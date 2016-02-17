@@ -5,6 +5,7 @@ import StartApp.Simple as StartApp
 import Signal exposing (Signal, Address)
 import Player
 import Collection
+import Stylesheet
 
 
 type Action
@@ -46,9 +47,19 @@ view : Address Action -> Model -> Html
 view address model =
   div
     []
-    [ Collection.view (Signal.forwardTo address CollectionAction) model.collection
+    [ node "style" [] [ text Stylesheet.text ]
+    , Collection.view (Signal.forwardTo address CollectionAction) model.collection
     , Player.view (Signal.forwardTo address PlayerAction) model.player
     ]
+
+
+
+stylesheet : String -> Html
+stylesheet url =
+  node "link"
+    [ rel "stylesheet"
+    , href url
+    ] []
 
 
 main =

@@ -8,11 +8,6 @@ import Signal exposing (Signal, Address)
 import Song
 
 
-onTimeUpdate : Address a -> a -> Attribute
-onTimeUpdate address value =
-    on "timeupdate" Json.value (\_ -> Signal.message address value)
-
-
 type Action
   = Play Song.Model
   | Pause
@@ -46,7 +41,6 @@ view address model =
     [ Html.audio
       [ src model.song.url
       , autoplay True
-      --, onTimeUpdate address Seek
       ]
       []
     ]
