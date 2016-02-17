@@ -3,37 +3,49 @@ module Player where
 import Json.Decode as Json
 import Html exposing (..)
 import Html.Events exposing (..)
-import Html.Attributes exposing (src, type', controls)
+import Html.Attributes exposing (..)
 import Signal exposing (Signal, Address)
+import Song
+
 
 onTimeUpdate : Address a -> a -> Attribute
 onTimeUpdate address value =
     on "timeupdate" Json.value (\_ -> Signal.message address value)
 
-type alias Model = Int
 
 type Action
-  = Play
+  = Play Song.Model
   | Pause
   | Seek
+
+type alias Model =
+  { song : Song.Model
+  }
+
+
+initialModel : Model
+initialModel =
+  { song = Song.initialModel
+  }
+
 
 update : Action -> Model -> Model
 update action model =
   case action of
-    Play ->
-      model
+    Play song ->
+      { model | song = song }
     Pause ->
       model
     Seek ->
       model
 
+
 view : Address Action -> Model -> Html
 view address model =
   div []
     [ Html.audio
-      [ src "https://raw.githubusercontent.com/jcollard/elm-audio/master/snd/theme.mp3"
-      , type' "audio/mp3"
-      , controls True
+      [ src model.song.url
+      , autoplay True
       --, onTimeUpdate address Seek
       ]
       []
