@@ -39,7 +39,7 @@ update action model =
     CollectionAction act ->
       case act of
         Collection.Play song ->
-          { model | player = Player.update (Player.Play song) model.player }
+          { model | player = Player.update (Player.Play (Debug.watch song.url song)) model.player }
         _ ->
           { model | collection = Collection.update act model.collection }
 

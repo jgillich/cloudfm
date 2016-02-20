@@ -6,7 +6,9 @@ import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 import Signal exposing (Signal, Address)
 import Song
-
+import Backend.Types
+import Backend.Http
+import Backend.YouTube
 
 type Action
   = Play Song.Model
@@ -38,11 +40,10 @@ update action model =
 
 view : Address Action -> Model -> Html
 view address model =
-  div []
-    [ Html.audio
-      [ src model.song.url
-      , autoplay True
-      , controls True
-      ]
-      []
-    ]
+  case model.song.backend of
+    Backend.Types.Http ->
+      Backend.Http.play model.song
+    Backend.Types.YouTube ->
+      Backend.YouTube.play model.song
+    Backend.Types.None ->
+      div [] []

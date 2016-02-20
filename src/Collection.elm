@@ -7,6 +7,7 @@ import Signal exposing (Signal, Address)
 import Stylesheet exposing (..)
 import Song
 import Player
+import Backend.Types
 
 
 { id, class, classList } =
@@ -25,34 +26,44 @@ type alias ID = Int
 
 initialModel : Model
 initialModel =
-    { songs =
-        [ ( 0
-          , { artist = "India"
-            , title = "National Anthem"
-            , url = "http://www.sample-videos.com/audio/mp3/india-national-anthem.mp3"
-            }
-          )
-        , ( 1
-          , { artist = "Crowd"
-            , title = "Cheering"
-            , url = "http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"
-            }
-          )
-        , ( 2
-          , { artist = "Wave"
-            , title = "Waving"
-            , url = "http://www.sample-videos.com/audio/mp3/wave.mp3"
-            }
-          )
-        ]
-    , nextID = 3
-    }
+  { songs =
+      [ ( 0
+        , { artist = "India"
+          , title = "National Anthem"
+          , url = "http://www.sample-videos.com/audio/mp3/india-national-anthem.mp3"
+          , backend = Backend.Types.Http
+          }
+        )
+      , ( 1
+        , { artist = "Crowd"
+          , title = "Cheering"
+          , url = "http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"
+          , backend = Backend.Types.Http
+          }
+        )
+      , ( 2
+        , { artist = "Wave"
+          , title = "Waving"
+          , url = "http://www.sample-videos.com/audio/mp3/wave.mp3"
+          , backend = Backend.Types.Http
+          }
+        )
+      , ( 3
+        , { artist = "evancz"
+          , title = "Elm"
+          , url = "https://www.youtube.com/embed/ZTliDiWDV0k"
+          , backend = Backend.Types.YouTube
+          }
+        )
+      ]
+  , nextID = 3
+  }
 
 
 -- UPDATE
 
 type Action
-    = Insert
+    = Insert Song.Model
     | Remove
     | Modify ID Song.Action
     | Play Song.Model
@@ -61,8 +72,8 @@ type Action
 update : Action -> Model -> Model
 update action model =
   case action of
-    Insert ->
-      let newSong = ( model.nextID, Song.initialModel )
+    Insert song ->
+      let newSong = ( model.nextID, song )
           newSongs = model.songs ++ [ newSong ]
       in
           { model |
