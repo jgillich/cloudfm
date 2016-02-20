@@ -1,11 +1,15 @@
 module Collection (..) where
 
+import List exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Signal exposing (Signal, Address)
 import Stylesheet exposing (..)
+import Artist
+import Album
 import Song
+import Playlist
 import Player
 import Backend.Types
 
@@ -13,103 +17,94 @@ import Backend.Types
 { id, class, classList } =
   namespace
 
--- MODEL
+
+type Action
+    = Play Playlist.Model
+
 
 type alias Model =
-    { songs : List ( ID, Song.Model )
-    , nextID : ID
+    { artists : List Artist.Model
     }
-
-
-type alias ID = Int
 
 
 initialModel : Model
 initialModel =
-  { songs =
-      [ ( 0
-        , { artist = "India"
-          , title = "National Anthem"
-          , url = "http://www.sample-videos.com/audio/mp3/india-national-anthem.mp3"
-          , backend = Backend.Types.Http
-          }
-        )
-      , ( 1
-        , { artist = "Crowd"
-          , title = "Cheering"
-          , url = "http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"
-          , backend = Backend.Types.Http
-          }
-        )
-      , ( 2
-        , { artist = "Wave"
-          , title = "Waving"
-          , url = "http://www.sample-videos.com/audio/mp3/wave.mp3"
-          , backend = Backend.Types.Http
-          }
-        )
-      , ( 3
-        , { artist = "evancz"
-          , title = "Elm"
-          , url = "https://www.youtube.com/embed/ZTliDiWDV0k"
-          , backend = Backend.Types.YouTube
-          }
-        )
+  { artists =
+      [ { name = "India"
+        , albums =
+            [ { name = "National Anthem"
+              , songs =
+                  [ { title = "National Anthem"
+                    , url = "http://www.sample-videos.com/audio/mp3/india-national-anthem.mp3"
+                    , backend = Backend.Types.Http
+                    }
+                  ]
+              }
+            ]
+        }
+      , { name = "Crowd"
+        , albums =
+            [ { name = "Cheering"
+              , songs =
+                  [ { title = "Cheering"
+                    , url = "http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"
+                    , backend = Backend.Types.Http
+                    }
+                  ]
+              }
+            ]
+        }
+      , { name = "Wave"
+        , albums =
+            [ { name = "Waving"
+              , songs =
+                  [ { title = "Waving"
+                    , url = "http://www.sample-videos.com/audio/mp3/wave.mp3"
+                    , backend = Backend.Types.Http
+                    }
+                  ]
+              }
+            ]
+        }
+      , { name = "evancz"
+        , albums =
+            [ { name = "Elm"
+              , songs =
+                  [ { title = "Elm"
+                    , url = "https://www.youtube.com/embed/ZTliDiWDV0k"
+                    , backend = Backend.Types.YouTube
+                    }
+                  ]
+              }
+            ]
+        }
       ]
-  , nextID = 3
   }
 
 
--- UPDATE
+artistView : Address Action -> Artist.Model -> Html
+artistView address artist =
+  let playlist =
+    map (\album -> album.songs) artist.albums
+      |> foldr (++) []
+  in
+  li [ onClick address (Play playlist) ] [ text artist.name ]
 
-type Action
-    = Insert Song.Model
-    | Remove
-    | Modify ID Song.Action
-    | Play Song.Model
 
-
-update : Action -> Model -> Model
-update action model =
-  case action of
-    Insert song ->
-      let newSong = ( model.nextID, song )
-          newSongs = model.songs ++ [ newSong ]
-      in
-          { model |
-              songs = newSongs,
-              nextID = model.nextID + 1
-          }
-
-    Remove ->
-      { model | songs = List.drop 1 model.songs }
-
-    Modify id songAction ->
-      let updateSong (songID, songModel) =
-              if songID == id then
-                  (songID, Song.update songAction songModel)
-              else
-                  (songID, songModel)
-      in
-          { model | songs = List.map updateSong model.songs }
-
-    _ ->
-      model
-
--- VIEW
-
-collectionItem : Address Action -> (ID, Song.Model) -> Html
-collectionItem address (identifier, song) =
-  table
-    [ id Collection ]
-    [ tr []
-      [ th [] [ text song.artist ]
-      , th [] [ text song.title ]
-      , th [] [ button [ onClick address (Play song) ] [ text "Play" ] ]
-      ]
-    ]
+albumView : Address Action -> Album.Model -> Html
+albumView address album =
+  li [ onClick address (Play album.songs) ] [ text album.name ]
 
 
 view : Address Action -> Model -> Html
 view address model =
-  div [] (List.map (collectionItem address) model.songs)
+  let
+    albums =
+      map (\artist -> artist.albums) model.artists
+        |> foldr (++) []
+  in
+    div
+      []
+      [ ul [] (map (artistView address) model.artists)
+      , ul [] (map (albumView address) albums)
+      ]

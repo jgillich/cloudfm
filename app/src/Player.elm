@@ -1,37 +1,40 @@
 module Player (..) where
 
-import Json.Decode as Json
+import List exposing (..)
 import Html exposing (..)
 import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 import Signal exposing (Signal, Address)
 import Song
+import Playlist
 import Backend.Types
 import Backend.Http
 import Backend.YouTube
 
 type Action
-  = Play Song.Model
+  = Play Playlist.Model
   | Pause
   | Seek
 
 
 type alias Model =
-  { song : Song.Model
+  { currentSong : Maybe Song.Model
+  , playlist : Playlist.Model
   }
 
 
 initialModel : Model
 initialModel =
-  { song = Song.initialModel
+  { currentSong = Nothing
+  , playlist = []
   }
 
 
 update : Action -> Model -> Model
 update action model =
   case action of
-    Play song ->
-      { model | song = song }
+    Play playlist ->
+      { model | currentSong = head playlist, playlist = playlist  }
     Pause ->
       model
     Seek ->
@@ -40,10 +43,14 @@ update action model =
 
 view : Address Action -> Model -> Html
 view address model =
-  case model.song.backend of
-    Backend.Types.Http ->
-      Backend.Http.play model.song
-    Backend.Types.YouTube ->
-      Backend.YouTube.play model.song
-    Backend.Types.None ->
+  case model.currentSong of
+    Just song ->
+      case song.backend of
+        Backend.Types.Http ->
+          Backend.Http.play song
+        Backend.Types.YouTube ->
+          Backend.YouTube.play song
+        Backend.Types.None ->
+          div [] []
+    Nothing ->
       div [] []

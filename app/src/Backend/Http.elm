@@ -9,7 +9,6 @@ type alias Model =
   { url : String
   }
 
-type alias Action = Song.Action
 
 play : Song.Model -> Html
 play song =
