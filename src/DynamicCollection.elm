@@ -20,26 +20,26 @@ type alias ID = Int
 initialModel : Model
 initialModel =
     { songs =
-        [ ( 1
+        [ ( 0
           , { artist = "India"
             , title = "National Anthem"
             , url = "http://www.sample-videos.com/audio/mp3/india-national-anthem.mp3"
             }
           )
-        , ( 2
+        , ( 1
           , { artist = "Crowd"
             , title = "Cheering"
             , url = "http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"
             }
           )
-        , ( 3
+        , ( 2
           , { artist = "Wave"
             , title = "Waving"
             , url = "http://www.sample-videos.com/audio/mp3/wave.mp3"
             }
           )
         ]
-    , nextID = 0
+    , nextID = 3
     }
 
 
