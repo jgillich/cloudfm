@@ -4,26 +4,26 @@ import Html.Attributes exposing (..)
 import StartApp.Simple as StartApp
 import Signal exposing (Signal, Address)
 import Player
-import Collection
+import DynamicCollection
 import Stylesheet
 
 
 type Action
   = NoOp
   | PlayerAction Player.Action
-  | CollectionAction Collection.Action
+  | CollectionAction DynamicCollection.Action
 
 
 type alias Model =
   { player : Player.Model
-  , collection : Collection.Model
+  , collection : DynamicCollection.Model
   }
 
 
 initialModel : Model
 initialModel =
   { player = Player.initialModel
-  , collection = Collection.initialModel
+  , collection = DynamicCollection.initialModel
   }
 
 
@@ -37,10 +37,12 @@ update action model =
 
     CollectionAction act ->
       case act of
-        Collection.Play song ->
+        DynamicCollection.Play song ->
           { model | player = Player.update (Player.Play song) model.player }
-        Collection.NoOp ->
+        DynamicCollection.NoOp ->
           model
+        _ ->
+          { model | collection = DynamicCollection.update act model.collection }
 
 
 view : Address Action -> Model -> Html
@@ -48,7 +50,7 @@ view address model =
   div
     []
     [ node "style" [] [ text Stylesheet.text ]
-    , Collection.view (Signal.forwardTo address CollectionAction) model.collection
+    , DynamicCollection.view (Signal.forwardTo address CollectionAction) model.collection
     , Player.view (Signal.forwardTo address PlayerAction) model.player
     ]
 
