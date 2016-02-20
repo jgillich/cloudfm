@@ -4,56 +4,58 @@ import Html.Attributes exposing (..)
 import StartApp.Simple as StartApp
 import Signal exposing (Signal, Address)
 import Player
-import DynamicCollection
+import Collection
 import Stylesheet
+import Header
 
 
 type Action
-  = NoOp
+  = HeaderAction Header.Action
   | PlayerAction Player.Action
-  | CollectionAction DynamicCollection.Action
+  | CollectionAction Collection.Action
 
 
 type alias Model =
-  { player : Player.Model
-  , collection : DynamicCollection.Model
+  { header : Header.Model
+  , player : Player.Model
+  , collection : Collection.Model
   }
 
 
 initialModel : Model
 initialModel =
-  { player = Player.initialModel
-  , collection = DynamicCollection.initialModel
+  { header = Header.initialModel
+  , player = Player.initialModel
+  , collection = Collection.initialModel
   }
 
 
 update : Action -> Model -> Model
 update action model =
   case action of
-    NoOp ->
-      model
     PlayerAction act ->
       { model | player = Player.update act model.player }
 
     CollectionAction act ->
       case act of
-        DynamicCollection.Play song ->
+        Collection.Play song ->
           { model | player = Player.update (Player.Play song) model.player }
-        DynamicCollection.NoOp ->
-          model
         _ ->
-          { model | collection = DynamicCollection.update act model.collection }
+          { model | collection = Collection.update act model.collection }
+
+    _ ->
+      model
 
 
 view : Address Action -> Model -> Html
 view address model =
   div
     []
-    [ node "style" [] [ text Stylesheet.text ]
-    , DynamicCollection.view (Signal.forwardTo address CollectionAction) model.collection
+    [ node "style" [] [ text Stylesheet.str ]
+    , Header.view (Signal.forwardTo address HeaderAction) model.header
+    , Collection.view (Signal.forwardTo address CollectionAction) model.collection
     , Player.view (Signal.forwardTo address PlayerAction) model.player
     ]
-
 
 
 stylesheet : String -> Html

@@ -1,4 +1,4 @@
-module Song where
+module Song (..) where
 
 type alias Model =
   { artist : String

@@ -1,4 +1,4 @@
-module Player where
+module Player (..) where
 
 import Json.Decode as Json
 import Html exposing (..)
@@ -12,6 +12,7 @@ type Action
   = Play Song.Model
   | Pause
   | Seek
+
 
 type alias Model =
   { song : Song.Model
@@ -41,6 +42,7 @@ view address model =
     [ Html.audio
       [ src model.song.url
       , autoplay True
+      , controls True
       ]
       []
     ]
