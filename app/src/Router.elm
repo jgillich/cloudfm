@@ -37,6 +37,7 @@ routes : List (String, Hop.Payload -> Action)
 routes =
   [ ("/", ShowCollection)
   , ("/collection", ShowCollection)
+  , ("/collection/:artist", ShowCollection)
   , ("/discover", ShowDiscover)
   ]
 

@@ -2,15 +2,17 @@ module Collection (..) where
 
 import List exposing (..)
 import Html exposing (..)
-import Html.Attributes exposing (src)
+import Html.Attributes exposing (src, href)
 import Html.Events exposing (..)
 import Signal exposing (Signal, Address)
+import Dict
 import Artist
 import Album
 import Stylesheet exposing (id, class, CssClasses(..), CssIds(..))
 import Song
 import Playlist
 import Player
+import Router
 import Backend exposing(Types(..))
 
 
@@ -85,8 +87,8 @@ artistView address artist =
       |> foldr (++) []
   in
   li
-    [ class [ ArtistItem ], onClick address (Play playlist) ]
-    [ text artist.name ]
+    [ class [ ArtistItem ] ]
+    [ a [ href ("#collection/" ++ artist.name) ] [ text artist.name ] ]
 
 
 albumView : Address Action -> Album.Model -> Html
@@ -97,10 +99,14 @@ albumView address album =
 
 
 
-view : Address Action -> Model -> Html
-view address model =
+view : Address Action -> Model -> Router.Payload -> Html
+view address model payload =
   let
-    albums = map (\artist -> artist.albums) model.artists
+    -- FIXME there probably is a better way to do this
+    selectedArtist = Dict.get "artist" payload.params
+    predicate = (\artist -> (Maybe.withDefault artist.name selectedArtist) == artist.name)
+    albums = filter predicate  model.artists
+        |> map (\artist -> artist.albums)
         |> foldr (++) []
   in
     div

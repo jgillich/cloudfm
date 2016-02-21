@@ -74,7 +74,7 @@ pageView address model =
   case model.router.page of
     Router.Collection ->
       div []
-      [ Collection.view (Signal.forwardTo address CollectionAction) model.collection
+      [ Collection.view (Signal.forwardTo address CollectionAction) model.collection model.router.payload
       , Player.view (Signal.forwardTo address PlayerAction) model.player
       ]
     Router.Discover ->
