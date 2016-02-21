@@ -84,12 +84,16 @@ artistView address artist =
     map (\album -> album.songs) artist.albums
       |> foldr (++) []
   in
-  li [ onClick address (Play playlist) ] [ text artist.name ]
+  li
+    [ class [ ArtistItem ], onClick address (Play playlist) ]
+    [ text artist.name ]
 
 
 albumView : Address Action -> Album.Model -> Html
 albumView address album =
-  li [ onClick address (Play album.songs) ] [ text album.name ]
+  li
+    [ class [ AlbumItem ], onClick address (Play album.songs) ]
+    [ text album.name ]
 
 
 
@@ -101,7 +105,7 @@ view address model =
         |> foldr (++) []
   in
     div
-      []
-      [ ul [] (map (artistView address) model.artists)
-      , ul [] (map (albumView address) albums)
+      [ id Collection ]
+      [ ul [ id CollectionArtists ] (map (artistView address) model.artists)
+      , ul [ id CollectionAlbums ] (map (albumView address) albums)
       ]

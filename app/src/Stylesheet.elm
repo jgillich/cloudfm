@@ -8,14 +8,16 @@ import Css.Namespace as Namespace
 
 type CssClasses
   = NavLink
-  | CollectionItem
-  | CollectionItemField
+  | ArtistItem
+  | AlbumItem
 
 
 type CssIds
   = Logo
   | Collection
   | Main
+  | CollectionArtists
+  | CollectionAlbums
 
 
 colors =
@@ -26,7 +28,7 @@ colors =
 
 
 namespace =
-  CssHelpers.namespace "qq" -- FIXME elm-css doesn't prepend namespace to elements
+  CssHelpers.namespace "" -- FIXME elm-css doesn't prepend namespace to elements
 
 
 { id, class, classList } =
@@ -42,37 +44,51 @@ css =
     , body
       [ margin (em 0)
       , padding (em 0)
+      , height (pc 100)
       , color colors.text
       , fontFamilies [ "Open Sans", "sans-serif" ]
       ]
     , (#) Main
-      [
+      [ property "display"  "flex"
+      , flexDirection column
 
       ]
     , header
       [ backgroundColor colors.bg
-      , display dflex -- FIXME implement as flex
-      --, justifyContent center FIXME not implemented
+      , property "display"  "flex"
+      , property "justify-content" "center"
+
       ]
     , (#) Logo
-      [ flex (int 1)
+      [ flex2 (int 1) (em 2)
       , fontSize (em 2)
       , color (hex "FFF")
       , maxWidth (px 970)
       , lineHeight (px 50)
+      , property "align-items" "center"
       ]
     , (#) Collection
-      [ flex (int 1)
-      ]
-    , (.) CollectionItem
-       --listStyle none FIXME not implemented
-        []
-    --, button
-            ~ ( "border-left", "thin" )
+      [ property "display"  "flex"
+      , property "justify-content" "center"
 
-    , (.) CollectionItemField
-      [  padding (em 0.5)
+      , flexDirection row
+      ]
+    , ul
+      [ property  "list-style" "none"
+      ]
+    , li
+      [ padding (em 0.5)
       , borderBottom3 (em 0.1) solid colors.border
+      ]
+    , (#) CollectionArtists
+      [ flex (int 1)
+      , height (pc 100)
+      , maxWidth (px 300)
+
+      ]
+    , (#) CollectionAlbums
+      [ flex (int 3)
+        , maxWidth (px 670)
       ]
     ]
 

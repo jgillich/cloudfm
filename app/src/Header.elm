@@ -35,5 +35,5 @@ update action model =
 view : Address Action -> Model -> Html
 view address model =
   header []
-    [ span [ id Logo ] [ text "Name" ]
+    [ div [ id Logo ] [ text "Name" ]
     ]
