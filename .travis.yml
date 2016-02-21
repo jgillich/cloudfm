@@ -1,5 +1,6 @@
 language: haskell
 install:
   - npm install -g elm
-  - cd app && elm-package install -y
-script: cd app && elm-make --yes src/App.elm
+env:
+  - TEST_DIR=app
+script: cd $TEST_DIR && npm install && npm test
