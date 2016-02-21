@@ -7,9 +7,10 @@ import Html.Attributes exposing (..)
 import Signal exposing (Signal, Address)
 import Song
 import Playlist
-import Backend.Types
+import Backend exposing (Types(..))
 import Backend.Http
 import Backend.YouTube
+
 
 type Action
   = Play Playlist.Model
@@ -46,11 +47,11 @@ view address model =
   case model.currentSong of
     Just song ->
       case song.backend of
-        Backend.Types.Http ->
+        Http ->
           Backend.Http.play song
-        Backend.Types.YouTube ->
+        YouTube ->
           Backend.YouTube.play song
-        Backend.Types.None ->
+        None ->
           div [] []
     Nothing ->
       div [] []

@@ -1,12 +1,15 @@
 import Html exposing (..)
 import Html.Events exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (src, rel, href)
 import StartApp.Simple as StartApp
 import Signal exposing (Signal, Address)
+import Stylesheet exposing (..)
+import Stylesheet exposing (id, class, CssClasses(..), CssIds(..))
 import Player
 import Collection
 import Stylesheet
 import Header
+
 
 
 type Action
@@ -47,7 +50,7 @@ update action model =
 view : Address Action -> Model -> Html
 view address model =
   div
-    []
+    [ id Main ]
     [ node "style" [] [ text Stylesheet.str ]
     , Header.view (Signal.forwardTo address HeaderAction) model.header
     , Collection.view (Signal.forwardTo address CollectionAction) model.collection

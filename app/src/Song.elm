@@ -1,16 +1,16 @@
 module Song (..) where
 
-import Backend.Types
+import Backend
 
 type alias Model =
   { title : String
   , url : String
-  , backend : Backend.Types.Type
+  , backend : Backend.Types
   }
 
 initialModel : Model
 initialModel =
   { title = ""
   , url = ""
-  , backend = Backend.Types.None
+  , backend = Backend.None
   }

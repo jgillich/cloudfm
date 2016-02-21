@@ -7,11 +7,7 @@ import Signal exposing (Signal, Address)
 import Stylesheet exposing (..)
 import Song
 import Player
-import Backend.Types
-
-
-{ id, class, classList } =
-  namespace
+import Backend exposing(Types(..))
 
 
 type alias Model =

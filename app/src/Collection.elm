@@ -2,20 +2,16 @@ module Collection (..) where
 
 import List exposing (..)
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (src)
 import Html.Events exposing (..)
 import Signal exposing (Signal, Address)
-import Stylesheet exposing (..)
 import Artist
 import Album
+import Stylesheet exposing (id, class, CssClasses(..), CssIds(..))
 import Song
 import Playlist
 import Player
-import Backend.Types
-
-
-{ id, class, classList } =
-  namespace
+import Backend exposing(Types(..))
 
 
 type Action
@@ -36,7 +32,7 @@ initialModel =
               , songs =
                   [ { title = "National Anthem"
                     , url = "http://www.sample-videos.com/audio/mp3/india-national-anthem.mp3"
-                    , backend = Backend.Types.Http
+                    , backend = Http
                     }
                   ]
               }
@@ -48,7 +44,7 @@ initialModel =
               , songs =
                   [ { title = "Cheering"
                     , url = "http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"
-                    , backend = Backend.Types.Http
+                    , backend = Http
                     }
                   ]
               }
@@ -60,7 +56,7 @@ initialModel =
               , songs =
                   [ { title = "Waving"
                     , url = "http://www.sample-videos.com/audio/mp3/wave.mp3"
-                    , backend = Backend.Types.Http
+                    , backend = Http
                     }
                   ]
               }
@@ -72,7 +68,7 @@ initialModel =
               , songs =
                   [ { title = "Elm"
                     , url = "https://www.youtube.com/embed/ZTliDiWDV0k"
-                    , backend = Backend.Types.YouTube
+                    , backend = YouTube
                     }
                   ]
               }
@@ -94,6 +90,7 @@ artistView address artist =
 albumView : Address Action -> Album.Model -> Html
 albumView address album =
   li [ onClick address (Play album.songs) ] [ text album.name ]
+
 
 
 view : Address Action -> Model -> Html
