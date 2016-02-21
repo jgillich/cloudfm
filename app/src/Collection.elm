@@ -80,8 +80,8 @@ initialModel =
 
 artistView : Address Action -> Artist.Model -> Html
 artistView address artist =
-  let playlist =
-    map (\album -> album.songs) artist.albums
+  let
+    playlist = map (\album -> album.songs) artist.albums
       |> foldr (++) []
   in
   li
@@ -100,8 +100,7 @@ albumView address album =
 view : Address Action -> Model -> Html
 view address model =
   let
-    albums =
-      map (\artist -> artist.albums) model.artists
+    albums = map (\artist -> artist.albums) model.artists
         |> foldr (++) []
   in
     div
