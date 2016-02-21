@@ -22,6 +22,7 @@ type CssIds
   | Page
   | CollectionArtists
   | CollectionAlbums
+  | Player
 
 
 colors =
@@ -52,10 +53,6 @@ css =
       , color colors.text
       , fontFamilies [ "Open Sans", "sans-serif" ]
       ]
-    , (#) Main
-      [ property "display"  "flex"
-      , flexDirection column
-      ]
     , header
       [ backgroundColor colors.bg
       , property "display"  "flex"
@@ -71,36 +68,38 @@ css =
     , (#) Logo
       [ height (px 50)
       , property "object-fit" "cover"
-      , marginLeft (em -2)
-      , marginRight (em -1)
       ]
     , a
       [ (withClass NavItem)
         [ marginLeft (em 1)
         , color (hex "FFF")
-        , flex (int 0)
         ]
       ]
     , (#) Page
       [ property "display"  "flex"
-      , property "justify-content" "center"
-      , flexDirection row
+      , property "align-items" "center"
+      , flexDirection column
       ]
     , (#) Collection
       [ maxWidth (px 970)
       , flex (int 1)
       , property "display"  "flex"
+      --, flexDirection row
+      ]
+    , (#) Player
+      [ maxWidth (px 970)
+      , flex (int 1)
+      , property "display"  "flex"
       , property "align-items" "center"
       ]
-    , ul
+    , ul -- FIXME move below Collection
       [ property  "list-style" "none"
       ]
-    , li
+    , li -- FIXME move below Collection
       [ padding (em 0.5)
       ]
     , (#) CollectionArtists
-      [ flex (int 1)
-      , property "align-items" "center"
+      [
       ]
     , (.) ArtistItem
       [ (withClass Active)
@@ -109,8 +108,7 @@ css =
         ]
       ]
     , (#) CollectionAlbums
-      [ flex (int 5)
-      , property "align-items" "center"
+      [ width (pc 100)
       ]
     , (.) AlbumItem
       [ display inline

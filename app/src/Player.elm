@@ -3,10 +3,10 @@ module Player (..) where
 import List exposing (..)
 import Html exposing (..)
 import Html.Events exposing (..)
-import Html.Attributes exposing (..)
 import Signal exposing (Signal, Address)
 import Song
 import Playlist
+import Stylesheet exposing (id, class, CssClasses(..), CssIds(..))
 import Backend exposing (Types(..))
 import Backend.Http
 import Backend.YouTube
@@ -44,14 +44,18 @@ update action model =
 
 view : Address Action -> Model -> Html
 view address model =
-  case model.currentSong of
-    Just song ->
-      case song.backend of
-        Http ->
-          Backend.Http.play song
-        YouTube ->
-          Backend.YouTube.play song
-        None ->
+  let
+    player =
+      case model.currentSong of
+        Just song ->
+          case song.backend of
+            Http ->
+              Backend.Http.play song
+            YouTube ->
+              Backend.YouTube.play song
+            None ->
+              div [] []
+        Nothing ->
           div [] []
-    Nothing ->
-      div [] []
+  in
+    div [ id Player ] [ player ]
