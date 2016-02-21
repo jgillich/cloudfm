@@ -11,6 +11,7 @@ type CssClasses
   | ArtistItem
   | AlbumItem
   | NavItem
+  | AlbumCover
 
 
 type CssIds
@@ -18,6 +19,7 @@ type CssIds
   | Nav
   | Collection
   | Main
+  | Page
   | CollectionArtists
   | CollectionAlbums
 
@@ -59,18 +61,18 @@ css =
       , property "display"  "flex"
       , property "justify-content" "center"
       ]
-    , (#) Logo
-      [ height (px 50)
-      , property "object-fit" "cover"
-      , marginLeft (em -2)
-      , marginRight (em -1)
-      ]
     , (#) Nav
       [ flex (int 1)
       , property "display"  "flex"
       , property "align-items" "center"
       , color (hex "FFF")
       , maxWidth (px 970)
+      ]
+    , (#) Logo
+      [ height (px 50)
+      , property "object-fit" "cover"
+      , marginLeft (em -2)
+      , marginRight (em -1)
       ]
     , a
       [ (withClass NavItem)
@@ -79,11 +81,16 @@ css =
         , flex (int 0)
         ]
       ]
-    , (#) Collection
+    , (#) Page
       [ property "display"  "flex"
       , property "justify-content" "center"
-
       , flexDirection row
+      ]
+    , (#) Collection
+      [ maxWidth (px 970)
+      , flex (int 1)
+      , property "display"  "flex"
+      , property "align-items" "center"
       ]
     , ul
       [ property  "list-style" "none"
@@ -93,7 +100,7 @@ css =
       ]
     , (#) CollectionArtists
       [ flex (int 1)
-      , maxWidth (px 300)
+      , property "align-items" "center"
       ]
     , (.) ArtistItem
       [ (withClass Active)
@@ -102,8 +109,16 @@ css =
         ]
       ]
     , (#) CollectionAlbums
-      [ flex (int 3)
-      , maxWidth (px 670)
+      [ flex (int 5)
+      , property "align-items" "center"
+      ]
+    , (.) AlbumItem
+      [ display inline
+      ]
+    , (.) AlbumCover
+      [ width (px 150)
+      , height (px 150)
+      , property "object-fit" "cover"
       ]
     ]
 

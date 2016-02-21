@@ -12,6 +12,7 @@ import Backend exposing(Types(..))
 
 type alias Model =
     { name : String
+    , cover: String
     , songs : List Song.Model
     }
 
@@ -19,5 +20,6 @@ type alias Model =
 initialModel : Model
 initialModel =
   { name = ""
+  , cover = ""
   , songs = []
   }

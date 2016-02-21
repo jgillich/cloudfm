@@ -31,6 +31,7 @@ initialModel =
       [ { name = "India"
         , albums =
             [ { name = "National Anthem"
+              , cover = "http://www.billboard.com/files/styles/gallery_main_well/public/media/Green-Day-American-Idiot-album-covers-billboard-1000x1000.jpg"
               , songs =
                   [ { title = "National Anthem"
                     , url = "http://www.sample-videos.com/audio/mp3/india-national-anthem.mp3"
@@ -43,6 +44,7 @@ initialModel =
       , { name = "Crowd"
         , albums =
             [ { name = "Cheering"
+              , cover = "http://www.billboard.com/files/styles/gallery_main_well/public/media/Taylor-Swift-1989-album-covers-billboard-1000x1000.jpg"
               , songs =
                   [ { title = "Cheering"
                     , url = "http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"
@@ -55,6 +57,7 @@ initialModel =
       , { name = "Wave"
         , albums =
             [ { name = "Waving"
+              , cover = "http://www.billboard.com/files/styles/gallery_main_well/public/media/Ohio-Players-Honey-album-covers-billboard-1000x1000.jpg"
               , songs =
                   [ { title = "Waving"
                     , url = "http://www.sample-videos.com/audio/mp3/wave.mp3"
@@ -67,6 +70,7 @@ initialModel =
       , { name = "evancz"
         , albums =
             [ { name = "Elm"
+              , cover = "http://www.billboard.com/files/styles/gallery_main_well/public/media/Yeah-Yeah-Yeahs-Its-Blitz-album-covers-billboard-1000x1000.jpg"
               , songs =
                   [ { title = "Elm"
                     , url = "https://www.youtube.com/embed/ZTliDiWDV0k"
@@ -95,7 +99,7 @@ albumView : Address Action -> Album.Model -> Html
 albumView address album =
   li
     [ class [ AlbumItem ], onClick address (Play album.songs) ]
-    [ text album.name ]
+    [ a [ href "#" ] [ img [ class [ AlbumCover ], src album.cover] [ ] ] ]
 
 
 
