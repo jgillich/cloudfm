@@ -2,10 +2,11 @@
   "name": "mp-api",
   "version": "1.0.0",
   "description": "",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "forever -w --watchDirectory=src/ -c lsc src/index.ls",
-    "start": "lsc src/index.ls"
+    "test": "node_modules/.bin/lsc -c -o lib/ src/**.ls",
+    "dev": "forever -w --watchDirectory=src/ -c node_modules/.bin/lsc src/index.ls",
+    "start": "node_modules/.bin/lsc src/index.ls"
   },
   "author": "",
   "license": "ISC",

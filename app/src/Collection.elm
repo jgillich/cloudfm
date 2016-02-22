@@ -59,6 +59,7 @@ view address model payload =
       , ul [ id CollectionAlbums ] (map (albumView address) albums)
       ]
 
+
 decode : Decode.Decoder Model
 decode =
   Decode.list <| Artist.decode

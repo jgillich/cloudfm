@@ -3,4 +3,5 @@ install:
   - npm install -g elm
 env:
   - TEST_DIR=app
+  - TEST_DIR=api
 script: cd $TEST_DIR && npm install && npm test
