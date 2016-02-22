@@ -16,6 +16,7 @@ import Backend exposing(Types(..))
 
 type Action
     = Play Playlist.Model
+    | Add (List Artist.Model)
 
 
 type alias Model =
@@ -77,6 +78,38 @@ initialModel =
       ]
   }
 
+
+merge : List Artist.Model -> List Artist.Model -> List Artist.Model
+merge list1 list2 =
+  case (list1, list2) of
+    (x :: list1', list2) ->
+      case (artistExists list2 x.name) of
+        Just artist ->
+          merge list1' ({ artist | albums = (Artist.merge artist.albums x.albums) } :: List.filter (artistNameDoNotEqual artist.name) list2)
+        Nothing ->
+          merge list1' (x :: list2)
+
+    ([], list2) ->
+      list2
+
+
+artistExists : List Artist.Model -> String -> Maybe Artist.Model
+artistExists artists artistName =
+  List.map (getArtistIfNameEquals artistName) artists
+    |> Maybe.oneOf
+
+
+getArtistIfNameEquals : String -> Artist.Model -> Maybe Artist.Model
+getArtistIfNameEquals name artist =
+  if artist.name == name then
+    Just artist
+  else
+    Nothing
+
+
+artistNameDoNotEqual : String -> Artist.Model -> Bool
+artistNameDoNotEqual name artist =
+  artist.name /= name
 
 artistView : Address Action -> Artist.Model -> Html
 artistView address artist =

@@ -1,18 +1,11 @@
 module Artist (..) where
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
-import Signal exposing (Signal, Address)
-import Stylesheet exposing (..)
 import Album
-import Song
 
 
-{ id, class, classList } =
-  namespace
+type Action
+    = Add (List Album.Model)
 
--- MODEL
 
 type alias Model =
     { name : String
@@ -27,41 +20,43 @@ initialModel =
   }
 
 
--- UPDATE
+update : Action -> Model -> Model
+update action model =
+  case action of
+    Add albums ->
+      let
+        newAlbums = merge model.albums albums
+      in
+        { model | albums = newAlbums }
 
---
---
--- update : Action -> Model -> Model
--- update action model =
---   case action of
---     Insert album ->
---       let newAlbum = ( model.nextID, album )
---           newAlbums = model.albums ++ [ newAlbum ]
---       in
---           { model |
---               albums = newAlbums,
---               nextID = model.nextID + 1
---           }
---
---     Remove ->
---       { model | albums = List.drop 1 model.albums }
---
---     Modify id albumAction ->
---       let updateAlbum (albumID, albumModel) =
---               if albumID == id then
---                   (albumID, Album.update albumAction albumModel)
---               else
---                   (albumID, albumModel)
---       in
---           { model | albums = List.map updateAlbum model.albums }
 
-    -- _ ->
-    --   model
+merge : List Album.Model -> List Album.Model -> List Album.Model
+merge list1 list2 =
+  case (list1, list2) of
+    (x :: list1', list2) ->
+      case (albumExists list2 x.name) of
+        Just album ->
+          merge list1' ({ album | songs = (Album.merge album.songs x.songs) } :: List.filter (albumNameDoNotEqual album.name) list2)
+        Nothing ->
+          merge list1' (x :: list2)
 
--- VIEW
+    ([], list2) ->
+      list2
 
---
---
--- view : Address Action -> Model -> Html
--- view address model =
---   div [] (List.map (collectionItem address) model.songs)
+
+albumExists : List Album.Model -> String -> Maybe Album.Model
+albumExists albums albumName =
+  List.map (getAlbumIfNameEquals albumName) albums
+    |> Maybe.oneOf
+
+getAlbumIfNameEquals : String -> Album.Model -> Maybe Album.Model
+getAlbumIfNameEquals name album =
+  if album.name == name then
+    Just album
+  else
+    Nothing
+
+
+albumNameDoNotEqual : String -> Album.Model -> Bool
+albumNameDoNotEqual name album =
+  album.name /= name

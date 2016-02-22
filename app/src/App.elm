@@ -43,6 +43,12 @@ update action model =
       case act of
         Collection.Play playlist ->
           { model | player = Player.update (Player.Play playlist) model.player }
+        Collection.Add artists ->
+          let
+            newArtists = Collection.merge model.artists artists
+          in
+            { model | artists = newArtists }
+
     _ ->
       model
 
