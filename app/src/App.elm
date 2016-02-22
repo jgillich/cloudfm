@@ -45,9 +45,9 @@ update action model =
           { model | player = Player.update (Player.Play playlist) model.player }
         Collection.Add artists ->
           let
-            newArtists = Collection.merge model.artists artists
+            newArtists = Collection.merge model.collection.artists artists
           in
-            { model | artists = newArtists }
+            { model | collection = { artists = newArtists } }
 
     _ ->
       model
