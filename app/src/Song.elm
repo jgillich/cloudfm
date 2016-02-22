@@ -1,13 +1,13 @@
 module Song (..) where
 
 import Json.Decode as Decode exposing ((:=))
-import Backend
+import Backend.Types as Backend
 
 
 type alias Model =
   { title : String
   , url : String
-  , backend : Backend.Types
+  , backend : Backend.Type
   }
 
 

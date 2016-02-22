@@ -10,21 +10,37 @@ import Dict
 import Artist
 import Album
 import Stylesheet exposing (id, class, CssClasses(..), CssIds(..))
+import Http
+import Effects exposing (Effects)
+import Task exposing (Task)
 import Song
 import Playlist
 import Player
-import Router
-import Backend exposing(Types(..))
 
 
 type Action
     = Play Playlist.Model
     | Add (List Artist.Model)
+    | Update (Result Http.Error (List Artist.Model))
+
+
+type Page
+  = All
+  | Artist (Maybe Artist.Model)
+  | Album (Maybe Album.Model)
 
 
 type alias Model =
-  { artists: List Artist.Model
+  { artists : List Artist.Model
+  , status : Status
+  , page : Page
   }
+
+type Status
+  = Init
+  | Fetching
+  | Fetched
+  | HttpError Http.Error
 
 merge : List Artist.Model -> List Artist.Model -> List Artist.Model
 merge list1 list2 =
@@ -58,8 +74,31 @@ artistNameDoNotEqual : String -> Artist.Model -> Bool
 artistNameDoNotEqual name artist =
   artist.name /= name
 
-artistView : Address Action -> Artist.Model -> Html
-artistView address artist =
+
+update : Action -> Model -> (Model, Effects Action)
+update action model =
+  case action of
+    Add artists ->
+      ({ model | artists = merge model.artists artists }, Effects.none)
+    Update result ->
+      case result of
+        Ok artists ->
+          ( { model | artists = artists
+            , status = Fetched
+            }
+          , Effects.none
+          )
+        Err error ->
+          ( { model | status = HttpError error }
+          , Effects.none
+          )
+    _ ->
+      (model, Effects.none)
+
+
+
+artistItem : Address Action -> Artist.Model -> Html
+artistItem address artist =
   let
     playlist = map (\album -> album.songs) artist.albums
       |> foldr (++) []
@@ -69,31 +108,85 @@ artistView address artist =
     [ a [ href ("#collection/" ++ artist.name) ] [ text artist.name ] ]
 
 
-albumView : Address Action -> Album.Model -> Html
-albumView address album =
+artistAlbums : Address Action -> Artist.Model -> List Html
+artistAlbums address artist =
+  map (albumItem address artist) artist.albums
+
+
+albumItem : Address Action -> Artist.Model -> Album.Model -> Html
+albumItem address artist album =
+  let
+    albumUrl = "#collection/" ++ artist.name ++ "/" ++ album.name
+  in
   li
     [ class [ AlbumItem ], onClick address (Play album.songs) ]
-    [ a [ href "#" ] [ img [ class [ AlbumCover ], src album.cover] [ ] ] ]
+    [ a [ href albumUrl ] [ img [ class [ AlbumCover ], src album.cover] [ ] ] ]
 
 
+songItem : Address Action -> Song.Model -> Html
+songItem address song =
+  li
+    [ class [ SongItem ], onClick address (Play [ song ]) ]
+    [ text song.title ]
 
-view : Address Action -> Model -> Router.Payload -> Html
-view address model payload =
+
+albumsView : Address Action -> Maybe String -> Model -> Html
+albumsView address maybeArtist model =
   let
     -- FIXME there probably is a better way to do this
-    selectedArtist = Dict.get "artist" payload.params
-    predicate = (\artist -> (Maybe.withDefault artist.name selectedArtist) == artist.name)
-    albums = filter predicate  model
-        |> map (\artist -> artist.albums)
+    predicate = (\artist -> (Maybe.withDefault artist.name maybeArtist) == artist.name)
+    albums = filter predicate model.artists
+        |> map (artistAlbums address)
         |> foldr (++) []
   in
     div
       [ id Collection ]
-      [ ul [ id CollectionArtists ] (map (artistView address) model)
-      , ul [ id CollectionAlbums ] (map (albumView address) albums)
+      [ ul [ id CollectionArtists ] (map (artistItem address) model.artists)
+      , ul [ id CollectionAlbums ] albums
       ]
 
 
-decode : Decode.Decoder Model
+view : Address Action -> Page -> Model -> Html
+view address page model =
+  case page of
+    All ->
+      div
+        [ id Collection ]
+        [ ul [ id CollectionArtists ] (map (artistItem address) model.artists)
+        , ul [ id CollectionAlbums ] (map (artistAlbums address) model.artists |> foldr (++) [])
+        ]
+    Artist maybeArtist ->
+      let
+        artists = case Debug.log "artist" maybeArtist of
+          Just artist ->
+            [ artist ]
+          Nothing ->
+            model.artists
+      in
+        div
+          [ id Collection ]
+          [ ul [ id CollectionArtists ] (map (artistItem address) model.artists)
+          , ul [ id CollectionAlbums ] (map (artistAlbums address) artists |> foldr (++) [])
+          ]
+    Album maybeAlbum ->
+      let
+      qwe =  Debug.log "album" maybeAlbum
+      in
+      div [] []
+
+init : (Model, Effects Action)
+init =
+  ( { artists = []
+    , status = Init
+    , page = All
+    }
+  , Http.get decode "http://localhost:8155/collection"
+      |> Task.toResult
+      |> Task.map Update
+      |> Effects.task
+  )
+
+
+decode : Decode.Decoder (List Artist.Model)
 decode =
   Decode.list <| Artist.decode

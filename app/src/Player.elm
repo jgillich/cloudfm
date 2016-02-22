@@ -7,7 +7,7 @@ import Signal exposing (Signal, Address)
 import Song
 import Playlist
 import Stylesheet exposing (id, class, CssClasses(..), CssIds(..))
-import Backend exposing (Types(..))
+import Backend.Backend as Backend
 import Backend.Http
 import Backend.YouTube
 
@@ -48,13 +48,7 @@ view address model =
     player =
       case model.currentSong of
         Just song ->
-          case song.backend of
-            Http ->
-              Backend.Http.play song
-            YouTube ->
-              Backend.YouTube.play song
-            None ->
-              div [] []
+          Backend.play song
         Nothing ->
           div [] []
   in

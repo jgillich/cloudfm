@@ -7,23 +7,21 @@ import StartApp
 import Task exposing (Task)
 import Signal exposing (Signal, Address)
 import Effects exposing (Effects, Never)
-import Stylesheet exposing (..)
 import Stylesheet exposing (id, class, CssClasses(..), CssIds(..))
 import Json.Decode exposing (list)
+import Dict
 import Http
 import Player
 import Collection
-import Stylesheet
 import Header
 import Router
-
+import Artist
 
 type Action
   = HeaderAction Header.Action
   | PlayerAction Player.Action
   | CollectionAction Collection.Action
   | RouterAction Router.Action
-  | NewCollection (Result Http.Error Collection.Model)
 
 
 type alias Model =
@@ -31,7 +29,6 @@ type alias Model =
   , player : Player.Model
   , collection : Collection.Model
   , router: Router.Model
-  , message: Html
   }
 
 
@@ -43,6 +40,7 @@ update action model =
         (router, effects) = Router.update subAction model.router
       in
         ({ model | router = router }, Effects.map RouterAction effects)
+
     PlayerAction subAction ->
       ({ model | player = Player.update subAction model.player }, Effects.none)
 
@@ -50,20 +48,12 @@ update action model =
       case subAction of
         Collection.Play playlist ->
           ({ model | player = Player.update (Player.Play playlist) model.player }, Effects.none)
-        Collection.Add artists ->
+
+        _ ->
           let
-            newArtists = Collection.merge model.collection.artists artists
+            (collection, effects) = Collection.update subAction model.collection
           in
-            ({ model | collection = { artists = newArtists } }, Effects.none)
-
-
-    NewCollection result ->
-      case result of
-        Err error ->
-          ({ model | message = div [] [ text (toString error) ] }, Effects.none)
-        Ok collection ->
-          ({ model | collection = collection }, Effects.none)
-
+            ({ model | collection = collection }, Effects.map CollectionAction effects)
 
     _ ->
       (model, Effects.none)
@@ -75,51 +65,60 @@ view address model =
     [ id Main ]
     [ node "style" [] [ text Stylesheet.str ]
     , Header.view (Signal.forwardTo address HeaderAction) model.header
-    , model.message
-    , pageView address model
+    , div [ id Page ] [ (pageView address model) ]
     ]
 
 pageView : Signal.Address Action -> Model -> Html
 pageView address model =
-  case model.router.page of
-    Router.Collection ->
-      div [ id Page ]
-      [ Collection.view (Signal.forwardTo address CollectionAction) model.collection model.router.payload
-      , Player.view (Signal.forwardTo address PlayerAction) model.player
-      ]
-    Router.Discover ->
-      div [] [ text "Discover" ]
-    Router.NotFound ->
-      div [] [ text "Not Found" ]
+  let
+    content = case model.router.page of
+      Router.Collection page ->
+        let
+          maybeArtist =
+            Dict.get "artist" model.router.payload.params
+              |> Maybe.withDefault ""
+              |> Collection.artistExists model.collection.artists
+          maybeAlbum =
+            case maybeArtist of
+              Just artist ->
+                Dict.get "album" model.router.payload.params
+                  |> Maybe.withDefault ""
+                  |> Artist.albumExists artist.albums
+              Nothing ->
+                Nothing
+          www = (Debug.log "artist" (Collection.Artist  maybeArtist))
+        in
+        case page of
+          Collection.All ->
+            Collection.view (Signal.forwardTo address CollectionAction) Collection.All model.collection
+          Collection.Artist maybeArtist ->
+            Collection.view (Signal.forwardTo address CollectionAction) (Debug.log "artist" (Collection.Artist  maybeArtist))  model.collection
+          Collection.Album maybeAlbum ->
+            Collection.view (Signal.forwardTo address CollectionAction) (Collection.Album maybeAlbum)  model.collection
 
-
-stylesheet : String -> Html
-stylesheet url =
-  node "link"
-    [ rel "stylesheet"
-    , href url
-    ] []
+      Router.Discover ->
+        div [] [ text "Discover" ]
+      Router.NotFound ->
+        div [] [ text "Not Found" ]
+  in
+    div []
+    [ content
+    , Player.view (Signal.forwardTo address PlayerAction) model.player
+    ]
 
 
 init : (Model, Effects Action)
 init =
+  let
+    (collection, collectionEffects) = Collection.init
+  in
   ( { header = Header.initialModel
     , player = Player.initialModel
-    , collection = []
+    , collection = collection
     , router = Router.initialModel
-    , message = div [] []
     }
-  , fetchCollection
+  , Effects.map CollectionAction collectionEffects
   )
-
-
-fetchCollection : Effects Action
-fetchCollection =
-  Http.get Collection.decode "http://localhost:8155/collection"
-    |> Task.toResult
-    |> Task.map NewCollection
-    |> Effects.task
-
 
 
 app : StartApp.App Model
@@ -130,6 +129,7 @@ app =
     , view = view
     , inputs = [ (Signal.map RouterAction Router.signal) ]
     }
+
 
 main: Signal Html
 main =

@@ -12,6 +12,7 @@ type CssClasses
   | AlbumItem
   | NavItem
   | AlbumCover
+  | SongItem
 
 
 type CssIds

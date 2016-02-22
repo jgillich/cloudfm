@@ -2,42 +2,43 @@ module Router (..) where
 
 import Effects exposing (Effects, Never)
 import Hop
-
+import Collection
 
 type alias Payload = Hop.Payload
 
 
 type Action
   = HopAction Hop.Action
-  | ShowCollection Hop.Payload
+  | ShowCollection Collection.Page Hop.Payload
   | ShowDiscover Hop.Payload
   | ShowNotFound Hop.Payload
   | NavigateTo String
 
 
 type Page
-  = Collection
+  = Collection Collection.Page
   | Discover
   | NotFound
 
 
 type alias Model =
-  { payload: Hop.Payload
-  , page: Page
+  { payload : Hop.Payload
+  , page : Page
   }
 
 
 initialModel =
   { payload = router.payload
-  , page = Collection
+  , page = Collection Collection.All
   }
 
 
 routes : List (String, Hop.Payload -> Action)
 routes =
-  [ ("/", ShowCollection)
-  , ("/collection", ShowCollection)
-  , ("/collection/:artist", ShowCollection)
+  [ ("/", ShowCollection Collection.All)
+  , ("/collection", ShowCollection Collection.All)
+  , ("/collection/:artist", ShowCollection (Collection.Artist Nothing))
+  , ("/collection/:artist/:album", ShowCollection (Collection.Album Nothing))
   , ("/discover", ShowDiscover)
   ]
 
@@ -54,8 +55,8 @@ update action model =
   case action of
     NavigateTo path ->
       (model, Effects.map HopAction (Hop.navigateTo path))
-    ShowCollection payload ->
-      ({ model | page = Collection, payload = payload }, Effects.none)
+    ShowCollection page payload ->
+      ({ model | page = Collection page, payload = payload }, Effects.none)
     ShowDiscover payload ->
       ({ model | page = Discover, payload = payload }, Effects.none)
     ShowNotFound payload ->
