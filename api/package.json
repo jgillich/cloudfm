@@ -11,13 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "cors": "^2.7.1",
     "faker": "^3.0.1",
     "feathers": "^1.3.0",
     "feathers-rest": "^1.2.2",
     "feathers-socketio": "^1.3.3",
     "feathers-waterline": "^1.1.0",
     "livescript": "^1.4.0",
-    "lodash": "^4.5.0",
     "prelude-ls": "^1.1.2"
   }
 }

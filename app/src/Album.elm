@@ -5,9 +5,9 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Signal exposing (Signal, Address)
 import Stylesheet exposing (..)
+import Json.Decode as Decode exposing ((:=))
 import Song
 import Player
-import Backend exposing(Types(..))
 
 
 type alias Model =
@@ -23,3 +23,11 @@ initialModel =
   , cover = ""
   , songs = []
   }
+
+
+decode : Decode.Decoder Model
+decode =
+  Decode.object3 Model
+    ("name" := Decode.string)
+    ("cover" := Decode.string)
+    ("songs" := (Decode.list <| Song.decode))

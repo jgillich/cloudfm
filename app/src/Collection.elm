@@ -5,6 +5,7 @@ import Html exposing (..)
 import Html.Attributes exposing (src, href)
 import Html.Events exposing (..)
 import Signal exposing (Signal, Address)
+import Json.Decode as Decode exposing ((:=))
 import Dict
 import Artist
 import Album
@@ -20,68 +21,7 @@ type Action
     = Play Playlist.Model
 
 
-type alias Model =
-    { artists : List Artist.Model
-    }
-
-
-initialModel : Model
-initialModel =
-  { artists =
-      [ { name = "India"
-        , albums =
-            [ { name = "National Anthem"
-              , cover = "http://www.billboard.com/files/styles/gallery_main_well/public/media/Green-Day-American-Idiot-album-covers-billboard-1000x1000.jpg"
-              , songs =
-                  [ { title = "National Anthem"
-                    , url = "http://www.sample-videos.com/audio/mp3/india-national-anthem.mp3"
-                    , backend = Http
-                    }
-                  ]
-              }
-            ]
-        }
-      , { name = "Crowd"
-        , albums =
-            [ { name = "Cheering"
-              , cover = "http://www.billboard.com/files/styles/gallery_main_well/public/media/Taylor-Swift-1989-album-covers-billboard-1000x1000.jpg"
-              , songs =
-                  [ { title = "Cheering"
-                    , url = "http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"
-                    , backend = Http
-                    }
-                  ]
-              }
-            ]
-        }
-      , { name = "Wave"
-        , albums =
-            [ { name = "Waving"
-              , cover = "http://www.billboard.com/files/styles/gallery_main_well/public/media/Ohio-Players-Honey-album-covers-billboard-1000x1000.jpg"
-              , songs =
-                  [ { title = "Waving"
-                    , url = "http://www.sample-videos.com/audio/mp3/wave.mp3"
-                    , backend = Http
-                    }
-                  ]
-              }
-            ]
-        }
-      , { name = "evancz"
-        , albums =
-            [ { name = "Elm"
-              , cover = "http://www.billboard.com/files/styles/gallery_main_well/public/media/Yeah-Yeah-Yeahs-Its-Blitz-album-covers-billboard-1000x1000.jpg"
-              , songs =
-                  [ { title = "Elm"
-                    , url = "https://www.youtube.com/embed/ZTliDiWDV0k"
-                    , backend = YouTube
-                    }
-                  ]
-              }
-            ]
-        }
-      ]
-  }
+type alias Model = List Artist.Model
 
 
 artistView : Address Action -> Artist.Model -> Html
@@ -109,12 +49,16 @@ view address model payload =
     -- FIXME there probably is a better way to do this
     selectedArtist = Dict.get "artist" payload.params
     predicate = (\artist -> (Maybe.withDefault artist.name selectedArtist) == artist.name)
-    albums = filter predicate  model.artists
+    albums = filter predicate  model
         |> map (\artist -> artist.albums)
         |> foldr (++) []
   in
     div
       [ id Collection ]
-      [ ul [ id CollectionArtists ] (map (artistView address) model.artists)
+      [ ul [ id CollectionArtists ] (map (artistView address) model)
       , ul [ id CollectionAlbums ] (map (albumView address) albums)
       ]
+
+decode : Decode.Decoder Model
+decode =
+  Decode.list <| Artist.decode

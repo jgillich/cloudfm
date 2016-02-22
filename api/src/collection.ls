@@ -9,6 +9,4 @@ get = (id, params, fn) ->
 find = (params, fn ) ->
   fn null fixture!
 
-module.exports = {
-  get, find
-}
+export get, find

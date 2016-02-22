@@ -9,6 +9,8 @@ import Signal exposing (Signal, Address)
 import Effects exposing (Effects, Never)
 import Stylesheet exposing (..)
 import Stylesheet exposing (id, class, CssClasses(..), CssIds(..))
+import Json.Decode exposing (list)
+import Http
 import Player
 import Collection
 import Stylesheet
@@ -21,6 +23,7 @@ type Action
   | PlayerAction Player.Action
   | CollectionAction Collection.Action
   | RouterAction Router.Action
+  | NewCollection (Result Http.Error Collection.Model)
 
 
 type alias Model =
@@ -28,15 +31,7 @@ type alias Model =
   , player : Player.Model
   , collection : Collection.Model
   , router: Router.Model
-  }
-
-
-initialModel : Model
-initialModel =
-  { header = Header.initialModel
-  , player = Player.initialModel
-  , collection = Collection.initialModel
-  , router = Router.initialModel
+  , message: Html
   }
 
 
@@ -56,6 +51,12 @@ update action model =
         Collection.Play playlist ->
           ({ model | player = Player.update (Player.Play playlist) model.player }, Effects.none)
 
+    NewCollection result ->
+      case result of
+        Err error ->
+          ({ model | message = div [] [ text (toString error) ] }, Effects.none)
+        Ok collection ->
+          ({ model | collection = collection }, Effects.none)
     _ ->
       (model, Effects.none)
 
@@ -66,6 +67,7 @@ view address model =
     [ id Main ]
     [ node "style" [] [ text Stylesheet.str ]
     , Header.view (Signal.forwardTo address HeaderAction) model.header
+    , model.message
     , pageView address model
     ]
 
@@ -93,7 +95,23 @@ stylesheet url =
 
 init : (Model, Effects Action)
 init =
-  (initialModel, Effects.none)
+  ( { header = Header.initialModel
+    , player = Player.initialModel
+    , collection = []
+    , router = Router.initialModel
+    , message = div [] []
+    }
+  , fetchCollection
+  )
+
+
+fetchCollection : Effects Action
+fetchCollection =
+  Http.get Collection.decode "http://localhost:8155/collection"
+    |> Task.toResult
+    |> Task.map NewCollection
+    |> Effects.task
+
 
 
 app : StartApp.App Model
