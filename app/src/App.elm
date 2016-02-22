@@ -50,6 +50,12 @@ update action model =
       case subAction of
         Collection.Play playlist ->
           ({ model | player = Player.update (Player.Play playlist) model.player }, Effects.none)
+        Collection.Add artists ->
+          let
+            newArtists = Collection.merge model.collection.artists artists
+          in
+            ({ model | collection = { artists = newArtists } }, Effects.none)
+
 
     NewCollection result ->
       case result of
@@ -57,6 +63,8 @@ update action model =
           ({ model | message = div [] [ text (toString error) ] }, Effects.none)
         Ok collection ->
           ({ model | collection = collection }, Effects.none)
+
+
     _ ->
       (model, Effects.none)
 

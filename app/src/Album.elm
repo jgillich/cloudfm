@@ -25,6 +25,25 @@ initialModel =
   }
 
 
+merge : List Song.Model -> List Song.Model -> List Song.Model
+merge list1 list2 =
+  case (list1, list2) of
+    (x :: list1', list2) ->
+      if not (songExists list2 x.title) then
+        merge list1' (x :: list2)
+      else
+        merge list1' list2
+
+    ([], list2) ->
+      list2
+
+
+songExists : List Song.Model -> String -> Bool
+songExists songs songName =
+  List.map (\song -> song.title == songName) songs
+    |> List.member True
+
+
 decode : Decode.Decoder Model
 decode =
   Decode.object3 Model
