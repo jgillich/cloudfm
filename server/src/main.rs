@@ -1,13 +1,20 @@
 extern crate iron;
+extern crate mount;
+extern crate router;
 
 use iron::prelude::*;
 use iron::status;
+use mount::Mount;
+use providers::Providers;
 
 fn main() {
-    fn hello_world(_: &mut Request) -> IronResult<Response> {
-        Ok(Response::with((status::Ok, "Hello World!")))
-    }
+    let mut mount = Mount::new();
+    let providers = Providers::new();
 
-    Iron::new(hello_world).http("localhost:3000").unwrap();
-    println!("On 3000");
+    mount.mount("/v1", providers);
+
+    Iron::new(mount).http("localhost:3000").unwrap();
 }
+
+mod models;
+mod providers;

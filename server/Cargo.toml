@@ -5,3 +5,9 @@ authors = ["Jakob Gillich <jakob@gillich.me>"]
 
 [dependencies]
 iron = "0.2.6"
+router = "0.1.0"
+bodyparser = "0.2.0"
+logger = "0.0.3"
+mount = "0.0.10"
+urlencoded = "0.2.1"
+id3 = "0.1.9"
