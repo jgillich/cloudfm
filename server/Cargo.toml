@@ -1,0 +1,7 @@
+[package]
+name = "server"
+version = "0.1.0"
+authors = ["Jakob Gillich <jakob@gillich.me>"]
+
+[dependencies]
+iron = "0.2.6"

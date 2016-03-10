@@ -3,3 +3,5 @@ api/node_modules
 app/elm-stuff/
 app/elm.js
 app/node_modules
+
+server/target
