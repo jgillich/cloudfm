@@ -1,7 +1,7 @@
-language: haskell
+language: rust
 install:
   - npm install -g elm
 env:
   - TEST_DIR=app
-  - TEST_DIR=api
+  - TEST_DIR=server
 script: cd $TEST_DIR && npm install && npm test
