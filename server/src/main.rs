@@ -1,6 +1,8 @@
 extern crate iron;
 extern crate mount;
 extern crate router;
+extern crate walkdir;
+extern crate id3;
 
 use iron::prelude::*;
 use iron::status;

@@ -14,11 +14,8 @@ impl Providers {
     pub fn new() -> Providers {
         let mut mount = Mount::new();
 
-        let dropbox = Dropbox::new(&"john");
-        let folder = Folder::new(&"/");
-
-        mount.mount("/dropbox", dropbox);
-        mount.mount("/folder", folder);
+        mount.mount("/dropbox", Dropbox);
+        mount.mount("/folder", Folder);
 
         Providers {
             mount: mount
