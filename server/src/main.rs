@@ -9,9 +9,9 @@ extern crate walkdir;
 extern crate id3;
 extern crate serde;
 extern crate serde_json;
+extern crate crypto;
 
 use iron::prelude::*;
-use iron::status;
 use mount::Mount;
 use providers::Providers;
 

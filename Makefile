@@ -22,4 +22,4 @@ run-app:
 	cd app && elm-reactor
 
 run-server:
-	cd server && cargo-watch
+	cd server && cargo-watch watch run
