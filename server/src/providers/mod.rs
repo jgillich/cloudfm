@@ -6,7 +6,7 @@ pub use self::folder::Folder;
 
 
 pub struct Providers {
-    mount: Mount
+    mount: Mount,
 }
 
 
@@ -17,9 +17,7 @@ impl Providers {
         mount.mount("/dropbox", Dropbox);
         mount.mount("/folder", Folder);
 
-        Providers {
-            mount: mount
-        }
+        Providers { mount: mount }
     }
 }
 

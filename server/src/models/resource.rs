@@ -3,5 +3,5 @@ pub struct Resource<T> {
     #[serde(rename="type")]
     pub type_: String,
     pub id: String,
-    pub attributes: T
+    pub attributes: T,
 }

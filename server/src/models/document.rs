@@ -4,12 +4,11 @@ use super::{Error, Resource};
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Document<T> {
     pub data: Option<Vec<Resource<T>>>,
-    pub errors: Option<Vec<Error>>
-    //pub meta:
+    pub errors: Option<Vec<Error>>, // pub meta:
 }
 
-//impl Document {
+// impl Document {
 //    pub fn to_string(&self) -> &str {
 
 //    }
-//}
+// }
