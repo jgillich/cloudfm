@@ -1,7 +1,13 @@
 language: rust
+rust:
+  - stable
+  - nightly
 install:
   - npm install -g elm
 env:
   - TEST_DIR=app
   - TEST_DIR=server
+matrix:
+  allow_failures:
+    - rust: stable
 script: cd $TEST_DIR && npm install && npm test
