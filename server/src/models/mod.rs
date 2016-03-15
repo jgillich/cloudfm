@@ -1,13 +1,9 @@
-struct Song {
-    title: String
-}
+pub use self::document::Document;
+pub use self::error::Error;
+pub use self::resource::Resource;
+pub use self::song::Song;
 
-struct Artist {
-    name: String,
-    albums: Vec<Album>
-}
-
-struct Album {
-    name: String,
-    songs: Vec<Song>
-}
+pub mod document;
+pub mod error;
+pub mod resource;
+pub mod song;

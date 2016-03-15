@@ -1,10 +1,10 @@
 with import <nixpkgs> { };
 
-with rustPlatform;
+with rustUnstable;
 
 buildRustPackage rec {
   name = "mp-server";
   src = ./.;
   buildInputs = [ openssl ];
-  depsSha256 = "1nx2vvwhkiaq6byb56l01x3dndaahfy3c1jwlh8f1yka1a89ihai";
+  depsSha256 = "0p6z8pkcmrfjpp48lkqf1s5x3a9sp1y1widlvl3njhfdkpwmrqg2";
 }

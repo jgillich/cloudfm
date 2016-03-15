@@ -6,7 +6,6 @@ use self::get::Get;
 
 pub struct Folder;
 
-
 impl Handler for Folder {
     fn handle(&self, req: &mut Request) -> IronResult<Response> {
         let mut router = Router::new();
