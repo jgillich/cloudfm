@@ -2,7 +2,7 @@
 name = "server"
 version = "0.1.0"
 dependencies = [
- "bodyparser 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "base64 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "id3 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "iron 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "logger 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -12,7 +12,7 @@ dependencies = [
  "serde 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_macros 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "urlencoded 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "toml 0.1.28 (registry+https://github.com/rust-lang/crates.io-index)",
  "walkdir 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -22,21 +22,14 @@ version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "bitflags"
-version = "0.3.3"
+name = "base64"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "bodyparser"
-version = "0.2.0"
+name = "bitflags"
+version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "iron 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "persistent 0.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
- "plugin 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_json 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
 
 [[package]]
 name = "byteorder"
@@ -360,15 +353,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "persistent"
-version = "0.0.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "iron 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "plugin 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "pkg-config"
 version = "0.3.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -544,6 +528,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "toml"
+version = "0.1.28"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "rustc-serialize 0.3.18 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "traitobject"
 version = "0.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -597,16 +589,6 @@ dependencies = [
 
 [[package]]
 name = "url"
-version = "0.2.38"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "matches 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.3.18 (registry+https://github.com/rust-lang/crates.io-index)",
- "uuid 0.1.18 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "url"
 version = "0.5.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
@@ -615,17 +597,6 @@ dependencies = [
  "unicode-bidi 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "unicode-normalization 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "uuid 0.1.18 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "urlencoded"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "bodyparser 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "iron 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "plugin 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "url 0.2.38 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

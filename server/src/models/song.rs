@@ -20,19 +20,19 @@ impl Song {
 }
 
 impl Resource<Song> {
-    pub fn from_tag(tag: Tag) -> Resource<Song> {
+    pub fn from_tag(id: String, tag: Tag) -> Resource<Song> {
         Resource {
             type_: "song".to_string(),
-            id: "1".to_string(),
+            id: id,
             attributes: Song::from_tag(tag),
         }
     }
 }
 
 impl Document<Song> {
-    pub fn from_tags(tags: Vec<Tag>) -> Document<Song> {
+    pub fn from_tags(tags: Vec<(String, Tag)>) -> Document<Song> {
         Document {
-            data: Some(tags.into_iter().map(|t| Resource::<Song>::from_tag(t)).collect()),
+            data: Some(tags.into_iter().map(|(i, t)| Resource::<Song>::from_tag(i, t)).collect()),
             errors: None,
         }
     }

@@ -10,6 +10,7 @@ extern crate id3;
 extern crate serde;
 extern crate serde_json;
 extern crate crypto;
+extern crate base64;
 
 use iron::prelude::*;
 use mount::Mount;
