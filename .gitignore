@@ -5,3 +5,4 @@ app/elm.js
 app/node_modules
 
 server/target
+server/.env

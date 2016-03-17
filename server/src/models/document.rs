@@ -6,7 +6,8 @@ use serde_json;
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Document<T> {
     pub data: Option<Vec<Resource<T>>>,
-    pub errors: Option<Vec<Error>>, // pub meta:
+    pub errors: Option<Vec<Error>>,
+    pub meta: Option<String>
 }
 
 impl<T: Serialize> Document<T> {

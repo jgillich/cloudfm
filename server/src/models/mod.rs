@@ -1,9 +1,15 @@
-pub use self::document::Document;
-pub use self::error::Error;
-pub use self::resource::Resource;
-pub use self::song::Song;
+pub use self::album::*;
+pub use self::artist::*;
+pub use self::document::*;
+pub use self::empty::*;
+pub use self::error::*;
+pub use self::relationships::*;
+pub use self::resource::*;
+pub use self::track::*;
 
 pub mod document;
+pub mod empty;
 pub mod error;
+pub mod relationships;
 pub mod resource;
-pub mod song;
+pub mod track;

@@ -1,6 +1,5 @@
-#![feature(custom_derive,  plugin)]
-#![plugin(serde_macros)]
-
+#![feature(custom_derive, custom_attribute,  plugin)]
+#![plugin(serde_macros, diesel_codegen, dotenv_macros)]
 
 extern crate iron;
 extern crate mount;
@@ -11,6 +10,8 @@ extern crate serde;
 extern crate serde_json;
 extern crate crypto;
 extern crate base64;
+extern crate dotenv;
+extern crate diesel;
 
 use iron::prelude::*;
 use mount::Mount;
@@ -27,3 +28,5 @@ fn main() {
 
 mod models;
 mod providers;
+mod db;
+mod schema;

@@ -2,7 +2,7 @@ use iron::{Handler, Request, Response, IronResult, status};
 use mount::Mount;
 
 pub use self::dropbox::Dropbox;
-pub use self::folder::Folder;
+pub use self::fs::Fs;
 
 
 pub struct Providers {
@@ -15,7 +15,7 @@ impl Providers {
         let mut mount = Mount::new();
 
         mount.mount("/dropbox", Dropbox);
-        mount.mount("/folder", Folder);
+        mount.mount("/fs", Folder);
 
         Providers { mount: mount }
     }
@@ -28,5 +28,5 @@ impl Handler for Providers {
 }
 
 
-mod folder;
+mod fs;
 mod dropbox;

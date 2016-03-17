@@ -1,19 +1,20 @@
 use iron::{Handler, Request, Response, IronResult, status};
 use router::Router;
 
+pub struct Dropbox;
 
-use self::get::Get;
+impl Dropbox {
+    fn get(req: &mut Request) -> IronResult<Response> {
+        Ok(Response::with((status::Ok, "get dropbox")))
+    }
+}
 
-pub struct Folder;
-
-impl Handler for Folder {
+impl Handler for Dropbox {
     fn handle(&self, req: &mut Request) -> IronResult<Response> {
         let mut router = Router::new();
 
-        router.get("/", Get);
+        router.get("/", Dropbox::get);
 
         router.handle(req)
     }
 }
-
-mod get;
