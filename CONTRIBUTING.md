@@ -14,6 +14,6 @@ To build the server, Diesel needs to connect to the database in order to
 generate the schema. Put the following in a `.env` file (or just set it as
 environment variable):
 
-  DATABASE_URL=/tmp/mp.sqlite
+    DATABASE_URL=/tmp/mp.sqlite
 
 Now you can build the server with `cargo` as usual.

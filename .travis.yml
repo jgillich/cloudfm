@@ -1,9 +1,15 @@
 language: rust
+services:
+  - postgresql
 rust:
   - stable
   - nightly
 install:
   - npm install -g elm
+  - psql -c 'create database mp;' -U postgres
+  - cd server && cargo install diesel && diesel setup
+env:
+  - DATABASE_URL=postgres://localhost/mp
 matrix:
   allow_failures:
     - rust: stable
