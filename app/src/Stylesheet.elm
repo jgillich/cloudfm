@@ -2,9 +2,7 @@ module Stylesheet (..) where
 
 import Css exposing (..)
 import Css.Elements exposing (..)
-import Html.CssHelpers as CssHelpers
-import Css.Namespace as Namespace
-
+import Html.CssHelpers exposing (namespace)
 
 type CssClasses
   = Active
@@ -34,16 +32,14 @@ colors =
   }
 
 
-namespace =
-  CssHelpers.namespace "" -- FIXME elm-css doesn't prepend namespace to elements
+namespacer = namespace ""
 
 
-{ id, class, classList } =
-  namespace
+{ id, class, classList } =  namespacer
 
 
 css =
-  (stylesheet << Namespace.namespace namespace.name)
+  stylesheet
     [ html
       [ margin (em 0)
       , padding (em 0)
