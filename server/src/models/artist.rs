@@ -1,7 +1,11 @@
-use self::diesel::prelude::*;
+use diesel;
+use diesel::prelude::*;
 use diesel::result::Error;
+use diesel::pg::PgConnection;
+use super::super::schema::artists;
 
 #[derive(Queryable, Serialize, Deserialize, Debug)]
+#[insertable_into(artists)]
 pub struct Artist {
     pub name: String,
     #[serde(skip_serializing)]
@@ -9,23 +13,16 @@ pub struct Artist {
 }
 
 impl Artist {
-    fn find_or_create(conn: &SqliteConnection, search_name: &str) -> Artist {
-        use super::schema::artists::dsl::*;
-
-        match artists.where(name.eq(search_name)).first(conn) {
+    fn find_or_create(conn: &PgConnection, name: &str) -> Artist {
+        match artists::table.filter(artists::name.eq(name)).first(conn) {
             Ok(artist) => artist,
-            Err(_) => Artist::create(conn, search_name).unwrap()
+            Err(_) => Artist::create(conn, name).unwrap()
         }
     }
 
-    fn create(conn: &SqliteConnection, new_name) -> Result<Artist, Error> {
-        use super::schema::artists::dsl::*;
-
-        let new_artist = Artist {
-            name: new_name,
-            id: 0
-        };
-
-        diesel::insert(&new_artist).into(artists::table).get_result(conn)
+    fn create(conn: &PgConnection, name: &str) -> Result<Artist, Error> {
+        diesel::insert(Artist { name: name.to_string(), id: 0 })
+            .into(artists::table)
+            .get_result(conn)
     }
 }

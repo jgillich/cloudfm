@@ -15,7 +15,7 @@ impl Providers {
         let mut mount = Mount::new();
 
         mount.mount("/dropbox", Dropbox);
-        mount.mount("/fs", Folder);
+        mount.mount("/fs", Fs);
 
         Providers { mount: mount }
     }

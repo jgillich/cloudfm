@@ -1,0 +1,4 @@
+CREATE TABLE artists (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR NOT NULL
+)

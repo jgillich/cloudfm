@@ -1,4 +1,4 @@
-#![feature(custom_derive, custom_attribute,  plugin)]
+#![feature(custom_derive, custom_attribute, plugin)]
 #![plugin(serde_macros, diesel_codegen, dotenv_macros)]
 
 extern crate iron;
@@ -11,9 +11,11 @@ extern crate serde_json;
 extern crate crypto;
 extern crate base64;
 extern crate dotenv;
+#[macro_use]
 extern crate diesel;
 
 use iron::prelude::*;
+use diesel::prelude::*;
 use mount::Mount;
 use providers::Providers;
 

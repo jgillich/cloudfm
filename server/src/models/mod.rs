@@ -7,6 +7,8 @@ pub use self::relationships::*;
 pub use self::resource::*;
 pub use self::track::*;
 
+pub mod album;
+pub mod artist;
 pub mod document;
 pub mod empty;
 pub mod error;
