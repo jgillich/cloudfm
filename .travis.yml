@@ -3,9 +3,6 @@ sudo: required
 dist: trusty
 services:
   - postgresql
-rust:
-  - stable
-  - nightly
 install:
   - curl https://nixos.org/nix/install | sh
   - source $HOME/.nix-profile/etc/profile.d/nix.sh
@@ -14,7 +11,4 @@ install:
   - pushd server && /home/travis/.cargo/bin/diesel migration run && popd
 env:
   - DATABASE_URL=postgres://localhost/mp
-matrix:
-  allow_failures:
-    - rust: stable
 script: nix-shell . --run ci
