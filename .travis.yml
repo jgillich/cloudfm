@@ -1,6 +1,10 @@
 language: rust
 services:
   - postgresql
+addons:
+  apt:
+    packages:
+      - libsqlite3-dev
 rust:
   - stable
   - nightly
