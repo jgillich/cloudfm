@@ -7,7 +7,8 @@ rust:
   - stable
   - nightly
 install:
-  - npm install -g elm
+  - curl https://nixos.org/nix/install | sh
+  - source $HOME/.nix-profile/etc/profile.d/nix.sh
   - psql -c 'create database mp;' -U postgres
   - cargo install diesel_cli
   - pushd server && /home/travis/.cargo/bin/diesel migration run && popd
@@ -16,4 +17,4 @@ env:
 matrix:
   allow_failures:
     - rust: stable
-script: make ci
+script: nix-shell . --run ci

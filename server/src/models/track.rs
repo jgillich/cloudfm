@@ -3,14 +3,14 @@ use super::{Document, Resource, Relationship};
 
 #[derive(Queryable, Serialize, Deserialize, Debug)]
 pub struct Track {
+    #[serde(skip_serializing)]
+    pub id: i32,
     pub title: String,
     pub number: u32,
     #[serde(skip_serializing)]
     pub artist: String,
     #[serde(skip_serializing)]
     pub album: String,
-    #[serde(skip_serializing)]
-    pub id: i32,
 }
 
 pub struct TrackRelationships {

@@ -7,9 +7,10 @@ use super::super::schema::artists;
 #[derive(Queryable, Serialize, Deserialize, Debug)]
 #[insertable_into(artists)]
 pub struct Artist {
-    pub name: String,
     #[serde(skip_serializing)]
-    pub id: i32
+    pub id: i32,
+    pub name: String,
+
 }
 
 impl Artist {
