@@ -1,10 +1,8 @@
 language: rust
+sudo: required
+dist: trusty
 services:
   - postgresql
-addons:
-  apt:
-    packages:
-      - libsqlite3-dev
 rust:
   - stable
   - nightly
@@ -12,7 +10,7 @@ rust:
 install:
   - npm install -g elm
   - psql -c 'create database mp;' -U postgres
-  - cd server && cargo install diesel_cli && diesel setup
+  - cd server && cargo install diesel_cli && diesel migration run
 env:
   - DATABASE_URL=postgres://localhost/mp
 matrix:
