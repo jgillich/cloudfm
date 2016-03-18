@@ -6,6 +6,7 @@ services:
 install:
   - curl https://nixos.org/nix/install | sh
   - source $HOME/.nix-profile/etc/profile.d/nix.sh
+  - nix-channel --list
   - psql -c 'create database mp;' -U postgres
   - cargo install diesel_cli
   - pushd server && /home/travis/.cargo/bin/diesel migration run && popd
