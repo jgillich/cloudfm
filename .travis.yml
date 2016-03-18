@@ -10,7 +10,7 @@ rust:
 install:
   - npm install -g elm
   - psql -c 'create database mp;' -U postgres
-  - cd server && cargo install diesel_cli && /home/travis/.cargo/bin/diesel migration run
+  - cd server && cargo install diesel_cli && /home/travis/.cargo/bin/diesel migration run && cd ..
 env:
   - DATABASE_URL=postgres://localhost/mp
 matrix:
