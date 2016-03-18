@@ -6,11 +6,11 @@ services:
 rust:
   - stable
   - nightly
-  - nightly-2016-03-11
 install:
   - npm install -g elm
   - psql -c 'create database mp;' -U postgres
-  - cargo install diesel_cli && /home/travis/.cargo/bin/diesel migration run
+  - cargo install diesel_cli
+  - pushd server && /home/travis/.cargo/bin/diesel migration run && popd
 env:
   - DATABASE_URL=postgres://localhost/mp
 matrix:
