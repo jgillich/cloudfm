@@ -5,15 +5,15 @@ stdenv.mkDerivation rec {
 
   version = "0.1";
 
-  buildInputs = serverBuildInputs ++ appBuildInputs;
+  buildInputs = [ git rustUnstable.cargo rustUnstable.cargo.rustc ] ++ serverBuildInputs; # ++ appBuildInputs;
 
-  appBuildInputs = [ elmPackages.elm ];
+  #appBuildInputs = [ elmPackages.elm ];
 
   serverBuildInputs = [ openssl postgresql sqlite pkgconfig ];
 
   shellHook = ''
-    APP=`cwd`/app
-    SERVER=`cwd`/server
+    APP=`pwd`/app
+    SERVER=`pwd`/server
 
     function build {
       pushd $APP; elm-package install -y && elm-make --yes src/App.elm; popd
