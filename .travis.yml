@@ -1,4 +1,5 @@
-language: generic
+language: rust
+#language: generic
 sudo: required
 dist: trusty
 services:
