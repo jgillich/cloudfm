@@ -25,7 +25,10 @@ stdenv.mkDerivation rec {
     }
 
     function ci {
-      build; test
+      cargo install diesel_cli
+      pushd server; $HOME/.cargo/bin/diesel migration run; popd
+      build
+      test
     }
 
     function run {
