@@ -9,17 +9,19 @@ extern crate id3;
 extern crate serde;
 extern crate serde_json;
 extern crate crypto;
-extern crate base64;
 extern crate dotenv;
 #[macro_use]
 extern crate diesel;
 
+use dotenv::dotenv;
 use iron::prelude::*;
 use diesel::prelude::*;
 use mount::Mount;
 use providers::Providers;
 
 fn main() {
+    dotenv().ok();
+
     let mut mount = Mount::new();
     let providers = Providers::new();
 
