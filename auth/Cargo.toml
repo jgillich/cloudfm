@@ -7,3 +7,4 @@ license = "MIT"
 [dependencies]
 iron = "0.2"
 router = "0.1"
+couchdb = "0.5.1"
