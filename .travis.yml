@@ -1,14 +1,7 @@
-language: rust
-#language: generic
+language: generic
 sudo: required
 dist: trusty
-services:
-  - postgresql
 install:
   - curl https://nixos.org/nix/install | sh
   - source $HOME/.nix-profile/etc/profile.d/nix.sh
-  - nix-channel --list
-  - psql -c 'create database mp;' -U postgres
-env:
-  - DATABASE_URL=postgres://localhost/mp
 script: nix-shell . --run ci

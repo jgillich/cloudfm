@@ -17,6 +17,10 @@ stdenv.mkDerivation rec {
     APP=`pwd`/app
     SERVER=`pwd`/server
 
+    function migrate {
+      pushd $SERVER; diesel migration run; popd
+    }
+
     function build {
       pushd $APP; elm-package install -y && elm-make --yes src/App.elm; popd
       pushd $SERVER; cargo build; popd
@@ -27,10 +31,7 @@ stdenv.mkDerivation rec {
     }
 
     function ci {
-      cargo install diesel_cli
-      pushd server; $HOME/.cargo/bin/diesel migration run; popd
-      build
-      test
+      build; test
     }
 
     function run {
