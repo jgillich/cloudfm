@@ -12,6 +12,8 @@ stdenv.mkDerivation rec {
   serverBuildInputs = [ openssl postgresql sqlite pkgconfig ];
 
   shellHook = ''
+    set -e
+
     APP=`pwd`/app
     SERVER=`pwd`/server
 
