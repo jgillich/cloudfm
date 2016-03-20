@@ -1,7 +1,7 @@
 with import <nixpkgs> { };
 
 stdenv.mkDerivation rec {
-  name = "mp-${version}";
+  name = "cloudfm-${version}";
 
   version = "0.1";
 

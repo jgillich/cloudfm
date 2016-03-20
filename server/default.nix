@@ -1,11 +1,11 @@
 with import <nixpkgs> { };
 
 let
-  mp = import ../.;
+  cloudfm = import ../.;
 in rustUnstable.buildRustPackage rec {
-  name = "mp-server-${mp.version}";
+  name = "cloudfm-server-${cloudfm.version}";
   src = ./.;
-  buildInputs = mp.serverBuildInputs;
+  buildInputs = cloudfm.serverBuildInputs;
   depsSha256 = "0p6z8pkcmrfjpp48lkqf1s5x3a9sp1y1widlvl3njhfdkpwmrqg2";
-  shellHook = mp.shellHook;
+  shellHook = cloudfm.shellHook;
 }

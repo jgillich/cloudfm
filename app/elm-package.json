@@ -1,8 +1,8 @@
 {
     "version": "1.0.0",
-    "summary": "helpful summary of your project, less than 80 characters",
-    "repository": "https://github.com/jgillich/mp.git",
-    "license": "BSD3",
+    "summary": "The cloud-aware music player",
+    "repository": "https://github.com/cloudfm/cloudfm.git",
+    "license": "MIT",
     "source-directories": [
         "src"
     ],

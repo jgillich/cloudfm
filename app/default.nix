@@ -1,10 +1,10 @@
 with import <nixpkgs> { };
 
 let
-  mp = import ../.;
+  cloudfm = import ../.;
 in stdenv.mkDerivation rec {
-  name = "mp-app-${mp.version}";
+  name = "cloudfm-app-${cloudfm.version}";
   src = ./.;
-  buildInputs = mp.appBuildInputs;
-  shellHook = mp.shellHook;
+  buildInputs = cloudfm.appBuildInputs;
+  shellHook = cloudfm.shellHook;
 }

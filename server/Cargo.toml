@@ -1,7 +1,8 @@
 [package]
-name = "server"
+name = "cloudfm-server"
 version = "0.1.0"
 authors = ["Jakob Gillich <jakob@gillich.me>"]
+license = "MIT"
 
 [dependencies]
 iron = "0.2"
