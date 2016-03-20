@@ -1,0 +1,9 @@
+[package]
+name = "cloudfm-auth"
+version = "0.1.0"
+authors = ["Jakob Gillich <jakob@gillich.me>"]
+license = "MIT"
+
+[dependencies]
+iron = "0.2"
+router = "0.1"

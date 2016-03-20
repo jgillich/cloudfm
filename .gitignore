@@ -6,3 +6,7 @@ app/node_modules
 
 server/target
 server/.env
+
+auth/target
+
+rust-couchdb/target
