@@ -1,0 +1,30 @@
+extern crate iron;
+extern crate mount;
+extern crate router;
+extern crate walkdir;
+extern crate id3;
+extern crate crypto;
+extern crate couchdb;
+extern crate dotenv;
+extern crate uuid;
+
+use dotenv::dotenv;
+use iron::prelude::*;
+use mount::Mount;
+use providers::Providers;
+pub use error::Error;
+
+fn main() {
+    dotenv().ok();
+
+    let mut mount = Mount::new();
+    let providers = Providers::new();
+
+    mount.mount("/v1/providers", providers);
+
+    Iron::new(mount).http("localhost:3000").unwrap();
+}
+
+mod models;
+mod providers;
+mod error;

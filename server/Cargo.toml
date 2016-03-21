@@ -3,6 +3,13 @@ name = "cloudfm-server"
 version = "0.1.0"
 authors = ["Jakob Gillich <jakob@gillich.me>"]
 license = "MIT"
+build = "build.rs"
+
+
+[features]
+default = ["serde_codegen"]
+nightly = ["serde_macros"]
+
 
 [dependencies]
 iron = "0.2"
@@ -13,7 +20,13 @@ id3 = "0.1"
 walkdir = "0.1"
 serde = "0.7"
 serde_json = "0.7"
-serde_macros = "0.7"
+serde_macros = { version = "*", optional = true }
 rust-crypto = "0.2"
 dotenv = "0.8"
-couchdb = "0.5.1"
+couchdb = "0.5"
+uuid = "0.1"
+
+
+[build-dependencies]
+serde_codegen = { version = "*", optional = true }
+syntex = "*"

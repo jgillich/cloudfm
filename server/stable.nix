@@ -1,6 +1,6 @@
 with import <nixpkgs> { };
 
-rustUnstable.buildRustPackage rec {
+rustPlatform.buildRustPackage rec {
   name = "cloudfm-server-${version}";
   version = "0.1";
   src = ./.;

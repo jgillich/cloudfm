@@ -1,10 +1,9 @@
 with import <nixpkgs> { };
 
-let
-  cloudfm = import ../.;
-in stdenv.mkDerivation rec {
-  name = "cloudfm-app-${cloudfm.version}";
+stdenv.mkDerivation rec {
+  name = "cloudfm-app-${version}";
+  version = "0.1";
   src = ./.;
-  buildInputs = cloudfm.appBuildInputs;
-  shellHook = cloudfm.shellHook;
+  buildInputs = [ elmPackages.elm ];
+  shellHook = (import ../shell.nix).shellHook;
 }

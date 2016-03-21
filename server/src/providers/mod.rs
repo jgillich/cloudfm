@@ -1,8 +1,11 @@
 use iron::{Handler, Request, Response, IronResult, status};
 use mount::Mount;
+use couchdb;
 
 pub use self::dropbox::Dropbox;
 pub use self::fs::Fs;
+pub use super::Error;
+pub use super::models::*;
 
 
 pub struct Providers {
@@ -25,6 +28,10 @@ impl Handler for Providers {
     fn handle(&self, req: &mut Request) -> IronResult<Response> {
         self.mount.handle(req)
     }
+}
+
+trait Indexer {
+    fn index(&self, couchdb::Client) -> Option<Error>;
 }
 
 
