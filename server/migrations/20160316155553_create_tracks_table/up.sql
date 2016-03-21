@@ -1,5 +1,0 @@
-CREATE TABLE tracks (
-  id SERIAL PRIMARY KEY,
-  title VARCHAR NOT NULL,
-  number INTEGER NOT NULL
-)

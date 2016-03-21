@@ -1,4 +1,0 @@
-CREATE TABLE albums (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR NOT NULL
-)
