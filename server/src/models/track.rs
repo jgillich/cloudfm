@@ -14,17 +14,15 @@ pub struct Track {
 }
 
 
-
-
 impl Track {
     pub fn get(id: &str, client: couchdb::Client) -> Result<Track, Error> {
         // unwrap if safe since value may only be None if revision is specified
-        try!(client.get_document(("/tracks", id)).run()).unwrap()
+        Ok(try!(try!(client.get_document(&*format!("/tracks/{}", id)).run()).unwrap().into_content()))
     }
 
     pub fn from_tag(tag: Tag) -> Track {
         Track {
-            id: Uuid::new_v4(),
+            id: Uuid::new_v4().to_simple_string(),
             rev: "".to_string(),
             artist: tag.artist().unwrap_or("Unkown Artist").to_string(),
             album: tag.album().unwrap_or("Unknown Album").to_string(),
@@ -33,8 +31,9 @@ impl Track {
         }
     }
 
-    pub fn put(&self, client: couchdb::Client) -> Result<Track, Error> {
-      self.rev = try!(client.put_document(("tracks", self.id), self).run());
-      self
+    pub fn put(mut self, client: couchdb::Client) -> Result<Track, Error> {
+        self.rev = format!("{}", try!(client.put_document(&*format!("/tracks/{}", self.id), &self).run()));
+        Ok(self)
     }
+
 }

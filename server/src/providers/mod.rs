@@ -9,7 +9,7 @@ pub use super::models::*;
 
 
 pub struct Providers {
-    mount: Mount,
+    pub mount: Mount,
 }
 
 
@@ -31,7 +31,7 @@ impl Handler for Providers {
 }
 
 trait Indexer {
-    fn index(&self, couchdb::Client) -> Option<Error>;
+    fn index(&self, couchdb::Client) -> Result<(), Error>;
 }
 
 

@@ -1,4 +1,5 @@
-use iron::{Handler, Request, Response, IronResult, status};
+use iron::prelude::*;
+use iron::{status, Handler};
 use router::Router;
 
 pub struct Dropbox;

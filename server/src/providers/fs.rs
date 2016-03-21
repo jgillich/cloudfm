@@ -1,4 +1,5 @@
-use iron::{Handler, Request, Response, IronResult, status};
+use iron::prelude::*;
+use iron::{status, Handler};
 use router::Router;
 use walkdir::{DirEntry, WalkDir, WalkDirIterator};
 use id3::Tag;
@@ -26,14 +27,14 @@ impl Handler for Fs {
 }
 
 impl Indexer for Fs {
-    fn index(&self, client: couchdb::Client) -> Option<Error> {
-        fn is_file_type(e: DirEntry, ext: &str) -> bool {
+    fn index(&self, client: couchdb::Client) -> Result<(), Error> {
+        fn is_file_type(e: &DirEntry, ext: &str) -> bool {
             let p = e.path();
             p.is_file() && p.extension().map(|s| s == "mp3").unwrap_or(false)
         }
 
 
-        fn is_music(e: DirEntry) -> bool {
+        fn is_music(e: &DirEntry) -> bool {
             is_file_type(e, "mp3") || is_file_type(e, "ogg")
         }
 
@@ -51,10 +52,10 @@ impl Indexer for Fs {
 
         for path in paths {
             for tag in walk_path(path) {
-                try!(Track::from_tag().put(client))
+                //try!(Track::from_tag(tag).put(client))
             }
         }
 
-        None
+        Ok(())
     }
 }
