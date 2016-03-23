@@ -13,9 +13,9 @@ impl Dropbox {
 }
 
 impl Backend for Dropbox {
-    //fn name() -> &'static str {
-    //    "dropbox"
-    //}
+    fn name(&self) -> &'static str {
+        "dropbox"
+    }
 
     fn index(&self, chill: &chill::Client) -> Result<(), Error> {
 

@@ -8,5 +8,4 @@ env:
   matrix:
     - BUILD_PATH=app/default.nix
     - BUILD_PATH=server/default.nix
-    - BUILD_PATH=server/stable.nix
 script: nix-build $BUILD_PATH

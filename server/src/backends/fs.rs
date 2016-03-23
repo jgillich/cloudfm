@@ -18,9 +18,9 @@ impl Fs {
 
 impl Backend for Fs {
 
-    //fn name() -> &'static str {
-    //    "fs"
-    //}
+    fn name(&self) -> &'static str {
+        "fs"
+    }
 
     fn index(&self, db: &chill::Client) -> Result<(), Error> {
         fn is_file_type(e: &DirEntry, ext: &str) -> bool {

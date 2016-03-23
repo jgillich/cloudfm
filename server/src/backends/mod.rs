@@ -11,19 +11,18 @@ use std::env;
 
 pub struct Backends {
     pub mount: Mount,
-    backends: HashMap<String, Box<Backend>>,
+    backends: Vec<Box<Backend>>,
 }
 
 impl Backends {
     pub fn new() -> Backends {
         let mut mount = Mount::new();
-        let mut backends: HashMap<String, Box<Backend>> = HashMap::new();
+        let mut backends: Vec<Box<Backend>> = vec![
+            Box::new(Fs::new()),
+            Box::new(Dropbox::new()),
 
-        backends.insert("fs".to_string(), Box::new(Fs::new()));
+        ];
 
-        //for Backend in Backends.into_iter() {
-        //    //mount.mount(format!("/{}", Backend.name()), Backend);
-        //}
 
         Backends {
             mount: mount,
@@ -34,7 +33,7 @@ impl Backends {
     pub fn index(&self) -> Result<(), Error> {
         let db = db!();
 
-        for backend in self.backends.values() {
+        for backend in self.backends.iter() {
             backend.index(&db);
         }
 
@@ -48,8 +47,8 @@ impl Handler for Backends {
     }
 }
 
-trait Backend: Send + Sync + 'static {
-    //fn name() -> &'static str;
+trait Backend: Send + Sync {
+    fn name(&self) -> &'static str;
 
     fn index(&self, &chill::Client) -> Result<(), Error>;
 }
