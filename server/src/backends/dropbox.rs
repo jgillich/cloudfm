@@ -1,5 +1,5 @@
 use chill;
-use super::{Provider, Error};
+use super::{Backend, Error};
 
 pub struct Dropbox {
     name: String,
@@ -12,7 +12,7 @@ impl Dropbox {
         }
     }
 }
-impl Provider for Dropbox {
+impl Backend for Dropbox {
     //fn name() -> &'static str {
     //    "dropbox"
     //}

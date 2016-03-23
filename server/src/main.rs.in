@@ -11,7 +11,7 @@ extern crate uuid;
 use dotenv::dotenv;
 use iron::Iron;
 use mount::Mount;
-use providers::Providers;
+use backends::Backends;
 pub use error::Error;
 
 macro_rules! db {
@@ -33,10 +33,10 @@ fn main() {
     init_db();
 
     let mut mount = Mount::new();
-    let providers = Providers::new();
-    providers.index();
+    let backends = Backends::new();
+    backends.index();
 
-    mount.mount("/v1/providers", providers);
+    mount.mount("/v1/backends", backends);
 
     Iron::new(mount).http("localhost:3000").unwrap();
 }
@@ -60,5 +60,5 @@ fn init_db() {
 
 
 mod models;
-mod providers;
+mod backends;
 mod error;

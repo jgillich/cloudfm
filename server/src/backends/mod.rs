@@ -9,46 +9,46 @@ pub use super::Error;
 pub use super::models::*;
 use std::env;
 
-pub struct Providers {
+pub struct Backends {
     pub mount: Mount,
-    providers: HashMap<String, Box<Provider>>,
+    backends: HashMap<String, Box<Backend>>,
 }
 
-impl Providers {
-    pub fn new() -> Providers {
+impl Backends {
+    pub fn new() -> Backends {
         let mut mount = Mount::new();
-        let mut providers: HashMap<String, Box<Provider>> = HashMap::new();
+        let mut backends: HashMap<String, Box<Backend>> = HashMap::new();
 
-        providers.insert("fs".to_string(), Box::new(Fs::new()));
+        backends.insert("fs".to_string(), Box::new(Fs::new()));
 
-        //for provider in providers.into_iter() {
-        //    //mount.mount(format!("/{}", provider.name()), provider);
+        //for Backend in Backends.into_iter() {
+        //    //mount.mount(format!("/{}", Backend.name()), Backend);
         //}
 
-        Providers {
+        Backends {
             mount: mount,
-            providers: providers,
+            backends: backends,
         }
     }
 
     pub fn index(&self) -> Result<(), Error> {
         let db = db!();
 
-        for provider in self.providers.values() {
-            provider.index(&db);
+        for backend in self.backends.values() {
+            backend.index(&db);
         }
 
         Ok(())
     }
 }
 
-impl Handler for Providers {
+impl Handler for Backends {
     fn handle(&self, req: &mut Request) -> IronResult<Response> {
         self.mount.handle(req)
     }
 }
 
-trait Provider: Send + Sync + 'static {
+trait Backend: Send + Sync + 'static {
     //fn name() -> &'static str;
 
     fn index(&self, &chill::Client) -> Result<(), Error>;

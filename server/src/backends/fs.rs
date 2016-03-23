@@ -2,7 +2,7 @@ use walkdir::{DirEntry, WalkDir, WalkDirIterator};
 use id3::Tag;
 use chill;
 use super::Track;
-use super::{Error, Provider};
+use super::{Error, Backend};
 
 pub struct Fs {
     name: String,
@@ -16,7 +16,7 @@ impl Fs {
     }
 }
 
-impl Provider for Fs {
+impl Backend for Fs {
 
     //fn name() -> &'static str {
     //    "fs"
