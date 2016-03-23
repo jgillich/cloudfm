@@ -5,13 +5,13 @@ use super::Track;
 use super::{Error, Backend};
 
 pub struct Fs {
-    name: String,
+    machine_id: String,
 }
 
 impl Fs {
     pub fn new() -> Fs {
         Fs {
-            name: "fs".to_string()
+            machine_id: "notYetUniqueMachineId".to_string() // FIXME
         }
     }
 }
@@ -25,7 +25,7 @@ impl Backend for Fs {
     fn index(&self, db: &chill::Client) -> Result<(), Error> {
         fn is_file_type(e: &DirEntry, ext: &str) -> bool {
             let p = e.path();
-            p.is_file() && p.extension().map(|s| s == "mp3").unwrap_or(false)
+            p.is_file() && p.extension().map(|s| s == ext).unwrap_or(false)
         }
 
 
@@ -33,21 +33,22 @@ impl Backend for Fs {
             is_file_type(e, "mp3") || is_file_type(e, "ogg")
         }
 
-        fn walk_path(path: &str) -> Vec<Tag> {
+        fn walk_path(path: &str) -> Vec<DirEntry> {
             WalkDir::new(path)
                 .into_iter()
                 .filter_map(|e| e.ok())
                 .filter(|e| is_music(e))
-                .filter_map(|e| Tag::read_from_path(e.path()).ok())
                 .collect()
         }
 
-        // TODO fetch from db
-        let paths = vec!["/home/jakob/Downloads"];
+        let paths = vec!["/home/jakob/Downloads"]; // TODO fetch from db
 
         for path in paths {
-            for tag in walk_path(path) {
-                try!(Track::from_tag(tag).create(db));
+            for entry in walk_path(path) {
+                if let Ok(tag) = Tag::read_from_path(entry.path()) {
+                    let uri = format!("fs:{}:{}", self.machine_id, entry.path().to_str().unwrap());
+                    try!(Track::from_tag(uri, tag).create(db));
+                }
             }
         }
 

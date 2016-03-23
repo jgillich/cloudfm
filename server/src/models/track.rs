@@ -9,6 +9,7 @@ pub struct Track {
     pub number: u32,
     pub artist: String,
     pub album: String,
+    pub uri: String,
 }
 
 
@@ -18,12 +19,13 @@ impl Track {
         Ok(try!(document.get_content()))
     }
 
-    pub fn from_tag(tag: Tag) -> Track {
+    pub fn from_tag(uri: String, tag: Tag) -> Track {
         Track {
             artist: tag.artist().unwrap_or("Unkown Artist").to_string(),
             album: tag.album().unwrap_or("Unknown Album").to_string(),
             title: tag.title().unwrap_or("Unknown Title").to_string(),
             number: tag.track().unwrap_or(0),
+            uri: uri,
         }
     }
 
