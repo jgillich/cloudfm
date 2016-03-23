@@ -15,6 +15,7 @@ rec {
 
   shellHook = ''
     set -e
+    export DATABASE_URL="http://localhost:15984"
 
     function dirs {
       APP=`pwd`
@@ -42,22 +43,25 @@ rec {
     }
 
     function ci {
-      couchdb &
+      couchdb
       build; test
+      kill $COUCH_PID
     }
 
     function run {
       dirs
-      couchdb &
+      couchdb
       pushd $SERVER; cargo run; popd
+      echo "killing $COUCH_PID"
+      kill $COUCH_PID
     }
 
     function couchdb {
-      export DATABASE_URL="http://localhost:15984"
       rm -rf /tmp/cloudfm
       mkdir -p /tmp/cloudfm/data
       touch /tmp/cloudfm/couchdb.ini
-      ${couchdb}/bin/couchdb -a ${configFile} -a /tmp/cloudfm/couchdb.ini
+      ${couchdb}/bin/couchdb -a ${configFile} -a /tmp/cloudfm/couchdb.ini &
+      COUCH_PID=$!
     }
   '';
 }

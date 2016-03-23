@@ -32,8 +32,7 @@ impl Providers {
     }
 
     pub fn index(&self) -> Result<(), Error> {
-        let url = try!(env::var("DATABASE_URL"));
-        let db = try!(chill::Client::new(&url));
+        let db = db!();
 
         for provider in self.providers.values() {
             provider.index(&db);

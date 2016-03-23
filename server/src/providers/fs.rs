@@ -47,7 +47,7 @@ impl Provider for Fs {
 
         for path in paths {
             for tag in walk_path(path) {
-                //try!(Track::from_tag(tag).put(client))
+                try!(Track::from_tag(tag).create(db));
             }
         }
 

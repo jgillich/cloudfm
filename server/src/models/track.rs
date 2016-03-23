@@ -14,7 +14,7 @@ pub struct Track {
 
 
 impl Track {
-    pub fn get(id: &str, db: chill::Client) -> Result<Track, Error> {
+    pub fn from_id(id: &str, db: &chill::Client) -> Result<Track, Error> {
         let document = try!(db.read_document(("/tracks", id)).run());
         Ok(try!(document.get_content()))
     }
@@ -29,7 +29,7 @@ impl Track {
         }
     }
 
-    pub fn create(mut self, db: chill::Client) -> Result<(chill::DocumentId, chill::Revision), Error> {
+    pub fn create(mut self, db: &chill::Client) -> Result<(chill::DocumentId, chill::Revision), Error> {
         db.create_document("/tracks", &self).run().map_err(Error::from)
     }
 
