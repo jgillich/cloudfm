@@ -5,11 +5,9 @@ authors = ["Jakob Gillich <jakob@gillich.me>"]
 license = "MIT"
 build = "build.rs"
 
-
 [features]
-default = ["serde_codegen"]
-nightly = ["serde_macros"]
-
+default = ["serde_macros"]
+stable = ["serde_codegen"]
 
 [dependencies]
 iron = "=0.2"
@@ -23,9 +21,8 @@ serde_json = "0.7"
 serde_macros = { version = "*", optional = true }
 rust-crypto = "0.2"
 dotenv = "0.8"
-couchdb = { version = "*", git = "https://github.com/jgillich/couchdb.git" }
+chill = { version = "*", git = "https://github.com/jgillich/chill.git" }
 uuid = "0.1"
-
 
 [build-dependencies]
 serde_codegen = { version = "*", optional = true }

@@ -1,21 +1,24 @@
-use iron::prelude::*;
-use iron::{status, Handler};
-use router::Router;
+use chill;
+use super::{Provider, Error};
 
-pub struct Dropbox;
-
-impl Dropbox {
-    fn get(req: &mut Request) -> IronResult<Response> {
-        Ok(Response::with((status::Ok, "get dropbox")))
-    }
+pub struct Dropbox {
+    name: String,
 }
 
-impl Handler for Dropbox {
-    fn handle(&self, req: &mut Request) -> IronResult<Response> {
-        let mut router = Router::new();
+impl Dropbox {
+    pub fn new() -> Dropbox {
+        Dropbox {
+            name: "dropbox".to_string()
+        }
+    }
+}
+impl Provider for Dropbox {
+    //fn name() -> &'static str {
+    //    "dropbox"
+    //}
 
-        router.get("/", Dropbox::get);
+    fn index(&self, chill: &chill::Client) -> Result<(), Error> {
 
-        router.handle(req)
+        Ok(())
     }
 }

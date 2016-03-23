@@ -4,12 +4,12 @@ extern crate router;
 extern crate walkdir;
 extern crate id3;
 extern crate crypto;
-extern crate couchdb;
+extern crate chill;
 extern crate dotenv;
 extern crate uuid;
 
 use dotenv::dotenv;
-use iron::{Iron, Handler};
+use iron::Iron;
 use mount::Mount;
 use providers::Providers;
 pub use error::Error;

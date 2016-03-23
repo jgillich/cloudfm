@@ -1,33 +1,28 @@
-use iron::prelude::*;
-use iron::{status, Handler};
-use router::Router;
 use walkdir::{DirEntry, WalkDir, WalkDirIterator};
 use id3::Tag;
-use couchdb;
+use chill;
 use super::Track;
-use super::Error;
-use super::Indexer;
+use super::{Error, Provider};
 
-pub struct Fs;
+pub struct Fs {
+    name: String,
+}
 
 impl Fs {
-    fn get(req: &mut Request) -> IronResult<Response> {
-        Ok(Response::with((status::Ok, "get folder")))
+    pub fn new() -> Fs {
+        Fs {
+            name: "fs".to_string()
+        }
     }
 }
 
-impl Handler for Fs {
-    fn handle(&self, req: &mut Request) -> IronResult<Response> {
-        let mut router = Router::new();
+impl Provider for Fs {
 
-        router.get("/", Fs::get);
+    //fn name() -> &'static str {
+    //    "fs"
+    //}
 
-        router.handle(req)
-    }
-}
-
-impl Indexer for Fs {
-    fn index(&self, client: couchdb::Client) -> Result<(), Error> {
+    fn index(&self, db: &chill::Client) -> Result<(), Error> {
         fn is_file_type(e: &DirEntry, ext: &str) -> bool {
             let p = e.path();
             p.is_file() && p.extension().map(|s| s == "mp3").unwrap_or(false)

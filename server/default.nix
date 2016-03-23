@@ -5,6 +5,6 @@ rustUnstable.buildRustPackage rec {
   version = "0.1";
   src = ./.;
   buildInputs = [ openssl postgresql sqlite pkgconfig ];
-  depsSha256 = "160ar8jfzhhrg5rk3rjq3sc5mmrakysynrpr4nfgqkbq952il2zk";
+  depsSha256 = "0x654m5l77dcz4dbhgdn80scgyjsbmgzg6rfg4bakm6s44bm5x5x";
   shellHook = (import ../shell.nix).shellHook;
 }
