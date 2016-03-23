@@ -5,7 +5,6 @@ use super::super::Error;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Track {
-    pub id: String,
     pub title: String,
     pub number: u32,
     pub artist: String,
@@ -21,7 +20,6 @@ impl Track {
 
     pub fn from_tag(tag: Tag) -> Track {
         Track {
-            id: Uuid::new_v4().to_simple_string(),
             artist: tag.artist().unwrap_or("Unkown Artist").to_string(),
             album: tag.album().unwrap_or("Unknown Album").to_string(),
             title: tag.title().unwrap_or("Unknown Title").to_string(),
