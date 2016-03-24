@@ -1,8 +1,9 @@
-use walkdir::{DirEntry, WalkDir, WalkDirIterator};
+use std::path::Path;
+use walkdir::{DirEntry, WalkDir};
 use id3::Tag;
 use chill;
-use super::Track;
-use super::{Error, Backend};
+use super::Backend;
+use super::super::{Error, Track};
 
 pub struct Fs {
     machine_id: String,
@@ -53,5 +54,9 @@ impl Backend for Fs {
         }
 
         Ok(())
+    }
+
+    fn get_file(&self, uri: &str) -> Result<&Path, Error> {
+        panic!("not implemented");
     }
 }
