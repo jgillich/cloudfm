@@ -1,6 +1,8 @@
 use id3::Tag;
 use chill;
 use uuid::Uuid;
+use std::str;
+use std::fmt;
 use super::super::Error;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -9,17 +11,11 @@ pub struct Track {
     pub number: u32,
     pub artist: String,
     pub album: String,
-    pub uri: String,
+    pub uri: TrackUri,
 }
 
-
 impl Track {
-    pub fn from_id(id: &str, db: &chill::Client) -> Result<Track, Error> {
-        let document = try!(db.read_document(("/tracks", id)).run());
-        Ok(try!(document.get_content()))
-    }
-
-    pub fn from_tag(uri: String, tag: Tag) -> Track {
+    pub fn from_tag(uri: TrackUri, tag: Tag) -> Track {
         Track {
             artist: tag.artist().unwrap_or("Unkown Artist").to_string(),
             album: tag.album().unwrap_or("Unknown Album").to_string(),
@@ -33,4 +29,51 @@ impl Track {
         db.create_document("/tracks", &self).run().map_err(Error::from)
     }
 
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TrackUri {
+    backend: String,
+    owner: String,
+    id: String,
+}
+
+impl TrackUri {
+    pub fn new(backend: &str, owner: &str, id: &str) -> TrackUri {
+        TrackUri {
+            backend: backend.to_string(),
+            owner: owner.to_string(),
+            id: id.to_string(),
+        }
+    }
+
+    pub fn to_string(&self) -> String {
+        format!("{}", self)
+    }
+}
+
+impl str::FromStr for TrackUri {
+    type Err = ParseTrackUriError;
+
+    fn from_str(s: &str) -> Result<TrackUri, ParseTrackUriError> {
+        let mut parts = s.split(":").collect::<Vec<&str>>();
+        if parts.len() != 3 {
+            Err(ParseTrackUriError {})
+        } else {
+            let uri = TrackUri {
+                backend: parts.pop().unwrap().to_string(),
+                owner: parts.pop().unwrap().to_string(),
+                id: parts.pop().unwrap().to_string(),
+            };
+            Ok(uri)
+        }
+    }
+}
+
+pub struct ParseTrackUriError;
+
+impl fmt::Display for TrackUri {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}:{}:{}", self.backend, self.owner, self.id)
+    }
 }

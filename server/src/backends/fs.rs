@@ -3,7 +3,7 @@ use walkdir::{DirEntry, WalkDir};
 use id3::Tag;
 use chill;
 use super::Backend;
-use super::super::{Error, Track};
+use super::super::{Error, Track, TrackUri};
 
 pub struct Fs {
     machine_id: String,
@@ -47,7 +47,7 @@ impl Backend for Fs {
         for path in paths {
             for entry in walk_path(path) {
                 if let Ok(tag) = Tag::read_from_path(entry.path()) {
-                    let uri = format!("fs:{}:{}", self.machine_id, entry.path().to_str().unwrap());
+                    let uri = TrackUri::new("fs", &self.machine_id, entry.path().to_str().unwrap());
                     try!(Track::from_tag(uri, tag).create(db));
                 }
             }
