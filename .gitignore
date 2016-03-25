@@ -1,8 +1,6 @@
-api/node_modules
-
-app/elm-stuff/
-app/elm.js
+app/target
 app/node_modules
+app/typings
 
 server/target
 server/.env

@@ -2,7 +2,7 @@
 
 The cloud-aware music player.
 
-[![Build Status](https://travis-ci.org/cloudfm/cloudfm.svg?branch=master)](https://travis-ci.org/cloudfm/cloudfm)
+[![Travis](https://img.shields.io/travis/cloudfm/cloudfm.svg?style=flat-square)](https://travis-ci.org/cloudfm/cloudfm)
 
 ### Hacking
 
