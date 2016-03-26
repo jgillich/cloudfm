@@ -50,6 +50,18 @@ impl TrackUri {
     pub fn to_string(&self) -> String {
         format!("{}", self)
     }
+
+    pub fn backend(&self) -> &str {
+        &self.backend
+    }
+
+    pub fn owner(&self) -> &str {
+        &self.owner
+    }
+
+    pub fn id(&self) -> &str {
+        &self.id
+    }
 }
 
 impl str::FromStr for TrackUri {

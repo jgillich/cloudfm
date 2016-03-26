@@ -4,12 +4,13 @@ use router::Router;
 use mount::Mount;
 use chill;
 use iron::Iron;
-use super::backends::{Dropbox, Fs, Spotify, Backend};
+use super::backends::{Backends, Dropbox, Fs, Spotify, Backend};
+use super::routes::Routes;
 
 pub struct Server {
     handler: Mount,
     db: chill::Client,
-    backends: Vec<Box<Backend>>
+    backends: Backends
 }
 
 impl Server {
@@ -17,13 +18,6 @@ impl Server {
     pub fn new() -> Server {
         let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
         let db = chill::Client::new(&db_url).expect("DATABASE_URL must be a valid URL");
-
-        // create backends
-        let backends: Vec<Box<Backend>> = vec![
-            Box::new(Dropbox::new()),
-            Box::new(Fs::new()),
-            Box::new(Spotify::new()),
-        ];
 
         // create databases
         for path in vec![ "/tracks" ] {
@@ -37,13 +31,12 @@ impl Server {
 
         // create routes
         let mut mount = Mount::new();
-        let router = Router::new();
-        mount.mount("/v1", router);
+        mount.mount("/v1", Routes::new());
 
         Server {
             handler: mount,
             db: db,
-            backends: backends,
+            backends: Backends::new(),
         }
     }
 
