@@ -6,6 +6,6 @@ install:
   - source $HOME/.nix-profile/etc/profile.d/nix.sh
 env:
   matrix:
-    - BUILD_PATH=app/default.nix
+    # - BUILD_PATH=app/default.nix
     - BUILD_PATH=server/default.nix
 script: nix-build $BUILD_PATH
