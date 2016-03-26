@@ -1,10 +1,10 @@
 use std::env;
-use std::path::Path;
+use std::path::PathBuf;
 use chill;
 use dbox::client::Client;
 use dbox::files;
 use super::Backend;
-use super::super::Error;
+use super::super::{Error, TrackUri};
 
 pub struct Dropbox {
 
@@ -35,7 +35,7 @@ impl Backend for Dropbox {
         Ok(())
     }
 
-    fn get_file(&self, uri: &str) -> Result<&Path, Error> {
+    fn get_track(&self, uri: TrackUri) -> Result<PathBuf, Error> {
         panic!("not implemented");
     }
 }

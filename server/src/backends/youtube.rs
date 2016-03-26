@@ -1,7 +1,7 @@
 use chill;
-use std::path::Path;
+use std::path::PathBuf;
 use super::Backend;
-use super::super::{Error, Track};
+use super::super::{Error, Track, TrackUri};
 
 pub struct Youtube {
 
@@ -24,7 +24,7 @@ impl Backend for Youtube {
         Ok(())
     }
 
-    fn get_file(&self, uri: &str) -> Result<&Path, Error> {
+    fn get_track(&self, uri: TrackUri) -> Result<PathBuf, Error> {
         panic!("not implemented");
     }
 }

@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::PathBuf;
 use walkdir::{DirEntry, WalkDir};
 use id3::Tag;
 use chill;
@@ -58,7 +58,8 @@ impl Backend for Fs {
         Ok(())
     }
 
-    fn get_file(&self, uri: &str) -> Result<&Path, Error> {
-        panic!("not implemented");
+    fn get_track(&self, uri: TrackUri) -> Result<PathBuf, Error> {
+        let path = base64::decode(uri.id()).unwrap();
+        Ok(PathBuf::from(path))
     }
 }

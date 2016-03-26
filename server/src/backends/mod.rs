@@ -1,6 +1,7 @@
 use chill;
+use std::path::PathBuf;
 use super::Error;
-use std::path::Path;
+use super::models::TrackUri;
 
 pub use self::dropbox::Dropbox;
 pub use self::fs::Fs;
@@ -13,7 +14,7 @@ pub trait Backend: Send + Sync {
 
     fn index(&self, &chill::Client) -> Result<(), Error>;
 
-    fn get_file(&self, &str) -> Result<&Path, Error>;
+    fn get_track(&self, TrackUri) -> Result<PathBuf, Error>;
 }
 
 mod dropbox;

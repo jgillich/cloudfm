@@ -4,13 +4,14 @@ use router::Router;
 use mount::Mount;
 use chill;
 use iron::Iron;
+use std::sync::Arc;
 use super::backends::{Backends, Dropbox, Fs, Spotify, Backend};
 use super::routes::Routes;
 
 pub struct Server {
     routes: Routes,
     db: chill::Client,
-    backends: Backends
+    backends: Arc<Backends>
 }
 
 impl Server {
@@ -18,6 +19,12 @@ impl Server {
     pub fn new() -> Server {
         let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
         let db = chill::Client::new(&db_url).expect("DATABASE_URL must be a valid URL");
+
+        let backends: Arc<Backends> = Arc::new(vec![
+            Box::new(Dropbox::new()),
+            Box::new(Fs::new()),
+            Box::new(Spotify::new()),
+        ]);
 
         // create databases
         for path in vec![ "/tracks" ] {
@@ -30,13 +37,10 @@ impl Server {
         }
 
         Server {
-            routes: Routes::new(),
+            backends: backends.clone(),
+            routes: Routes::new(backends),
             db: db,
-            backends: vec![
-                Box::new(Dropbox::new()),
-                Box::new(Fs::new()),
-                Box::new(Spotify::new()),
-            ],
+
         }
     }
 
