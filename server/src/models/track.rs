@@ -73,9 +73,9 @@ impl str::FromStr for TrackUri {
             Err(ParseTrackUriError {})
         } else {
             let uri = TrackUri {
-                backend: parts.pop().unwrap().to_string(),
-                owner: parts.pop().unwrap().to_string(),
-                id: parts.pop().unwrap().to_string(),
+                backend: parts[0].to_string(),
+                owner: parts[1].to_string(),
+                id: parts[2].to_string(),
             };
             Ok(uri)
         }

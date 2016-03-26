@@ -13,6 +13,7 @@ extern crate uuid;
 extern crate serde;
 extern crate serde_json;
 extern crate dbox;
+extern crate base64;
 
 use dotenv::dotenv;
 use server::Server;

@@ -8,7 +8,7 @@ use super::backends::{Backends, Dropbox, Fs, Spotify, Backend};
 use super::routes::Routes;
 
 pub struct Server {
-    handler: Mount,
+    routes: Routes,
     db: chill::Client,
     backends: Backends
 }
@@ -29,23 +29,27 @@ impl Server {
             }
         }
 
-        // create routes
-        let mut mount = Mount::new();
-        mount.mount("/v1", Routes::new());
-
         Server {
-            handler: mount,
+            routes: Routes::new(),
             db: db,
-            backends: Backends::new(),
+            backends: vec![
+                Box::new(Dropbox::new()),
+                Box::new(Fs::new()),
+                Box::new(Spotify::new()),
+            ],
         }
     }
 
     pub fn start(mut self) {
-        Iron::new(self.handler).http("localhost:3000").unwrap();
+        self.index(); // TODO move somewhere else
+        let mut mount = Mount::new();
+        mount.mount("/v1", self.routes);
+        Iron::new(mount).http("localhost:3000").unwrap();
     }
 
     fn index(&mut self) -> Result<(), Error> {
         for backend in self.backends.iter() {
+            backend.index(&self.db).unwrap();
             if let Err(err) = backend.index(&self.db) {
                 // TODO log error
             }

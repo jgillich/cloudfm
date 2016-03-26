@@ -2,6 +2,7 @@ use std::path::Path;
 use walkdir::{DirEntry, WalkDir};
 use id3::Tag;
 use chill;
+use base64;
 use super::Backend;
 use super::super::{Error, Track, TrackUri};
 
@@ -47,7 +48,8 @@ impl Backend for Fs {
         for path in paths {
             for entry in walk_path(path) {
                 if let Ok(tag) = Tag::read_from_path(entry.path()) {
-                    let uri = TrackUri::new("fs", &self.machine_id, entry.path().to_str().unwrap());
+                    let id = base64::encode(entry.path().to_str().unwrap()).unwrap();
+                    let uri = TrackUri::new("fs", &self.machine_id, &id);
                     try!(Track::from_tag(uri, tag).create(db));
                 }
             }
