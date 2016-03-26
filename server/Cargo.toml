@@ -21,3 +21,4 @@ uuid = "0.1"
 dbox = { version = "0.1.3", git = "https://github.com/jgillich/dbox" }
 #google-youtube3 = "0.1"
 base64 = "0.1.1"
+machine-id = "0.2.2"

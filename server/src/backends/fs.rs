@@ -3,6 +3,7 @@ use walkdir::{DirEntry, WalkDir};
 use id3::Tag;
 use chill;
 use base64;
+use machine_id::MachineId;
 use super::Backend;
 use super::super::{Error, Track, TrackUri};
 
@@ -13,7 +14,7 @@ pub struct Fs {
 impl Fs {
     pub fn new() -> Fs {
         Fs {
-            machine_id: "notYetUniqueMachineId".to_string() // FIXME
+            machine_id: format!("{}", MachineId::get())
         }
     }
 }

@@ -14,6 +14,7 @@ extern crate serde;
 extern crate serde_json;
 extern crate dbox;
 extern crate base64;
+extern crate machine_id;
 
 use dotenv::dotenv;
 use server::Server;
