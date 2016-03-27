@@ -2,10 +2,17 @@
 /// <reference path='./main.d.ts'/>
 
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { h1 } from "react-hyperscript-helpers";
+import { render } from 'react-dom'
+import { browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
+import Root from './containers/Root'
+import configureStore from './store/configureStore'
+import { h } from "react-hyperscript-helpers";
 
-ReactDOM.render(
-  h1('Hello, World!'),
+const store = configureStore({})
+const history = syncHistoryWithStore(browserHistory, store)
+
+render(
+  h(Root, { store: store, history: history }),
   document.body
 );
