@@ -1,8 +1,9 @@
-import { Component, PropTypes, ValidationMap } from 'react'
-import { Provider } from 'react-redux'
-import routes from '../routes'
-import { Router } from 'react-router'
+import { Component, PropTypes, ValidationMap } from "react"
+import { Provider } from "react-redux"
+import { Router } from "react-router"
 import { h } from "react-hyperscript-helpers";
+import routes from "../routes"
+
 
 export default class Root extends Component<any, any> {
   render(): JSX.Element {

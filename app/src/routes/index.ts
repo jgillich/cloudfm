@@ -1,5 +1,5 @@
-import { Route } from 'react-router'
-import App from '../containers/App'
+import { Route } from "react-router"
+import App from "../components/App"
 import { h } from "react-hyperscript-helpers";
 
 export default (
