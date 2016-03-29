@@ -12,9 +12,9 @@ extern crate dotenv;
 extern crate uuid;
 extern crate serde;
 extern crate serde_json;
-extern crate dbox;
 extern crate base64;
 extern crate machine_id;
+extern crate jamendo;
 
 use dotenv::dotenv;
 use server::Server;

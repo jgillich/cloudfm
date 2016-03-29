@@ -1,8 +1,6 @@
 use std::env;
 use std::path::PathBuf;
 use chill;
-use dbox::client::Client;
-use dbox::files;
 use super::Backend;
 use super::super::{Error, TrackUri};
 
@@ -23,15 +21,6 @@ impl Backend for Dropbox {
     }
 
     fn index(&self, chill: &chill::Client) -> Result<(), Error> {
-        // TODO fetch from db for user
-        let client = try!(Client::new(&env::var("DROPBOX_TOKEN").unwrap()));
-
-        // FIXME SIGSEGV: invalid memory reference
-        //let folder_list = try!(files::list_folder(&client, "")); // TODO make folder configurable
-
-        //for metadata in folder_list.entries.iter() {
-        //    println!("{}", metadata.name);
-        //}
         Ok(())
     }
 

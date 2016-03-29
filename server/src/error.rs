@@ -1,12 +1,12 @@
 use std::env;
 use chill;
-use dbox;
+use jamendo;
 
 #[derive(Debug)]
 pub enum Error {
     Env(env::VarError),
     Chill(chill::Error),
-    Dropbox(dbox::ApiError),
+    Jamendo(jamendo::Error),
 }
 
 impl From<env::VarError> for Error {
@@ -21,8 +21,8 @@ impl From<chill::Error> for Error {
     }
 }
 
-impl From<dbox::ApiError> for Error {
-    fn from(err: dbox::ApiError) -> Error {
-        Error::Dropbox(err)
+impl From<jamendo::Error> for Error {
+    fn from(err: jamendo::Error) -> Error {
+        Error::Jamendo(err)
     }
 }

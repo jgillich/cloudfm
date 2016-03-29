@@ -5,7 +5,7 @@ use mount::Mount;
 use chill;
 use iron::Iron;
 use std::sync::Arc;
-use super::backends::{Backends, Dropbox, Fs, Spotify, Backend};
+use super::backends::{Backends, Dropbox, Fs, Jamendo, Spotify, Backend};
 use super::routes::Routes;
 
 pub struct Server {
@@ -23,6 +23,7 @@ impl Server {
         let backends: Arc<Backends> = Arc::new(vec![
             Box::new(Dropbox::new()),
             Box::new(Fs::new()),
+            Box::new(Jamendo::new()),
             Box::new(Spotify::new()),
         ]);
 
