@@ -1,11 +1,9 @@
-language: generic
-sudo: required
-dist: trusty
-install:
-  - curl https://nixos.org/nix/install | sh
-  - source $HOME/.nix-profile/etc/profile.d/nix.sh
+language: rust
+rust:
+  - nightly
+services:
+  - couchdb
 env:
-  matrix:
-    # - BUILD_PATH=app/default.nix
-    - BUILD_PATH=server/default.nix
-script: nix-build $BUILD_PATH
+  - DATABASE_PATH=http://localhost:5984/
+script:
+  - pushd server && cargo build && cargo test && popd
