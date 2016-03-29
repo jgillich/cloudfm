@@ -5,14 +5,14 @@ use chill;
 use base64;
 use machine_id::MachineId;
 use super::Backend;
-use super::super::{Error, Track, TrackUri};
+use {Error, Track, TrackUri};
 
 pub struct Fs {
     machine_id: String,
 }
 
 impl Fs {
-    pub fn new() -> Fs {
+    pub fn new() -> Self {
         Fs {
             machine_id: format!("{}", MachineId::get())
         }

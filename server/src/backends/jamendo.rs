@@ -1,14 +1,8 @@
-use std::path::PathBuf;
-use walkdir::{DirEntry, WalkDir};
-use id3::Tag;
 use chill;
-use base64;
-use machine_id::MachineId;
+use std::path::PathBuf;
 use jamendo::{self, Client};
 use super::Backend;
-use Error;
-use Track;
-use TrackUri;
+use {Error, Track, TrackUri};
 
 pub struct Jamendo {
     client: Client,
@@ -41,7 +35,7 @@ impl Backend for Jamendo {
                 uri: TrackUri::new(self.name(), "nop", &track.id),
             };
 
-            model.create(db);
+            try!(model.create(db));
         }
 
         Ok(())
