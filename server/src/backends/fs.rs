@@ -1,6 +1,5 @@
 use std::fs::File;
 use iron::{IronResult, Response, status};
-use std::path::PathBuf;
 use walkdir::{DirEntry, WalkDir};
 use id3::Tag;
 use chill;

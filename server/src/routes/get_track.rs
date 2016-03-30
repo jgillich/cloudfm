@@ -1,10 +1,9 @@
 use iron::{Handler, Request, Response, IronResult, status};
 use router::Router;
-use base64;
 use std::sync::Arc;
-use std::path::Path;
-use super::super::backends::Backends;
-use super::super::models::TrackUri;
+use backends::Backends;
+use TrackUri;
+
 
 pub struct GetTrack {
     backends: Arc<Backends>
@@ -31,7 +30,7 @@ impl Handler for GetTrack {
                 }
                 Ok(Response::with((status::BadRequest, "unknown backend")))
             },
-            Err(e) => Ok(Response::with((status::BadRequest, "track uri missing or invalid")))
+            Err(_) => Ok(Response::with((status::BadRequest, "track uri missing or invalid")))
         }
 
     }

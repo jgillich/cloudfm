@@ -1,6 +1,5 @@
 use std::env;
 use error::Error;
-use router::Router;
 use mount::Mount;
 use chill;
 use iron::Iron;
@@ -21,15 +20,15 @@ impl Server {
         let db = chill::Client::new(&db_url).expect("DATABASE_URL must be a valid URL");
 
         let backends: Arc<Backends> = Arc::new(vec![
-            //Box::new(Fs::new()),
+            Box::new(Fs::new()),
             Box::new(Jamendo::new()),
         ]);
 
         // create databases
         for path in vec![ "/tracks" ] {
-            if let Err(e) = db.create_database("/tracks").unwrap().run() {
+            if let Err(e) = db.create_database(path).unwrap().run() {
                 match e {
-                    chill::Error::DatabaseExists(err) => (),
+                    chill::Error::DatabaseExists(_) => (),
                     _ => Err(Error::from(e)).unwrap()
                 }
             }
@@ -50,15 +49,12 @@ impl Server {
         Iron::new(mount).http("localhost:3000").unwrap();
     }
 
-    fn index(&mut self) -> Result<(), Error> {
+    fn index(&mut self) {
         for backend in self.backends.iter() {
-            backend.index(&self.db).unwrap();
-            if let Err(err) = backend.index(&self.db) {
+            if let Err(_) = backend.index(&self.db) {
                 // TODO log error
             }
         }
-
-        Ok(())
     }
 
 }

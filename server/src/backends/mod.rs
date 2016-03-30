@@ -1,4 +1,4 @@
-use iron::{IronResult, Response, status};
+use iron::{IronResult, Response};
 use chill;
 use {Error, TrackUri};
 

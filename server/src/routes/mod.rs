@@ -6,7 +6,6 @@ use self::get_track::GetTrack;
 
 pub struct Routes {
     router: Router,
-    backends: Arc<Backends>,
 }
 
 impl Routes {
@@ -17,7 +16,6 @@ impl Routes {
 
         Routes {
             router: router,
-            backends: backends
         }
     }
 

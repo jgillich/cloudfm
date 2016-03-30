@@ -5,10 +5,10 @@ authors = ["Jakob Gillich <jakob@gillich.me>"]
 license = "MIT"
 
 [dependencies]
-iron = "=0.2"
-# FIXME router depends on iron >= 0.2, < 0.4, so cargo installs 0.3
-router = "=0.1.0"
-mount = "0.0.10"
+hyper = "0.8.0"
+iron = "0.3"
+router = "0.1"
+mount = "0.1"
 id3 = "0.1"
 walkdir = "0.1"
 serde = "0.7"

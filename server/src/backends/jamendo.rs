@@ -1,17 +1,21 @@
+use iron::response::BodyReader;
 use iron::{IronResult, Response, status};
 use chill;
+use hyper;
 use jamendo::{self, Client};
 use super::Backend;
 use {Error, Track, TrackUri};
 
 pub struct Jamendo {
     client: Client,
+    hyper_client: hyper::Client,
 }
 
 impl Jamendo {
     pub fn new() -> Self {
         Jamendo {
             client: Client::new(jamendo::TEST_ID),
+            hyper_client: hyper::Client::new(),
         }
     }
 }
@@ -46,7 +50,8 @@ impl Backend for Jamendo {
         let tracks = itry!(self.client.get_tracks().id(id).run());
         let track = iexpect!(tracks.first());
 
-        panic!("qwe")
+        let res = itry!(self.hyper_client.get(&track.audiodownload).send());
 
+        Ok(Response::with((status::Ok, BodyReader(res))))
     }
 }

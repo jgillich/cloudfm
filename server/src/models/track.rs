@@ -1,6 +1,5 @@
 use id3::Tag;
 use chill;
-use uuid::Uuid;
 use std::str;
 use std::fmt;
 use Error;
@@ -25,7 +24,7 @@ impl Track {
         }
     }
 
-    pub fn create(mut self, db: &chill::Client) -> Result<(chill::DocumentId, chill::Revision), Error> {
+    pub fn create(self, db: &chill::Client) -> Result<(chill::DocumentId, chill::Revision), Error> {
         db.create_document("/tracks", &self)?.run().map_err(Error::from)
     }
 
@@ -56,7 +55,7 @@ impl str::FromStr for TrackUri {
     type Err = ParseTrackUriError;
 
     fn from_str(s: &str) -> Result<TrackUri, ParseTrackUriError> {
-        let mut parts = s.split(":").collect::<Vec<&str>>();
+        let parts = s.split(":").collect::<Vec<&str>>();
         if parts.len() != 3 {
             Err(ParseTrackUriError {})
         } else {
