@@ -1,7 +1,8 @@
+use iron::response::WriteBody;
 use chill;
 use std::path::PathBuf;
 use super::Backend;
-use super::super::{Error, Track, TrackUri};
+use {Error, Track, TrackUri};
 
 pub struct Spotify {
 
@@ -24,7 +25,7 @@ impl Backend for Spotify {
         Ok(())
     }
 
-    fn get_track(&self, uri: TrackUri) -> Result<PathBuf, Error> {
+    fn get_track(&self, uri: TrackUri) -> Result<&WriteBody, Error> {
         panic!("not implemented");
     }
 }

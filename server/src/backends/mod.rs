@@ -1,17 +1,16 @@
+use iron::{IronResult, Response, status};
 use chill;
-use std::path::PathBuf;
-use Error;
-use TrackUri;
+use {Error, TrackUri};
 
-mod dropbox;
+//mod dropbox;
 mod fs;
 mod jamendo;
-mod spotify;
+//mod spotify;
 
-pub use self::dropbox::Dropbox;
+//pub use self::dropbox::Dropbox;
 pub use self::fs::Fs;
 pub use self::jamendo::Jamendo;
-pub use self::spotify::Spotify;
+//pub use self::spotify::Spotify;
 
 pub type Backends = Vec<Box<Backend>>;
 
@@ -20,5 +19,5 @@ pub trait Backend: Send + Sync {
 
     fn index(&self, &chill::Client) -> Result<(), Error>;
 
-    fn get_track(&self, TrackUri) -> Result<PathBuf, Error>;
+    fn get_track(&self, TrackUri) -> IronResult<Response>;
 }

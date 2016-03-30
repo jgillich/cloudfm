@@ -1,3 +1,4 @@
+use iron::response::WriteBody;
 use std::env;
 use std::path::PathBuf;
 use chill;
@@ -24,7 +25,7 @@ impl Backend for Dropbox {
         Ok(())
     }
 
-    fn get_track(&self, uri: TrackUri) -> Result<PathBuf, Error> {
+    fn get_track(&self, uri: TrackUri) -> Result<&WriteBody, Error> {
         panic!("not implemented");
     }
 }

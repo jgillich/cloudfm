@@ -1,5 +1,5 @@
+use iron::{IronResult, Response, status};
 use chill;
-use std::path::PathBuf;
 use jamendo::{self, Client};
 use super::Backend;
 use {Error, Track, TrackUri};
@@ -32,7 +32,7 @@ impl Backend for Jamendo {
                 number: 0,
                 artist: track.artist_name,
                 album: track.album_name,
-                uri: TrackUri::new(self.name(), "nop", &track.id),
+                uri: TrackUri::new(self.name(), "", &track.id),
             };
 
             try!(model.create(db));
@@ -41,7 +41,12 @@ impl Backend for Jamendo {
         Ok(())
     }
 
-    fn get_track(&self, uri: TrackUri) -> Result<PathBuf, Error> {
-        panic!("not implemented");
+    fn get_track(&self, uri: TrackUri) -> IronResult<Response> {
+        let id = itry!(uri.id.parse::<i32>());
+        let tracks = itry!(self.client.get_tracks().id(id).run());
+        let track = iexpect!(tracks.first());
+
+        panic!("qwe")
+
     }
 }

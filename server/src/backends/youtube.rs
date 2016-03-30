@@ -1,3 +1,4 @@
+use iron::Response;
 use chill;
 use std::path::PathBuf;
 use super::Backend;

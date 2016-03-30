@@ -3,7 +3,7 @@ use chill;
 use uuid::Uuid;
 use std::str;
 use std::fmt;
-use super::super::Error;
+use Error;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Track {
@@ -26,16 +26,16 @@ impl Track {
     }
 
     pub fn create(mut self, db: &chill::Client) -> Result<(chill::DocumentId, chill::Revision), Error> {
-        db.create_document("/tracks", &self).run().map_err(Error::from)
+        db.create_document("/tracks", &self)?.run().map_err(Error::from)
     }
 
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct TrackUri {
-    backend: String,
-    owner: String,
-    id: String,
+    pub backend: String,
+    pub owner: String,
+    pub id: String,
 }
 
 impl TrackUri {
@@ -49,18 +49,6 @@ impl TrackUri {
 
     pub fn to_string(&self) -> String {
         format!("{}", self)
-    }
-
-    pub fn backend(&self) -> &str {
-        &self.backend
-    }
-
-    pub fn owner(&self) -> &str {
-        &self.owner
-    }
-
-    pub fn id(&self) -> &str {
-        &self.id
     }
 }
 

@@ -1,7 +1,7 @@
 #![feature(custom_derive, plugin, question_mark)]
 #![plugin(serde_macros)]
 
-extern crate iron;
+#[macro_use] extern crate iron;
 extern crate mount;
 extern crate router;
 extern crate walkdir;
@@ -19,6 +19,12 @@ extern crate jamendo;
 use dotenv::dotenv;
 use server::Server;
 
+mod models;
+mod backends;
+mod error;
+mod server;
+mod routes;
+
 pub use error::Error;
 pub use models::*;
 
@@ -26,9 +32,3 @@ fn main() {
     dotenv().ok();
     Server::new().start();
 }
-
-mod models;
-mod backends;
-mod error;
-mod server;
-mod routes;

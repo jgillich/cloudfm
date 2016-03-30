@@ -1,3 +1,5 @@
+use std::fs::File;
+use iron::{IronResult, Response, status};
 use std::path::PathBuf;
 use walkdir::{DirEntry, WalkDir};
 use id3::Tag;
@@ -59,8 +61,9 @@ impl Backend for Fs {
         Ok(())
     }
 
-    fn get_track(&self, uri: TrackUri) -> Result<PathBuf, Error> {
-        let path = base64::decode(uri.id()).unwrap();
-        Ok(PathBuf::from(path))
+    fn get_track(&self, uri: TrackUri) -> IronResult<Response> {
+        let path = itry!(base64::decode(&uri.id));
+        let file = itry!(File::open(path));
+        Ok(Response::with((status::Ok, file)))
     }
 }
