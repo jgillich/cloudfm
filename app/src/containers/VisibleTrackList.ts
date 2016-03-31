@@ -15,6 +15,6 @@ const mapDispatchToProps = (dispatch) => {
 const VisibleTrackList = connect(
   mapStateToProps,
   mapDispatchToProps
-)(TrackList)
+)(TrackList as any) // FIXME https://github.com/DefinitelyTyped/DefinitelyTyped/issues/6237#issuecomment-203987302
 
 export default VisibleTrackList
