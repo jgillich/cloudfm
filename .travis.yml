@@ -5,5 +5,8 @@ services:
   - couchdb
 env:
   - DATABASE_PATH=http://localhost:5984/
+install:
+  - npm install -g webpack typings
 script:
   - pushd server && cargo build && cargo test && popd
+  - pushd app && npm i && typings i && webpack && popd
