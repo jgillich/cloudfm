@@ -1,4 +1,5 @@
 var path = require('path');
+var failPlugin = require('webpack-fail-plugin');
 var html = new (require('html-webpack-plugin'))({
   title: 'cloudfm'
 });
@@ -17,5 +18,5 @@ module.exports = {
       { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
   },
-  plugins: [ html ]
+  plugins: [ failPlugin, html ]
 }
