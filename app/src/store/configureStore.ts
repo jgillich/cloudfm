@@ -1,8 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux"
 import { persistentStore } from 'redux-pouchdb'
 import rootReducer from "../reducers"
-// import * as PouchDB from "pouchdb";
-var PouchDB = require("pouchdb");
+import * as PouchDB from "pouchdb";
 
 const db = new PouchDB("cloudfm");
 

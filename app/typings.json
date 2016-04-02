@@ -9,6 +9,7 @@
     "mocha": "github:DefinitelyTyped/DefinitelyTyped/mocha/mocha.d.ts#d6dd320291705694ba8e1a79497a908e9f5e6617",
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#1c56e368e17bb28ca57577250624ca5bd561aa81",
     "object-assign": "github:DefinitelyTyped/DefinitelyTyped/object-assign/object-assign.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
+    "pouchdb/pouch": "registry:dt/pouchdb/pouch#0.1.0+20160316155526",
     "react": "github:DefinitelyTyped/DefinitelyTyped/react/react.d.ts#f407264835650f5f38d4bb2c515a79e7a835916b",
     "react-dom": "github:DefinitelyTyped/DefinitelyTyped/react/react-dom.d.ts#ca5bfe76d2d9bf6852cbc712d9f3e0047c93486e",
     "react-redux": "github:DefinitelyTyped/DefinitelyTyped/react-redux/react-redux.d.ts#6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3",
