@@ -1,8 +1,8 @@
-import * as CollectionActions from "../actions/collection"
+import * as TracksActions from "../actions/tracks"
 
 export default function collectionReducer(state = [], action: any) {
   switch (action.type) {
-    case CollectionActions.ADD_TRACK:
+    case TracksActions.ADD_TRACK:
       return [
         ...state,
         action.track

@@ -6,6 +6,7 @@
   },
   "files": [
     "src/actions/collection.ts",
+    "src/actions/tracks.ts",
     "src/components/App.ts",
     "src/components/Root.ts",
     "src/components/Track.ts",

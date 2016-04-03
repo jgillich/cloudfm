@@ -8,12 +8,12 @@ import { syncHistoryWithStore } from "react-router-redux"
 import { h } from "react-hyperscript-helpers";
 import Root from "./components/Root"
 import configureStore from "./store/configureStore"
-import * as CollectionActions from "./actions/collection"
+import * as TracksActions from "./actions/tracks"
 
 const store = configureStore({})
 const history = syncHistoryWithStore(browserHistory, store)
 
-store.dispatch(CollectionActions.addTrack({
+store.dispatch(TracksActions.addTrack({
   title: "test",
   artist: "test",
   album: "test",
