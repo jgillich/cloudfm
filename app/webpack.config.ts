@@ -5,19 +5,20 @@ var html = new (require('html-webpack-plugin'))({
 });
 
 module.exports = {
-  entry: './src/main.ts',
+  entry: './src/main.tsx',
   output: {
     path: path.resolve("target"),
     filename: "bundle.js"
   },
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.css']
   },
   module: {
     loaders: [
-      { test: /\.tsx?$/, loader: 'ts-loader' }
+      { test: /\.tsx?$/, loader: 'ts-loader' },
+      { test: /\.css$/, loader: "style-loader!css-loader?modules" }
     ]
   },
   plugins: [ failPlugin, html ],
-  devtool: 'source-map'
+  devtool: 'eval'
 }

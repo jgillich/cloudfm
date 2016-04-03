@@ -6,17 +6,11 @@
   },
   "files": [
     "src/actions/tracks.ts",
-    "src/components/App.ts",
-    "src/components/Root.ts",
-    "src/components/TrackItem.ts",
-    "src/components/TrackList.ts",
     "src/containers/VisibleTrackList.ts",
     "src/interfaces/track.ts",
     "src/main.d.ts",
-    "src/main.ts",
     "src/reducers/index.ts",
     "src/reducers/tracks.ts",
-    "src/routes/index.ts",
     "src/store/configureStore.ts",
     "typings/browser.d.ts",
     "typings/browser/ambient/assert/index.d.ts",
@@ -39,7 +33,13 @@
     "typings/browser/ambient/redux-thunk/index.d.ts",
     "typings/browser/ambient/redux/index.d.ts",
     "typings/browser/ambient/webpack/index.d.ts",
-    "webpack.config.ts"
+    "webpack.config.ts",
+    "src/components/App.tsx",
+    "src/components/Root.tsx",
+    "src/components/TrackItem.tsx",
+    "src/components/TrackList.tsx",
+    "src/main.tsx",
+    "src/routes/index.tsx"
   ],
   "filesGlob": [
     "**/*.ts",

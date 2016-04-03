@@ -13,7 +13,6 @@
     "pouchdb": "^5.3.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "react-hyperscript-helpers": "^1.0.1",
     "react-redux": "^4.4.1",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.0",
@@ -22,7 +21,9 @@
     "redux-pouchdb": "0.0.7"
   },
   "devDependencies": {
+    "css-loader": "^0.23.1",
     "html-webpack-plugin": "^2.14.0",
+    "style-loader": "^0.13.1",
     "ts-loader": "^0.8.1",
     "typescript": "^1.8.9",
     "webpack": "^1.12.14",

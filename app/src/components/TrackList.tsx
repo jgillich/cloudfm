@@ -1,5 +1,5 @@
+import * as React from "react"
 import { StatelessComponent } from 'react'
-import { ul, h } from "react-hyperscript-helpers"
 import { Track } from "../interfaces/track"
 import TrackItem from "./TrackItem"
 
@@ -8,7 +8,7 @@ interface PropTypes {
 }
 
 const TrackList: StatelessComponent<PropTypes> = ({ tracks }) => (
-  ul(tracks.map(track => h(TrackItem, { track })))
+  <ul>{tracks.map (track => <TrackItem track={track}/>)}</ul>
 )
 
 export default TrackList
