@@ -25,7 +25,6 @@
     "typings/browser/ambient/history/index.d.ts",
     "typings/browser/ambient/jquery/index.d.ts",
     "typings/browser/ambient/jsdom/index.d.ts",
-    "typings/browser/ambient/lodash/index.d.ts",
     "typings/browser/ambient/mocha/index.d.ts",
     "typings/browser/ambient/node/index.d.ts",
     "typings/browser/ambient/object-assign/index.d.ts",

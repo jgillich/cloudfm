@@ -18,5 +18,6 @@ module.exports = {
       { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
   },
-  plugins: [ failPlugin, html ]
+  plugins: [ failPlugin, html ],
+  devtool: 'source-map'
 }

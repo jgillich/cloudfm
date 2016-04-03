@@ -16,7 +16,7 @@ export default class Root extends Component<any, any> {
   }
 
   static propTypes: ValidationMap<any> = {
-    tore: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
   }
 }

@@ -7,14 +7,13 @@ import * as createLogger from "redux-logger"
 const db = new PouchDB("cloudfm");
 
 const applyMiddlewares = applyMiddleware(
-  
-  // HAS TO BE LAST MIDDLEWARE
+
+  // has to be last
   (createLogger as any)()
 );
 
 const createStoreWithMiddleware = compose(
-  applyMiddlewares,
-  persistentStore(db)
+  applyMiddlewares
 )(createStore);
 
 export default function configureStore(initialState) {

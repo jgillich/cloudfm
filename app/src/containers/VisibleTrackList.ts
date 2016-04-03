@@ -3,7 +3,7 @@ import TrackList from "../components/TrackList"
 
 const mapStateToProps = (state) => {
   return {
-    tracks: state.tracks
+    collection: state.collection
   }
 }
 
