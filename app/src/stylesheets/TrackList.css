@@ -1,0 +1,9 @@
+.component {
+  max-width: 970px;
+  flex: 1;
+  display: flex;
+}
+
+.trackList {
+  list-style: none;
+}

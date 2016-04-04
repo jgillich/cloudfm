@@ -4,7 +4,7 @@ const styles = require("../stylesheets/Header.css")
 const logo = require("../assets/logo_white.svg")
 
 const App: StatelessComponent<any> = () => (
-  <div className={styles.header}>
+  <div className={styles.component}>
 
     <div className={styles.nav}>
       <img className={styles.logo} src={logo}/>

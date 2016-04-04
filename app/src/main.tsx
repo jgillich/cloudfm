@@ -10,15 +10,15 @@ import configureStore from "./store/configureStore"
 import * as TracksActions from "./actions/tracks"
 
 const store = configureStore({})
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store);
 
-store.dispatch(TracksActions.addTrack({
-  title: "test",
-  artist: "test",
-  album: "test",
-  number: 1,
-  uri: "test"
-}))
+[1, 2, 3, 4, 5].forEach(no => store.dispatch(TracksActions.addTrack({
+  title: "test" + no,
+  artist: "test"+ no,
+  album: "test"+ no,
+  number: no,
+  uri: "test" + no
+})))
 
 render(
   <Root store={store} history={history}/>,

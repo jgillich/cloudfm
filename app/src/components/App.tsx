@@ -5,9 +5,11 @@ import VisibleTrackList from "../containers/VisibleTrackList"
 const styles = require("../stylesheets/App.css")
 
 const App: StatelessComponent<any> = () => (
-  <div className={styles.app}>
+  <div className={styles.component}>
     <Header/>
-    <VisibleTrackList/>
+    <div className={styles.main}>
+      <VisibleTrackList/>
+    </div>
   </div>
 )
 

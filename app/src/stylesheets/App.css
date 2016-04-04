@@ -3,7 +3,13 @@
   padding: 0;
 }
 
-.app {
+.component {
   font-family: "Open Sans", "sans-serif";
   color: #333;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
