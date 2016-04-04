@@ -1,6 +1,6 @@
 import * as TracksActions from "../actions/tracks";
 
-export default function collectionReducer(state = [], action: any) {
+const tracksReducer = (state = [], action: any) => {
   switch (action.type) {
     case TracksActions.ADD_TRACK:
       return [
@@ -11,3 +11,5 @@ export default function collectionReducer(state = [], action: any) {
       return state;
   };
 };
+
+export default tracksReducer;

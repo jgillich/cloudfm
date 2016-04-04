@@ -12,13 +12,14 @@ import * as TracksActions from "./actions/tracks";
 const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);
 
-[1, 2, 3, 4, 5].forEach(no => store.dispatch(TracksActions.addTrack({
-  album: "test"+ no,
-  artist: "test"+ no,
-  number: no,
-  title: "test" + no,
-  uri: "test" + no,
-})));
+store.dispatch(TracksActions.addTrack({
+  album: "" + Math.random(),
+  artist: "" + Math.random(),
+  number: Math.random() * 10,
+  title: "" + Math.random(),
+  uri: "" + Math.random(),
+  _id: "" + Math.random(),
+}));
 
 render(
   <Root store={store} history={history}/>,

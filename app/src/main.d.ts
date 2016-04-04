@@ -1,7 +1,6 @@
-declare namespace ReduxPouchdb {
-  function persistentStore(db: any): any;
-}
 
-declare module "redux-pouchdb" {
-  export = ReduxPouchdb;
+
+declare module "pouch-redux-middleware" {
+
+  export default function PouchMiddleware(a: any): any;
 }

@@ -8,7 +8,7 @@ interface PropTypes {
 };
 
 const TrackItem: StatelessComponent<PropTypes> = ({ track }) => (
-  <li className={styles.component}>{track.title}</li>
+  <li key={track._id} className={styles.component}>{track.title}</li>
 );
 
 export default TrackItem;
