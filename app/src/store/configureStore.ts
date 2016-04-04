@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware, compose } from "redux"
-import { persistentStore } from 'redux-pouchdb'
-import rootReducer from "../reducers"
+import { createStore, applyMiddleware, compose } from "redux";
+import { persistentStore } from "redux-pouchdb";
+import rootReducer from "../reducers";
 import * as PouchDB from "pouchdb";
-import * as createLogger from "redux-logger"
+import * as createLogger from "redux-logger";
 
 const db = new PouchDB("cloudfm");
 
@@ -20,5 +20,5 @@ export default function configureStore(initialState) {
   return createStoreWithMiddleware(
     rootReducer,
     initialState
-  )
-}
+  );
+};

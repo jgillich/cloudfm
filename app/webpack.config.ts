@@ -14,6 +14,9 @@ module.exports = {
     extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.css']
   },
   module: {
+    preLoaders: [
+      { test: /\.tsx?$/, loader: "tslint" }
+    ],
     loaders: [
       { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file' },
       { test: /\.tsx?$/, loader: 'ts-loader' },

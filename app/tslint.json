@@ -1,0 +1,36 @@
+{
+  "rules": {
+    "class-name": true,
+    "comment-format": [true, "check-space"],
+    "curly": true,
+    "eofline": true,
+    "indent": [true, "spaces"],
+    "interface-name": [true, "never-prefix"],
+    "max-line-length": [true, 80],
+    "member-access": true,
+    "no-any": false,
+    "no-consecutive-blank-lines": true,
+    "no-eval": true,
+    "no-trailing-whitespace": true,
+    "no-unreachable": true,
+    "no-use-before-declare": true,
+    "no-var-keyword": true,
+    "object-literal-sort-keys": true,
+    "one-line": [true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-finally",
+      "check-whitespace"
+    ],
+    "quotemark": [true, "double", "jsx-double"],
+    "radix": true,
+    "semicolon": [true, "always"],
+    "switch-default": true,
+    "trailing-comma": [true, {
+      "singleline": "never",
+      "multiline": "always"
+    }],
+    "typedef": [false]
+  }
+}
