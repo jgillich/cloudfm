@@ -35,6 +35,7 @@
     "typings/browser/ambient/webpack/index.d.ts",
     "webpack.config.ts",
     "src/components/App.tsx",
+    "src/components/Header.tsx",
     "src/components/Root.tsx",
     "src/components/TrackItem.tsx",
     "src/components/TrackList.tsx",

@@ -1,0 +1,22 @@
+.header {
+  background-color: #202020;
+  display: flex;
+  justify-content: center;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  color: #FFF;
+  max-width: 970px;
+}
+
+.navItem {
+  margin-left: 1em;
+}
+
+.logo {
+  height: 50px;
+  object-fit: cover;
+}
