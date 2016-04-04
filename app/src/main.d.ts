@@ -1,6 +1,9 @@
+interface PouchMiddleware {
+  (a: any): any;
+}
 
+declare var PouchMiddleware: PouchMiddleware;
 
 declare module "pouch-redux-middleware" {
-
-  export default function PouchMiddleware(a: any): any;
+  export = PouchMiddleware;
 }

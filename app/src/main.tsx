@@ -13,12 +13,12 @@ const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);
 
 store.dispatch(TracksActions.addTrack({
+  _id: "" + Math.random(),
   album: "" + Math.random(),
   artist: "" + Math.random(),
   number: Math.random() * 10,
   title: "" + Math.random(),
   uri: "" + Math.random(),
-  _id: "" + Math.random(),
 }));
 
 render(

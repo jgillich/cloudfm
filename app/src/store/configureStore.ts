@@ -1,23 +1,23 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "../reducers";
 import * as createLogger from "redux-logger";
-//import PouchMiddleware from "pouch-redux-middleware";
-import * as TracksActions from "../actions/tracks";
 import * as PouchDB from "pouchdb";
-const PouchMiddleware = require("pouch-redux-middleware");
+import * as PouchMiddleware from "pouch-redux-middleware";
 
 export default function configureStore(initialState) {
   const db = new PouchDB("cloudfm");
 
+  // FIXME warning: variable 'store' used before declaration
+  /* tslint:disable:no-use-before-declare */
   const pouchMiddleware = PouchMiddleware({
-      path: '/tracks',
-      db,
       actions: {
-        //remove: doc => store.dispatch({type: TracksActions.ADD_TRACK, id: doc._id}),
-        insert: doc => store.dispatch({type: TracksActions.ADD_TRACK, track: doc}),
-        //update: doc => store.dispatch({type: TracksActions.UPDATE_TODO, todo: doc}),
-      }
-    })
+        insert: doc => store.dispatch({track: doc, type: "ADD_TRACK"}),
+        remove: doc => {},
+        update: doc => {},
+      },
+      path: "/tracks",
+      db,
+    });
 
   const applyMiddlewares = applyMiddleware(
     pouchMiddleware,

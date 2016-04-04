@@ -36,6 +36,7 @@
     "webpack.config.ts",
     "src/components/App.tsx",
     "src/components/Header.tsx",
+    "src/components/Player.tsx",
     "src/components/Root.tsx",
     "src/components/TrackItem.tsx",
     "src/components/TrackList.tsx",
