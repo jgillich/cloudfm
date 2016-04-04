@@ -5,12 +5,15 @@
     "jsx": "react"
   },
   "files": [
-    "src/actions/tracks.ts",
+    "src/actions/index.ts",
+    "src/actions/track.ts",
     "src/containers/VisibleTrackList.ts",
+    "src/interfaces/action.ts",
+    "src/interfaces/index.ts",
     "src/interfaces/track.ts",
     "src/main.d.ts",
     "src/reducers/index.ts",
-    "src/reducers/tracks.ts",
+    "src/reducers/track.ts",
     "src/store/configureStore.ts",
     "typings/browser.d.ts",
     "typings/browser/ambient/assert/index.d.ts",

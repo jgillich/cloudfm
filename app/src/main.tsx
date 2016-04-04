@@ -7,19 +7,19 @@ import { browserHistory } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
 import Root from "./components/Root";
 import configureStore from "./store/configureStore";
-import * as TracksActions from "./actions/tracks";
+import { addTrack } from "./actions";
 
 const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);
 
-store.dispatch(TracksActions.addTrack({
+addTrack(store, {
   _id: "" + Math.random(),
   album: "" + Math.random(),
   artist: "" + Math.random(),
   number: Math.random() * 10,
   title: "" + Math.random(),
   uri: "" + Math.random(),
-}));
+});
 
 render(
   <Root store={store} history={history}/>,
