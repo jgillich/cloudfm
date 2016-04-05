@@ -1,5 +1,7 @@
 use iron::response::BodyReader;
 use iron::{IronResult, Response, status};
+use iron::headers::ContentType;
+use hyper::mime::{Mime, TopLevel, SubLevel};
 use chill;
 use hyper;
 use jamendo::{self, Client};
@@ -50,8 +52,10 @@ impl Backend for Jamendo {
         let tracks = itry!(self.client.get_tracks().id(id).run());
         let track = iexpect!(tracks.first());
 
-        let res = itry!(self.hyper_client.get(&track.audiodownload).send());
+        let track = itry!(self.hyper_client.get(&track.audiodownload).send());
+        let mut res = Response::with((status::Ok, BodyReader(track)));
+        res.headers.set(ContentType(Mime(TopLevel::Audio, SubLevel::Ext("mp3".into()), vec![])));
 
-        Ok(Response::with((status::Ok, BodyReader(res))))
+        Ok(res)
     }
 }
