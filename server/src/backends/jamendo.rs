@@ -36,7 +36,7 @@ impl Backend for Jamendo {
                 number: 0,
                 artist: track.artist_name,
                 album: track.album_name,
-                uri: TrackUri::new(self.name(), "", &track.id),
+                uri: TrackUri::new(self.name(), "TODO", &track.id),
             };
 
             try!(model.create(db));
