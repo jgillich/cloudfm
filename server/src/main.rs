@@ -16,6 +16,7 @@ extern crate serde_json;
 extern crate base64;
 extern crate machine_id;
 extern crate jamendo;
+extern crate logger;
 
 use dotenv::dotenv;
 use server::Server;

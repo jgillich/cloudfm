@@ -6,10 +6,19 @@ The cloud-aware music player.
 
 ### Hacking
 
-We use the [Nix](http://nixos.org/nix/) package manager for development, so make
-sure you grab it first. Then, switch to the project folder and type:
+The server is written in Rust and requires a recent nightly version of the
+Rust compiler. See [server/README.md](server/README.md) for further instructions.
 
-    nix-shell .
+The app requires Node.js 4 or newer. See [app/README.md](app/README.md)
+for further instructions.
 
-This will put you in a shell with all dependencies available. There are also a
-few new commands: `build`, `run` and `test`.
+In order to run either, you need a CouchDB instance that is configured
+with `enable_cors = true` under the `httpd` section. Next, create a `.env` file
+at the project root with the database URL:
+
+```
+DATABASE_URL=http://localhost:5984
+```
+
+This file is read by both the app and the server. Alternatively, you can also
+set this as an environment variable.

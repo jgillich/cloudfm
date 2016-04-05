@@ -4,6 +4,8 @@ use mount::Mount;
 use chill;
 use iron::Iron;
 use std::sync::Arc;
+use logger::Logger;
+use iron::middleware::Chain;
 use super::backends::{Backends, Fs, Jamendo, Backend};
 use super::routes::Routes;
 
@@ -44,9 +46,17 @@ impl Server {
 
     pub fn start(mut self) {
         self.index(); // TODO move somewhere else
+
+        let (logger_before, logger_after) = Logger::new(None);
+
         let mut mount = Mount::new();
         mount.mount("/v1", self.routes);
-        Iron::new(mount).http("localhost:3000").unwrap();
+
+        let mut chain = Chain::new(mount);
+        chain.link_before(logger_before);
+        chain.link_after(logger_after);
+
+        Iron::new(chain).http("localhost:3000").unwrap();
     }
 
     fn index(&mut self) {

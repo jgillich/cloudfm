@@ -4,7 +4,7 @@ const styles = require("../stylesheets/Player.css");
 
 const Player: StatelessComponent<any> = ({ src }) => (
   <div className={styles.component}>
-    <audio src={src} autoPlay={true} />
+    <audio src={src} autoPlay={true} controls={true} />
   </div>
 );
 

@@ -5,25 +5,23 @@ import * as PouchDB from "pouchdb";
 import * as PouchMiddleware from "pouch-redux-middleware";
 
 export default function configureStore(initialState) {
-  const db = new PouchDB("cloudfm");
+  const tracksDb = new PouchDB("tracks");
 
-  db.replicate.to(process.env.DATABASE_URL, (err, res) => {
-    if(err) {
-      console.error("Failed to set up replication. Is DATABASE_URL set?");
-    }
-  });
+  // FIXME PouchDB.sync needs typings
+  (PouchDB as any).sync("tracks", process.env.DATABASE_URL + "/tracks", {live: true, retry: true});
+
 
   // FIXME warning: variable 'store' used before declaration
   /* tslint:disable:no-use-before-declare */
   const pouchMiddleware = PouchMiddleware({
-      actions: {
-        insert: doc => store.dispatch({track: doc, type: "ADD_TRACK"}),
-        remove: doc => {},
-        update: doc => {},
-      },
-      path: "/tracks",
-      db,
-    });
+    actions: {
+      insert: doc => store.dispatch({track: doc, type: "ADD_TRACK"}),
+      remove: doc => {},
+      update: doc => {},
+    },
+    path: "/tracks",
+    db: tracksDb,
+  });
 
   const applyMiddlewares = applyMiddleware(
     pouchMiddleware,

@@ -22,3 +22,4 @@ uuid = "0.1"
 base64 = "0.1.1"
 machine-id = "0.2.2"
 jamendo = { version = "*", git = "https://github.com/jgillich/jamendo-rs" }
+logger = "0.0.3"

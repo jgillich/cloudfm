@@ -4,5 +4,11 @@ export interface Track {
   artist: string;
   number: number;
   title: string;
-  uri: string;
+  uri: TrackUri;
 };
+
+export interface TrackUri {
+  id: string;
+  backend: string;
+  owner: string;
+}
