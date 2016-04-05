@@ -1,14 +1,13 @@
 language: rust
 rust:
   - nightly
-node_js:
-  - "5"
 services:
   - couchdb
 env:
   - DATABASE_PATH=http://localhost:5984/
 install:
-  - npm install -g webpack typings
+  - npm install -g webpack typings n
+  - n stable
 script:
   - pushd server && cargo build && cargo test && popd
   - pushd app && npm i && typings i && webpack && popd
