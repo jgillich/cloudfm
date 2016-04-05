@@ -54,7 +54,7 @@ impl Backend for Jamendo {
 
         let track = itry!(self.hyper_client.get(&track.audiodownload).send());
         let mut res = Response::with((status::Ok, BodyReader(track)));
-        res.headers.set(ContentType(Mime(TopLevel::Audio, SubLevel::Ext("mp3".into()), vec![])));
+        res.headers.set(ContentType(Mime(TopLevel::Audio, SubLevel::Ext("mpeg".into()), vec![])));
 
         Ok(res)
     }
