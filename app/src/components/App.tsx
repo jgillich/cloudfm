@@ -2,7 +2,7 @@ import * as React from "react";
 import { StatelessComponent } from "react";
 import Header from "./Header";
 import VisibleTrackList from "../containers/VisibleTrackList";
-import Player from "./Player";
+import Player from "../containers/Player";
 const styles = require("../stylesheets/App.css");
 
 const App: StatelessComponent<any> = () => (

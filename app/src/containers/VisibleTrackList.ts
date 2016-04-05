@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import TrackList from "../components/TrackList";
+import { playTrack } from "../actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -9,6 +10,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onTrackClick: (track) => {
+      dispatch(playTrack(track))
+    }
   };
 };
 

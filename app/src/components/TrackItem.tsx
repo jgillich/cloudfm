@@ -5,10 +5,11 @@ const styles = require("../stylesheets/TrackItem.css");
 
 interface PropTypes {
   track: Track;
+  onClick: any;
 };
 
-const TrackItem: StatelessComponent<PropTypes> = ({ track }) => (
-  <li key={track._id} className={styles.component}>{track.title}</li>
+const TrackItem: StatelessComponent<PropTypes> = ({ track, onClick }) => (
+  <li className={styles.component} onClick={onClick}>{track.title}</li>
 );
 
 export default TrackItem;
