@@ -4,7 +4,9 @@ rust:
 services:
   - couchdb
 env:
-  - DATABASE_PATH=http://localhost:5984/
+  - DATABASE_URL=http://localhost:5984
+  - SERVER_URL=http://localhost:8423
+  - SERVER_ADDR=127.0.0.1:8423
 install:
   - npm install -g webpack typings n
   - N_PREFIX=$HOME n stable

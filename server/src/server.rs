@@ -6,6 +6,8 @@ use iron::Iron;
 use std::sync::Arc;
 use logger::Logger;
 use iron::middleware::Chain;
+use dotenv::dotenv;
+use std::net::SocketAddr;
 use super::backends::{Backends, Fs, Jamendo, Backend};
 use super::routes::Routes;
 
@@ -18,6 +20,8 @@ pub struct Server {
 impl Server {
 
     pub fn new() -> Server {
+        dotenv().ok();
+
         let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
         let db = chill::Client::new(&db_url).expect("DATABASE_URL must be a valid URL");
 
@@ -56,7 +60,10 @@ impl Server {
         chain.link_before(logger_before);
         chain.link_after(logger_after);
 
-        Iron::new(chain).http("localhost:3000").unwrap();
+        let addr = env::var("SERVER_ADDR").unwrap_or("127.0.0.1:8423".into());
+        println!("Starting server on {}", addr);
+
+        Iron::new(chain).http(addr.parse::<SocketAddr>().unwrap()).unwrap();
     }
 
     fn index(&mut self) {

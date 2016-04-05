@@ -5,9 +5,10 @@ var htmlPlugin = new (require("html-webpack-plugin"))({
   title: "cloudfm",
 });
 
-require("dotenv").config();
+require("dotenv").config({silent: true, path: "../.env"});
 var envPlugin = new webpack.DefinePlugin({
-    "process.env.DATABASE_URL": `"${process.env.DATABASE_URL}"`
+    "process.env.DATABASE_URL": `"${process.env.DATABASE_URL}"`,
+    "process.env.SERVER_URL": `"${process.env.SERVER_URL}"`
 });
 
 module.exports = {

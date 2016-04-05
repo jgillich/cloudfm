@@ -18,9 +18,6 @@ extern crate machine_id;
 extern crate jamendo;
 extern crate logger;
 
-use dotenv::dotenv;
-use server::Server;
-
 mod models;
 mod backends;
 mod error;
@@ -31,6 +28,5 @@ pub use error::Error;
 pub use models::*;
 
 fn main() {
-    dotenv().ok();
-    Server::new().start();
+    server::Server::new().start();
 }

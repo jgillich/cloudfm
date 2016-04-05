@@ -13,12 +13,26 @@ The app requires Node.js 4 or newer. See [app/README.md](app/README.md)
 for further instructions.
 
 In order to run either, you need a CouchDB instance that is configured
-with `enable_cors = true` under the `httpd` section. Next, create a `.env` file
-at the project root with the database URL:
+with cors enabled:
+```
+[httpd]
+enable_cors = true
+[cors]
+origins = *
+credentials = true
+methods = GET,PUT,POST,HEAD,DELETE
+headers = accept, authorization, content-type, origin
+```
+Next, create a `.env` file at the project root with the database and server URL:
 
 ```
 DATABASE_URL=http://localhost:5984
+SERVER_URL=http://localhost:8423
+SERVER_ADDR=127.0.0.1:8423
 ```
 
-This file is read by both the app and the server. Alternatively, you can also
-set this as an environment variable.
+### Configuration
+
+* `DATABASE_URL`: Public URL to the database
+* `SERVER_URL`: Public URL to the server
+* `SERVER_ADDR`: Server bind address

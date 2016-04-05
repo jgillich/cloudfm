@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
   };
   let { backend, owner, id } = state.player.uri;
   return {
-    src: `http://localhost:3000/v1/tracks/${backend}:${owner}:${id}`,
+    src: `${process.env.SERVER_URL}/v1/tracks/${backend}:${owner}:${id}`,
   };
 };
 

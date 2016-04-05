@@ -8,8 +8,11 @@ export default function configureStore(initialState) {
   const tracksDb = new PouchDB("tracks");
 
   // FIXME PouchDB.sync needs typings
-  (PouchDB as any).sync("tracks", process.env.DATABASE_URL + "/tracks", {live: true, retry: true});
-
+  (PouchDB as any).sync(
+    "tracks",
+    process.env.DATABASE_URL + "/tracks",
+    {live: true, retry: true}
+  );
 
   // FIXME warning: variable 'store' used before declaration
   /* tslint:disable:no-use-before-declare */
@@ -19,8 +22,8 @@ export default function configureStore(initialState) {
       remove: doc => {},
       update: doc => {},
     },
-    path: "/tracks",
     db: tracksDb,
+    path: "/tracks",
   });
 
   const applyMiddlewares = applyMiddleware(
