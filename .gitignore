@@ -1,6 +1,7 @@
+.env
+
 app/target
 app/node_modules
 app/typings
 
 server/target
-server/.env

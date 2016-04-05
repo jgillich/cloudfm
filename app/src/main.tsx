@@ -12,16 +12,12 @@ import { addTrack } from "./actions";
 const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);
 
-addTrack(store, {
-  _id: "" + Math.random(),
-  album: "" + Math.random(),
-  artist: "" + Math.random(),
-  number: Math.random() * 10,
-  title: "" + Math.random(),
-  uri: "" + Math.random(),
-});
+const container = document.createElement("div");
+container.id = "cloudfm";
 
 render(
   <Root store={store} history={history}/>,
-  document.body
+  container
 );
+
+document.body.appendChild(container);

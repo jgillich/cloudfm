@@ -4,8 +4,9 @@ import trackReducer from "./track";
 import playerReducer from "./player";
 
 const rootReducer = combineReducers({
-  routing: routerReducer,
   player: playerReducer,
+
+  routing: routerReducer,
   tracks: trackReducer,
 });
 

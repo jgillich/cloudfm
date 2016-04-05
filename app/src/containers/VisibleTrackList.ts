@@ -10,9 +10,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTrackClick: (track) => {
-      dispatch(playTrack(track))
-    }
+    onTrackClick: (track) => dispatch(playTrack(track)),
   };
 };
 

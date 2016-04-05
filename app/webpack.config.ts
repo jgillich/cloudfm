@@ -1,28 +1,34 @@
-var path = require('path');
-var failPlugin = require('webpack-fail-plugin');
-var html = new (require('html-webpack-plugin'))({
-  title: 'cloudfm'
+var webpack = require("webpack");
+var path = require("path");
+var failPlugin = require("webpack-fail-plugin");
+var htmlPlugin = new (require("html-webpack-plugin"))({
+  title: "cloudfm",
+});
+
+require("dotenv").config();
+var envPlugin = new webpack.DefinePlugin({
+    "process.env.DATABASE_URL": `"${process.env.DATABASE_URL}"`
 });
 
 module.exports = {
-  entry: './src/main.tsx',
+  entry: "./src/main.tsx",
   output: {
     path: path.resolve("target"),
     filename: "bundle.js"
   },
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.css']
+    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".css"]
   },
   module: {
     preLoaders: [
       { test: /\.tsx?$/, loader: "tslint" }
     ],
     loaders: [
-      { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file' },
-      { test: /\.tsx?$/, loader: 'ts-loader' },
+      { test: /\.(jpe?g|png|gif|svg)$/i, loader: "file" },
+      { test: /\.tsx?$/, loader: "ts-loader" },
       { test: /\.css$/, loader: "style-loader!css-loader?modules" }
     ]
   },
-  plugins: [ failPlugin, html ],
-  devtool: 'eval'
+  plugins: [ failPlugin, htmlPlugin, envPlugin ],
+  devtool: "eval"
 }
