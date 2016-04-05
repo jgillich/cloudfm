@@ -1,9 +1,11 @@
 .component {
-  max-width: 970px;
-  flex: 1;
-  display: flex;
+  display: block;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
 }
 
 .trackList {
+  max-width: 970px;
   list-style: none;
 }

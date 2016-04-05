@@ -1,15 +1,22 @@
-:global(body) {
+@import "../../node_modules/normalize.css/normalize.css";
+
+:global(document, body) {
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+
+global(*) {
+  box-sizing: border-box;
 }
 
 .component {
   font-family: "Open Sans", "sans-serif";
   color: #333;
-}
-
-.main {
   display: flex;
-  align-items: center;
   flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+  width: 100%;
+  height: 100vh;
 }

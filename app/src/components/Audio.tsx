@@ -2,9 +2,15 @@ import * as React from "react";
 import { StatelessComponent } from "react";
 const styles = require("../stylesheets/Player.css");
 
-const Player: StatelessComponent<any> = ({ src }) => (
+interface PropTypes {
+  src: string;
+};
+
+const Player: StatelessComponent<PropTypes> = ({ src }) => (
   <div className={styles.component}>
-    <audio src={src} autoPlay={true} controls={true} />
+    <div className={styles.player}>
+      <audio src={src} autoPlay={true} controls={true} />
+    </div>
   </div>
 );
 

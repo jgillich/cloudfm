@@ -10,6 +10,7 @@
   "author": "Jakob Gillich <jakob@gillich.me>",
   "license": "MIT",
   "dependencies": {
+    "normalize.css": "^4.0.0",
     "pouch-redux-middleware": "^0.1.0",
     "pouchdb": "^5.3.1",
     "react": "^0.14.7",

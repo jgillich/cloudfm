@@ -27,7 +27,7 @@ module.exports = {
     loaders: [
       { test: /\.(jpe?g|png|gif|svg)$/i, loader: "file" },
       { test: /\.tsx?$/, loader: "ts-loader" },
-      { test: /\.css$/, loader: "style-loader!css-loader?modules" }
+      { test: /\.css$/, loader: "style-loader!css-loader?modules&localIdentName=[name]-[local]-[hash:base64:5]" }
     ]
   },
   plugins: [ failPlugin, htmlPlugin, envPlugin ],

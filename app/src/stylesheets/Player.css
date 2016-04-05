@@ -1,3 +1,10 @@
 .component {
+  background-color: #202020;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
 
+.player {
+  max-width: 970px;
 }

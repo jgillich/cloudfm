@@ -8,10 +8,8 @@ const styles = require("../stylesheets/App.css");
 const App: StatelessComponent<any> = () => (
   <div className={styles.component}>
     <Header/>
-    <div className={styles.main}>
-      <VisibleTrackList/>
-      <Player/>
-    </div>
+    <VisibleTrackList/>
+    <Player/>
   </div>
 );
 
