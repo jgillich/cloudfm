@@ -7,7 +7,7 @@ env:
   - DATABASE_PATH=http://localhost:5984/
 install:
   - npm install -g webpack typings n
-  - n stable
+  - N_PREFIX=$HOME n stable
 script:
   - pushd server && cargo build && cargo test && popd
   - pushd app && npm i && typings i && webpack && popd
