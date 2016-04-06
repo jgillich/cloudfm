@@ -6,9 +6,9 @@ export interface TrackAction extends Action {
   track: Track;
 };
 
-export function addTrack(store, track: Track) {
-  store.dispatch({
+export function addTrack(track: Track): TrackAction {
+  return {
     type: ADD_TRACK,
     track,
-  });
+  };
 }

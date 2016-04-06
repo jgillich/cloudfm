@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Audio from "../components/Audio";
+import { Audio } from "../components";
 
 const mapStateToProps = (state) => {
   if (state.player === null) {
@@ -16,9 +16,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Player = connect(
+console.log(Audio)
+
+export const Player = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Audio as any);
-
-export default Player;

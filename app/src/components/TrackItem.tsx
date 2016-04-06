@@ -8,8 +8,6 @@ interface PropTypes {
   onClick: any;
 };
 
-const TrackItem: StatelessComponent<PropTypes> = ({ track, onClick }) => (
+export const TrackItem: StatelessComponent<PropTypes> = ({ track, onClick }) => (
   <li className={styles.component} onClick={onClick}>{track.title}</li>
 );
-
-export default TrackItem;
