@@ -8,6 +8,8 @@ use logger::Logger;
 use iron::middleware::Chain;
 use dotenv::dotenv;
 use std::net::SocketAddr;
+use std::path::Path;
+use staticfile::Static;
 use super::backends::{Backends, Fs, Jamendo, Backend};
 use super::routes::Routes;
 
@@ -55,6 +57,7 @@ impl Server {
 
         let mut mount = Mount::new();
         mount.mount("/v1", self.routes);
+        mount.mount("/", Static::new(Path::new("static/")));
 
         let mut chain = Chain::new(mount);
         chain.link_before(logger_before);
