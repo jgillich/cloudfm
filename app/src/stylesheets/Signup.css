@@ -1,0 +1,23 @@
+.component {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  max-width: 970px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form div {
+  flex: 1;
+  padding-bottom: 0.5em;
+}
+
+label {
+  display: block;
+}
+
+input {
+  margin-left: auto;
+}

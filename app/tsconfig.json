@@ -47,6 +47,7 @@
     "webpack.config.ts",
     "src/components/App.tsx",
     "src/components/Audio.tsx",
+    "src/components/Collection.tsx",
     "src/components/Header.tsx",
     "src/components/index.tsx",
     "src/components/Root.tsx",

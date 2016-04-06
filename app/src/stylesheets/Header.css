@@ -16,6 +16,11 @@
   margin-left: 1em;
 }
 
+a.navItem, a.navItem:visited {
+  color: #FFF;
+  text-decoration: none;
+}
+
 .logo {
   height: 50px;
   object-fit: cover;

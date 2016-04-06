@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Signup } from "../components/Signup";
-import { signupUser } from "../actions";
+import { loginUser, signupUser } from "../actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onLoginClick: (user) => dispatch(loginUser(user)),
     onSignupClick: (user) => dispatch(signupUser(user)),
   };
 };
