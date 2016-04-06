@@ -10,7 +10,7 @@ export interface UserAction extends Action {
     metadata?: {
       email: string;
     }
-  }
+  };
 };
 
 export function loginUser(user): UserAction {

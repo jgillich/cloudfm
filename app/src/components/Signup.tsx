@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Component } from "react";
-import { reduxForm } from 'redux-form';
+import { reduxForm } from "redux-form";
 const styles = require("../stylesheets/Login.css");
 
 export class Signup extends Component<any, any> {
-  render() {
+  public render() {
     const {name, password, email, onSignupClick} = this.props;
     return (
       <div className={styles.component}>

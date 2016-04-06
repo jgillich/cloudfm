@@ -16,8 +16,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-console.log(Audio)
-
 export const Player = connect(
   mapStateToProps,
   mapDispatchToProps

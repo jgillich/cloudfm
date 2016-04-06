@@ -1,7 +1,7 @@
 /// <reference path="../typings/browser.d.ts"/>
 /// <reference path="./main.d.ts"/>
 
-require('core-js/shim');
+require("core-js/shim");
 
 import * as React from "react";
 import { render } from "react-dom";
@@ -11,13 +11,7 @@ import { Root } from "./components";
 import configureStore from "./store/configureStore";
 import { addTrack } from "./actions";
 
-const store = configureStore({
-  user: {
-    name: "",
-    password: "",
-    email: "",
-  }
-});
+const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);
 
 const container = document.createElement("div");
