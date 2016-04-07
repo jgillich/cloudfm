@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Component, StatelessComponent } from "react";
 import { reduxForm } from "redux-form";
+import { Link } from "react-router";
 const styles = require("../stylesheets/Signup.css");
 
-class SignupFormComponent extends Component<any, any> {
+class FormComponent extends Component<any, any> {
   public render() {
     const {fields: {name, password, email}, handleSubmit} = this.props;
     return (
@@ -20,20 +21,22 @@ class SignupFormComponent extends Component<any, any> {
           <label>Email</label>
           <input type="email" {...email}/>
         </div>
-        <button className={styles.submit} type="submit">Submit</button>
+        <button className={styles.submit} type="submit">Sign up</button> or <Link to="/">Log in</Link>
       </form>
     );
   }
 };
 
-const SignupForm = reduxForm({
+const Form = reduxForm({
   form: "signup",
   fields: ["name", "password", "email"]
-})(SignupFormComponent as any);
+})(FormComponent as any);
 
-export const Signup: StatelessComponent<any> = ({ error, user, signupSubmit }) => (
+export const SignupForm: StatelessComponent<any> = ({ error, user, submit }) => (
   <div className={styles.component}>
-    <div>{error}</div>
-    <SignupForm onSubmit={signupSubmit} initialState={user}/>
+    <div className={styles.inner}>
+      <div>{error}</div>
+      <Form onSubmit={submit} initialState={user}/>
+    </div>
   </div>
 );

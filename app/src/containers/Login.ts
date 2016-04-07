@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { Signup } from "../components/Signup";
+import { LoginForm } from "../components/LoginForm";
 import { loginUser, signupUser } from "../actions";
 
 const mapStateToProps = (state) => {
@@ -11,11 +11,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signupSubmit: (user) => dispatch(signupUser(user)),
+    submit: (user) => dispatch(loginUser(user)),
   };
 };
 
-export const Authentication = connect(
+export const Login = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Signup as any);
+)(LoginForm as any);
