@@ -31,5 +31,8 @@ module.exports = {
     ]
   },
   plugins: [ failPlugin, htmlPlugin, envPlugin ],
-  devtool: "eval"
+  devtool: "#eval",
+  devServer: {
+    historyApiFallback: true
+  }
 }

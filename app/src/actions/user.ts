@@ -17,6 +17,23 @@ export interface UserAction extends Action {
   status?: string;
 };
 
+export function resumeSession() {
+  return function (dispatch) {
+    const remoteUrl = process.env.DATABASE_URL + "/_users";
+    const remoteDb: any = new PouchDB(remoteUrl, {skip_setup: true});
+
+    remoteDb.getSession(function (err, response) {
+      if (!err && response.userCtx.name) {
+        dispatch({
+          type: LOGIN_USER,
+          user: response.userCtx,
+        });
+        dispatch(push("/collection"));
+      }
+    });
+  }
+}
+
 export function loginUser(user) {
   return loginOrSignup({
     type: LOGIN_USER,
@@ -37,20 +54,6 @@ function loginOrSignup(action: UserAction) {
     const remoteUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
     const remoteDb: any = new PouchDB(remoteUrl, {skip_setup: true});
 
-    /* TODO reuse existing session
-    remoteDb.getSession(function (err, response) {
-      console.log(err, response)
-      if (err) {
-
-        // network error
-      } else if (!response.userCtx.name) {
-        // nobody"s logged in
-      } else {
-        console.log(response.userCtx.name);
-        // response.userCtx.name is the current user
-      }
-    });*/
-
     switch (action.type) {
       case LOGIN_USER:
         remoteDb.login(name, password, function (err, response) {
@@ -59,6 +62,7 @@ function loginOrSignup(action: UserAction) {
           } else {
             db.sync(remoteDb, {live: true, retry: true})
               .on("error", console.error.bind(console));
+            dispatch(Object.assign({}, action));
             dispatch(push("/collection"));
           }
         });
@@ -68,6 +72,8 @@ function loginOrSignup(action: UserAction) {
          if (err) {
            dispatch(Object.assign({}, action, {status: "error", error: err.name}));
          } else {
+           dispatch(Object.assign({}, action));
+
            // signup succeeded, let"s login
            dispatch(loginOrSignup(Object.assign({}, action, {type: LOGIN_USER})));
          }

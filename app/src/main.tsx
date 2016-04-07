@@ -9,7 +9,7 @@ import { browserHistory } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
 import { Root } from "./components";
 import configureStore from "./store/configureStore";
-import { addTrack } from "./actions";
+import { resumeSession } from "./actions";
 
 const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);
@@ -23,3 +23,5 @@ render(
 );
 
 document.body.appendChild(container);
+
+store.dispatch(resumeSession());
