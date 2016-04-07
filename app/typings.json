@@ -2,7 +2,7 @@
   "ambientDependencies": {
     "assert": "github:DefinitelyTyped/DefinitelyTyped/assert/assert.d.ts#58697597421d259f656dad7a2a5f20140c8a8051",
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
-    "es6-promise": "github:DefinitelyTyped/DefinitelyTyped/es6-promise/es6-promise.d.ts#6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3",
+    "core-js": "registry:dt/core-js#0.0.0+20160317120654",
     "history": "github:DefinitelyTyped/DefinitelyTyped/react-router/history.d.ts#99f6493ffb1ef5479c6154ec9f82a47178bbf8b6",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#cf2a968f0edd7d30773f7d23fe3708fa029d5ab7",
     "jsdom": "github:DefinitelyTyped/DefinitelyTyped/jsdom/jsdom.d.ts#ffad52fa9cfba2ab1a08da7fecbb944264184d91",

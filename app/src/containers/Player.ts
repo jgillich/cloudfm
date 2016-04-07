@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { Audio } from "../components";
 
 const mapStateToProps = (state) => {
-  if (state.player === null) {
+  if (!state.player.uri) {
     return { src: "" };
   };
   let { backend, owner, id } = state.player.uri;

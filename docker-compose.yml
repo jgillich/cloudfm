@@ -10,3 +10,5 @@ web:
     - "8423:8423"
 db:
   image: klaemo/couchdb:1.6-couchperuser
+  ports:
+    - "5984:5984"

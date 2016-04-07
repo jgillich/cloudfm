@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Component } from "react";
 import { reduxForm } from "redux-form";
-const styles = require("../stylesheets/Signup.css");
+const styles = require("../stylesheets/Login.css");
 
-class SignupComponent extends Component<any, any> {
+class LoginComponent extends Component<any, any> {
   public render() {
-    const {fields: {name, password, email}, handleSubmit} = this.props;
+    const {fields: {name, password}, handleSubmit} = this.props;
     return (
       <div className={styles.component}>
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -17,10 +17,6 @@ class SignupComponent extends Component<any, any> {
             <label>Password</label>
             <input type="password" {...password}/>
           </div>
-          <div>
-            <label>Email</label>
-            <input type="email" {...email}/>
-          </div>
           <button className={styles.submit} type="submit">Submit</button>
         </form>
       </div>
@@ -28,7 +24,7 @@ class SignupComponent extends Component<any, any> {
   }
 };
 
-export const Signup = reduxForm({
+export const Login = reduxForm({
   form: 'signup',
-  fields: ['name', 'password', 'email']
-})(SignupComponent);
+  fields: ['name', 'password']
+})(LoginComponent);
