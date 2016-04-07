@@ -1,6 +1,6 @@
-import { connect } from "react-redux";
-import { TrackList } from "../components";
-import { playTrack } from "../actions";
+import {connect} from "react-redux";
+import {TrackList} from "../components";
+import {playTrack} from "../actions";
 
 const mapStateToProps = (state) => {
   return {

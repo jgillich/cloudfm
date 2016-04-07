@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Component, StatelessComponent } from "react";
-import { reduxForm } from "redux-form";
-import { Link } from "react-router";
+import {Component, StatelessComponent} from "react";
+import {reduxForm} from "redux-form";
+import {Link} from "react-router";
 const styles = require("../stylesheets/Signup.css");
 
 class FormComponent extends Component<any, any> {
@@ -21,18 +21,19 @@ class FormComponent extends Component<any, any> {
           <label>Email</label>
           <input type="email" {...email}/>
         </div>
-        <button className={styles.submit} type="submit">Sign up</button> or <Link to="/">Log in</Link>
+        <button className={styles.submit} type="submit">Sign up</button>
+        or <Link to="/">Log in</Link>
       </form>
     );
   }
 };
 
 const Form = reduxForm({
+  fields: ["name", "password", "email"],
   form: "signup",
-  fields: ["name", "password", "email"]
 })(FormComponent as any);
 
-export const SignupForm: StatelessComponent<any> = ({ error, user, submit }) => (
+export const SignupForm: StatelessComponent<any> = ({error, user, submit}) => (
   <div className={styles.component}>
     <div className={styles.inner}>
       <div>{error}</div>

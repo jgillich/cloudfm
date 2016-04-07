@@ -6,5 +6,5 @@ export * from "./TrackItem";
 export * from "./TrackList";
 export * from "./Collection";
 export * from "./App";
-export *  from "./Router";
+export * from "./Router";
 export * from "./Root";

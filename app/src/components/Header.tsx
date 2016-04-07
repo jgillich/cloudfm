@@ -1,6 +1,6 @@
 import * as React from "react";
-import { StatelessComponent } from "react";
-import { Link } from "react-router";
+import {StatelessComponent} from "react";
+import {Link} from "react-router";
 const styles = require("../stylesheets/Header.css");
 const logo = require("../assets/logo_white.svg");
 

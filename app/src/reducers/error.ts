@@ -1,5 +1,5 @@
 function errorReducer(state = null, action) {
-  const { type, error } = action;
+  const {type, error} = action;
 
   if(type == "RESET_ERROR") {
     return null;

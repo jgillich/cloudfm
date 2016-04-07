@@ -12,14 +12,18 @@ db.setSchema(schema);
 // emit or TypeScript won't compile this
 function emit(a: any, b?: any) {}
 
-const views = schema.map(type => ({ [type.plural]: makeViews(type.plural) }))
+const views = schema.map(type => ({[type.plural]: makeViews(type.plural)}))
                     .reduce((p, c) => Object.assign(p, c), {});
 
 function makeViews(type: string) {
   const prefix = type + "_";
   return {
     all: {
-      map: function(doc) { if(doc.id.startsWith(prefix)) { emit(doc._id); } }.toString(),
+      map: function(doc) {
+        if(doc.id.startsWith(prefix)) {
+          emit(doc._id);
+        }
+      }.toString(),
     },
   };
 }

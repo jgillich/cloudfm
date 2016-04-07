@@ -1,5 +1,5 @@
-import { Track } from "../interfaces";
-import { INSERT_TRACK, REMOVE_TRACK, UPDATE_TRACK, TrackAction } from "../actions";
+import {Track} from "../interfaces";
+import {INSERT_TRACK, REMOVE_TRACK, UPDATE_TRACK, TrackAction} from "../actions";
 
 const trackReducer = (state: Track[] = [], action: TrackAction) => {
   switch (action.type) {

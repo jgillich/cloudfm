@@ -1,6 +1,6 @@
 import * as React from "react";
-import { StatelessComponent } from "react";
-import { VisibleTrackList, Player } from "../containers";
+import {StatelessComponent} from "react";
+import {VisibleTrackList, Player} from "../containers";
 const styles = require("../stylesheets/Collection.css");
 
 export const Collection: StatelessComponent<any> = ({children}) => (

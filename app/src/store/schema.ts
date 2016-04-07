@@ -1,26 +1,27 @@
 export default [
   {
-    singular: "track",
     plural: "tracks",
+
     relations: {
       album: {belongsTo: "album"},
       artist: {belongsTo: "artist"},
     },
+    singular: "track",
   },
   {
-    singular: "album",
     plural: "albums",
     relations: {
-      tracks: {hasMany: "tracks"},
       artist: {belongsTo: "artist"},
+      tracks: {hasMany: "tracks"},
     },
+    singular: "album",
   },
   {
-    singular: "artist",
     plural: "artists",
     relations: {
-      tracks: {hasMany: "tracks"},
       albums: {hasMany: "albums"},
+      tracks: {hasMany: "tracks"},
     },
+    singular: "artist",
   },
 ];

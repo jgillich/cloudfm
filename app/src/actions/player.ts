@@ -1,4 +1,4 @@
-import { Track, Action } from "../interfaces";
+import {Track, Action} from "../interfaces";
 
 export const PLAY_TRACK = "PLAY_TRACK";
 

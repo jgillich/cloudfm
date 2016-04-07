@@ -1,4 +1,4 @@
-import { Track, Action } from "../interfaces";
+import {Track, Action} from "../interfaces";
 
 export const INSERT_TRACK = "INSERT_TRACK";
 export const REMOVE_TRACK = "REMOVE_TRACK";

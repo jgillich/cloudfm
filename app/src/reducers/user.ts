@@ -1,5 +1,4 @@
-import { LOGIN_USER, SIGNUP_USER, UserAction } from "../actions";
-import db from "../store/db";
+import {LOGIN_USER, SIGNUP_USER, UserAction} from "../actions";
 
 const userReducer = (state = {}, action: UserAction) => {
   switch (action.type) {

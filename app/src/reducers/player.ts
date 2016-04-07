@@ -1,5 +1,4 @@
-import { Track } from "../interfaces";
-import { PLAY_TRACK, PlayerAction } from "../actions";
+import {PLAY_TRACK, PlayerAction} from "../actions";
 
 const playerReducer = (state = {}, action: PlayerAction) => {
   switch (action.type) {

@@ -1,7 +1,7 @@
-import { Action } from "../interfaces";
+import {Action} from "../interfaces";
 import * as PouchDB from "pouchdb";
 import db from "../store/db";
-import { push } from "react-router-redux";
+import {push} from "react-router-redux";
 
 export const LOGIN_USER = "LOGIN_USER";
 export const SIGNUP_USER = "SIGNUP_USER";
@@ -31,7 +31,7 @@ export function resumeSession() {
         dispatch(push("/collection"));
       }
     });
-  }
+  };
 }
 
 export function loginUser(user) {
@@ -50,35 +50,31 @@ export function signupUser(user) {
 
 function loginOrSignup(action: UserAction) {
   return function (dispatch) {
-    const { name, password, metadata } = action.user;
+    const {name, password, metadata} = action.user;
     const remoteUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
     const remoteDb: any = new PouchDB(remoteUrl, {skip_setup: true});
 
-    switch (action.type) {
-      case LOGIN_USER:
-        remoteDb.login(name, password, function (err, response) {
-          if (err) {
-            dispatch(Object.assign({}, action, {status: "error", error: err.name}));
-          } else {
-            db.sync(remoteDb, {live: true, retry: true})
-              .on("error", console.error.bind(console));
-            dispatch(Object.assign({}, action));
-            dispatch(push("/collection"));
-          }
-        });
-        break;
-      case SIGNUP_USER:
-        remoteDb.signup(name, password, { metadata }, function (err, response) {
-         if (err) {
-           dispatch(Object.assign({}, action, {status: "error", error: err.name}));
-         } else {
-           dispatch(Object.assign({}, action));
+    if(action.type == LOGIN_USER) {
+      remoteDb.login(name, password, function (err, response) {
+        if (err) {
+          return dispatch(Object.assign({}, action, {error: err.name}));
+        }
 
-           // signup succeeded, let"s login
-           dispatch(loginOrSignup(Object.assign({}, action, {type: LOGIN_USER})));
-         }
-       });
-       break;
+        db.sync(remoteDb, {live: true, retry: true})
+          .on("error", console.error.bind(console));
+        dispatch(Object.assign({}, action));
+        dispatch(push("/collection"));
+      });
+    } else if(action.type == SIGNUP_USER) {
+      remoteDb.signup(name, password, {metadata}, function (err, response) {
+        if (err) {
+          return dispatch(Object.assign({}, action, {error: err.name}));
+        }
+        dispatch(Object.assign({}, action));
+
+        // signup succeeded, let's login
+        dispatch(loginOrSignup(Object.assign({}, action, {type: LOGIN_USER})));
+      });
     }
   };
 }
