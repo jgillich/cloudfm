@@ -32,8 +32,7 @@ export function signupUser(user) {
 }
 
 function loginOrSignup(action: UserAction) {
-  return function (d) {
-    let dispatch = (action) => { console.log(action); return d(action)}
+  return function (dispatch) {
     const { name, password, metadata } = action.user;
     const remoteUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
     const remoteDb: any = new PouchDB(remoteUrl, {skip_setup: true});
@@ -75,7 +74,7 @@ function loginOrSignup(action: UserAction) {
        });
        break;
     }
-  }
+  };
 }
 
 function toHex(str) {

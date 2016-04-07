@@ -4,6 +4,7 @@ import { reducer as formReducer } from "redux-form";
 import trackReducer from "./track";
 import playerReducer from "./player";
 import userReducer from "./user";
+import errorReducer from "./error";
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   tracks: trackReducer,
   user: userReducer,
+  error: errorReducer,
 });
 
 export default rootReducer;

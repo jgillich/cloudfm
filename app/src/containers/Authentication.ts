@@ -4,17 +4,18 @@ import { loginUser, signupUser } from "../actions";
 
 const mapStateToProps = (state) => {
   return {
+    error: state.error,
     user: state.user,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: (user) => dispatch(signupUser(user)),
+    signupSubmit: (user) => dispatch(signupUser(user)),
   };
 };
 
 export const Authentication = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Signup);
+)(Signup as any);

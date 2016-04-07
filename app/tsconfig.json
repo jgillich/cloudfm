@@ -17,6 +17,7 @@
     "src/interfaces/index.ts",
     "src/interfaces/track.ts",
     "src/main.d.ts",
+    "src/reducers/error.ts",
     "src/reducers/index.ts",
     "src/reducers/player.ts",
     "src/reducers/track.ts",
