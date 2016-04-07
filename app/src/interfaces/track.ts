@@ -1,7 +1,12 @@
-export interface Track {
-  _id: string;
-  album: string;
-  artist: string;
+import {Doc} from "./";
+
+export interface Track extends Doc<TrackAttributes>  {
+
+}
+
+export interface TrackAttributes {
+  album: number;
+  artist: number;
   number: number;
   title: string;
   uri: TrackUri;

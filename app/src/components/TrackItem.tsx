@@ -9,5 +9,5 @@ interface PropTypes {
 };
 
 export const TrackItem: StatelessComponent<PropTypes> = ({ track, onClick }) => (
-  <li className={styles.component} onClick={onClick}>{track.title}</li>
+  <li className={styles.component} onClick={onClick}>{track.data.title}</li>
 );

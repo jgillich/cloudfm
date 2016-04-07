@@ -5,26 +5,27 @@ import thunkMiddleware from "redux-thunk";
 import * as PouchMiddleware from "pouch-redux-middleware";
 import { routerMiddleware } from "react-router-redux";
 import { browserHistory } from "react-router";
+import schema from "./schema";
 import db from "./db";
 
 export default function configureStore(initialState) {
   // FIXME warning: variable "store" used before declaration
   /* tslint:disable:no-use-before-declare */
-  const pouchMiddleware = PouchMiddleware({
-    actions: {
-      insert: doc => store.dispatch({track: doc, type: "ADD_TRACK"}),
-      remove: doc => {},
-      update: doc => {},
-    },
-    db: db,
-    path: "/tracks",
-  });
+  const pouchMiddleware = PouchMiddleware(
+    schema.map(type => ({
+        actions: {
+          insert: doc => type.singular == doc.type && store.dispatch({[doc.type]: doc, type: "INSERT_" + doc.type.toUpperCase()}),
+          remove: doc => type.singular == doc.type && store.dispatch({[doc.type]: doc, type: "REMOVE_" + doc.type.toUpperCase()}),
+          update: doc => type.singular == doc.type && store.dispatch({[doc.type]: doc, type: "UPDATE_" + doc.type.toUpperCase()}),
+        },
+        db: db,
+        path: `/${type.plural}`,
+    })));
 
   const applyMiddlewares = applyMiddleware(
     pouchMiddleware,
     thunkMiddleware,
     routerMiddleware(browserHistory),
-    // has to be last
     (createLogger as any)()
   );
 

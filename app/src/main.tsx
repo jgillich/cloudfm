@@ -9,7 +9,7 @@ import { browserHistory } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
 import { Root } from "./components";
 import configureStore from "./store/configureStore";
-import { resumeSession } from "./actions";
+import { resumeSession, insertTrack } from "./actions";
 
 const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);
