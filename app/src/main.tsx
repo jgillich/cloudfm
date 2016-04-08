@@ -11,6 +11,9 @@ import {Root} from "./components";
 import configureStore from "./store/configureStore";
 import {resumeSession} from "./actions";
 
+// https://github.com/Microsoft/TypeScript/issues/7270
+(React as any).__spread = Object.assign;
+
 const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);
 
