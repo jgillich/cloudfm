@@ -24,6 +24,10 @@ export function resumeSession() {
 
     remoteDb.getSession(function (err, response) {
       if (!err && response.userCtx.name) {
+        const userDb: any = new PouchDB(userDbUrl(response.userCtx.name), {skip_setup: true});
+        db.sync(userDb, {live: true, retry: true})
+          .on("error", console.error.bind(console));
+
         dispatch({
           type: LOGIN_USER,
           user: response.userCtx,
@@ -51,22 +55,21 @@ export function signupUser(user) {
 function loginOrSignup(action: UserAction) {
   return function (dispatch) {
     const {name, password, metadata} = action.user;
-    const remoteUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
-    const remoteDb: any = new PouchDB(remoteUrl, {skip_setup: true});
+    const userDb: any = new PouchDB(userDbUrl(name), {skip_setup: true});
 
     if(action.type == LOGIN_USER) {
-      remoteDb.login(name, password, function (err, response) {
+      userDb.login(name, password, function (err, response) {
         if (err) {
           return dispatch(Object.assign({}, action, {error: err.name}));
         }
 
-        db.sync(remoteDb, {live: true, retry: true})
+        db.sync(userDb, {live: true, retry: true})
           .on("error", console.error.bind(console));
         dispatch(Object.assign({}, action));
         dispatch(push("/collection"));
       });
     } else if(action.type == SIGNUP_USER) {
-      remoteDb.signup(name, password, {metadata}, function (err, response) {
+      userDb.signup(name, password, {metadata}, function (err, response) {
         if (err) {
           return dispatch(Object.assign({}, action, {error: err.name}));
         }
@@ -77,6 +80,10 @@ function loginOrSignup(action: UserAction) {
       });
     }
   };
+}
+
+function userDbUrl(name: string): string {
+  return process.env.DATABASE_URL + "/userdb-" + toHex(name);
 }
 
 function toHex(str) {
