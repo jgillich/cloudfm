@@ -14,7 +14,10 @@ import {resumeSession} from "./actions";
 // https://github.com/Microsoft/TypeScript/issues/7270
 (React as any).__spread = Object.assign;
 
-const store = configureStore({});
+const store = configureStore({
+  backends: [],
+  tracks: [],
+});
 const history = syncHistoryWithStore(browserHistory, store);
 
 const container = document.createElement("div");

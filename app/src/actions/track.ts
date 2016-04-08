@@ -7,10 +7,3 @@ export const UPDATE_TRACK = "UPDATE_TRACK";
 export interface TrackAction extends Action {
   track: Track;
 };
-
-export function insertTrack(track: Track): TrackAction {
-  return {
-    type: INSERT_TRACK,
-    track,
-  };
-}

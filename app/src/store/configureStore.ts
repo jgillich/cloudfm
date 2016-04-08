@@ -15,7 +15,7 @@ export default function configureStore(initialState) {
     schema.map(type => ({
         actions: {
           insert: doc => {
-            if(doc._id.startsWith(type.singular + "_")) {
+            if(doc.type == type.singular) {
               store.dispatch({
                 [type.singular]: doc,
                 type: "INSERT_" + type.singular.toUpperCase(),
@@ -23,7 +23,7 @@ export default function configureStore(initialState) {
             }
           },
           remove: doc => {
-            if(doc._id.startsWith(type.singular + "_")) {
+          if(doc.type == type.singular) {
               store.dispatch({
                 [type.singular]: doc,
                 type: "REMOVE_" + type.singular.toUpperCase(),
@@ -31,7 +31,7 @@ export default function configureStore(initialState) {
             }
           },
           update: doc => {
-            if(doc._id.startsWith(type.singular + "_")) {
+            if(doc.type == type.singular) {
               store.dispatch({
                 [type.singular]: doc,
                 type: "UPDATE_" + type.singular.toUpperCase(),

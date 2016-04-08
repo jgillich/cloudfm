@@ -11,6 +11,7 @@ export const Header: StatelessComponent<any> = () => (
       <img className={styles.logo} src={logo}/>
       <Link to="/collection" className={styles.navItem}>Collection</Link>
       <Link to="/discover" className={styles.navItem}>Discover</Link>
+      <Link to="/settings" className={styles.navItem}>Settings</Link>
     </div>
   </div>
 );

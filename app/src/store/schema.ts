@@ -24,4 +24,8 @@ export default [
     },
     singular: "artist",
   },
+  {
+    plural: "backends",
+    singular: "backend",
+  }
 ];

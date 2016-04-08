@@ -1,5 +1,4 @@
-export interface Doc<T> {
+export interface Doc {
   _id: string;
   type: string;
-  data: T;
 }

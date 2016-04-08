@@ -8,6 +8,9 @@
     "jsdom": "github:DefinitelyTyped/DefinitelyTyped/jsdom/jsdom.d.ts#ffad52fa9cfba2ab1a08da7fecbb944264184d91",
     "mocha": "github:DefinitelyTyped/DefinitelyTyped/mocha/mocha.d.ts#d6dd320291705694ba8e1a79497a908e9f5e6617",
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#1c56e368e17bb28ca57577250624ca5bd561aa81",
+    "node-uuid": "registry:dt/node-uuid#0.0.0+20160316155526",
+    "node-uuid/node-uuid-base": "registry:dt/node-uuid/node-uuid-base#0.0.0+20160316155526",
+    "node-uuid/node-uuid-cjs": "registry:dt/node-uuid/node-uuid-cjs#0.0.0+20160316155526",
     "object-assign": "github:DefinitelyTyped/DefinitelyTyped/object-assign/object-assign.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
     "pouchdb/pouch": "registry:dt/pouchdb/pouch#0.1.0+20160316155526",
     "react": "github:DefinitelyTyped/DefinitelyTyped/react/react.d.ts#f407264835650f5f38d4bb2c515a79e7a835916b",
@@ -20,5 +23,8 @@
     "redux-logger": "github:DefinitelyTyped/DefinitelyTyped/redux-logger/redux-logger.d.ts#7136728255d96038795d93c3e4b43c3c7de8ac1e",
     "redux-thunk": "github:DefinitelyTyped/DefinitelyTyped/redux-thunk/redux-thunk.d.ts#6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3",
     "webpack": "github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+  },
+  "dependencies": {
+    "node-uuid": "registry:dt/node-uuid#0.0.0+20160316155526"
   }
 }
