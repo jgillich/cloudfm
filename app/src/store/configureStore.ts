@@ -9,8 +9,8 @@ import schema from "./schema";
 import db from "./db";
 
 export default function configureStore(initialState) {
-  // FIXME warning: variable "store" used before declaration
-  /* tslint:disable:no-use-before-declare */
+  let store;
+
   const pouchMiddleware = PouchMiddleware(
     schema.map(type => ({
         actions: {
@@ -23,7 +23,7 @@ export default function configureStore(initialState) {
             }
           },
           remove: doc => {
-          if(doc.type == type.singular) {
+            if(doc.type == type.singular) {
               store.dispatch({
                 [type.singular]: doc,
                 type: "REMOVE_" + type.singular.toUpperCase(),
@@ -41,6 +41,7 @@ export default function configureStore(initialState) {
         },
         db: db,
         path: `/${type.plural}`,
+        docs: {}, // https://github.com/pgte/pouch-redux-middleware/issues/3
     })));
 
   const applyMiddlewares = applyMiddleware(
@@ -54,7 +55,7 @@ export default function configureStore(initialState) {
     applyMiddlewares
   )(createStore);
 
-  let store = createStoreWithMiddleware(
+  store = createStoreWithMiddleware(
     rootReducer,
     initialState
   );

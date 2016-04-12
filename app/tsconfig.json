@@ -13,7 +13,6 @@
     "src/containers/index.ts",
     "src/containers/Login.ts",
     "src/containers/Player.ts",
-    "src/containers/Settings.ts",
     "src/containers/Signup.ts",
     "src/containers/VisibleTrackList.ts",
     "src/interfaces/action.ts",
@@ -30,6 +29,7 @@
     "src/reducers/user.ts",
     "src/store/configureStore.ts",
     "src/store/db.ts",
+    "src/store/PouchMiddleware.ts",
     "src/store/schema.ts",
     "typings/browser.d.ts",
     "typings/browser/ambient/assert/index.d.ts",
@@ -58,7 +58,6 @@
     "webpack.config.ts",
     "src/components/App.tsx",
     "src/components/Audio.tsx",
-    "src/components/BackendAddForm.tsx",
     "src/components/BackendList.tsx",
     "src/components/Collection.tsx",
     "src/components/Header.tsx",
@@ -69,6 +68,8 @@
     "src/components/SignupForm.tsx",
     "src/components/TrackItem.tsx",
     "src/components/TrackList.tsx",
+    "src/containers/AddBackend.tsx",
+    "src/containers/Settings.tsx",
     "src/main.tsx"
   ],
   "filesGlob": [

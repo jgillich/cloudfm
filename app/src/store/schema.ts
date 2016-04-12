@@ -27,5 +27,5 @@ export default [
   {
     plural: "backends",
     singular: "backend",
-  }
+  },
 ];

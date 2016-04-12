@@ -10,9 +10,7 @@ export interface UserAction extends Action {
   user: {
     name: string;
     password: string;
-    metadata?: {
-      email: string;
-    }
+    email: string;
   };
   status?: string;
 };
@@ -54,7 +52,7 @@ export function signupUser(user) {
 
 function loginOrSignup(action: UserAction) {
   return function (dispatch) {
-    const {name, password, metadata} = action.user;
+    const {name, password, email} = action.user;
     const userDb: any = new PouchDB(userDbUrl(name), {skip_setup: true});
 
     if(action.type == LOGIN_USER) {
@@ -69,7 +67,7 @@ function loginOrSignup(action: UserAction) {
         dispatch(push("/collection"));
       });
     } else if(action.type == SIGNUP_USER) {
-      userDb.signup(name, password, {metadata}, function (err, response) {
+      userDb.signup(name, password, {metadata: {email}}, function (err, response) {
         if (err) {
           return dispatch(Object.assign({}, action, {error: err.name}));
         }
