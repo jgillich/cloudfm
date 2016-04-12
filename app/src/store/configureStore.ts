@@ -41,7 +41,7 @@ export default function configureStore(initialState) {
         },
         db: db,
         path: `/${type.plural}`,
-        docs: {}, // https://github.com/pgte/pouch-redux-middleware/issues/3
+        changeFilter: doc => doc.type == type.singular
     })));
 
   const applyMiddlewares = applyMiddleware(
