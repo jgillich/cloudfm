@@ -19,4 +19,4 @@ install:
 script:
   - pushd server && cargo build && cargo test && popd
   - pushd app && npm i && typings i && webpack && popd
-  - pushd docs && mdbook build && popd
+  - pushd docs && ~/.cargo/bin/mdbook build && popd
