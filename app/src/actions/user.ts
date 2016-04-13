@@ -18,11 +18,11 @@ export interface UserAction extends Action {
 export function resumeSession() {
   return function (dispatch) {
     const remoteUrl = process.env.DATABASE_URL + "/_users";
-    const remoteDb: any = new PouchDB(remoteUrl, {skip_setup: true});
+    const remoteDb: any = new (PouchDB as any)(remoteUrl, {skip_setup: true});
 
     remoteDb.getSession(function (err, response) {
       if (!err && response.userCtx.name) {
-        const userDb: any = new PouchDB(userDbUrl(response.userCtx.name), {skip_setup: true});
+        const userDb: any = new (PouchDB as any)(userDbUrl(response.userCtx.name), {skip_setup: true});
         db.sync(userDb, {live: true, retry: true})
           .on("error", console.error.bind(console));
 
@@ -53,7 +53,7 @@ export function signupUser(user) {
 function loginOrSignup(action: UserAction) {
   return function (dispatch) {
     const {name, password, email} = action.user;
-    const userDb: any = new PouchDB(userDbUrl(name), {skip_setup: true});
+    const userDb: any = new (PouchDB as any)(userDbUrl(name), {skip_setup: true});
 
     if(action.type == LOGIN_USER) {
       userDb.login(name, password, function (err, response) {

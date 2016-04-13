@@ -23,8 +23,5 @@
     "redux-logger": "github:DefinitelyTyped/DefinitelyTyped/redux-logger/redux-logger.d.ts#7136728255d96038795d93c3e4b43c3c7de8ac1e",
     "redux-thunk": "github:DefinitelyTyped/DefinitelyTyped/redux-thunk/redux-thunk.d.ts#6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3",
     "webpack": "github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
-  },
-  "dependencies": {
-    "node-uuid": "registry:dt/node-uuid#0.0.0+20160316155526"
   }
 }
