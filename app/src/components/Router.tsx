@@ -9,6 +9,7 @@ export const Router: StatelessComponent<any> = ({history}) => (
   <ReactRouter history={history}>
     <Route path="/" component={App}>
       <IndexRoute component={Login}/>
+      <Route path="/login" component={Login}/>
       <Route path="/signup" component={Signup} />
       <Route path="/collection" component={Collection} />
       <Route path="/settings" component={Settings} />
