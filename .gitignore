@@ -5,3 +5,5 @@ app/node_modules
 app/typings
 
 server/target
+
+docs/book
