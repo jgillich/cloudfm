@@ -1,5 +1,4 @@
 import * as PouchDB from "pouchdb";
-import schema from "./schema";
 
 (PouchDB as any).plugin(require("pouchdb-authentication"));
 

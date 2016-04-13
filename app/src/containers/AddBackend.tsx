@@ -9,7 +9,7 @@ const Container: StatelessComponent<any> = ({ dispatch }) => {
   return (
     <div>
       <form onSubmit={e => {
-        e.preventDefault()
+        e.preventDefault();
         dispatch(insertBackend({
           owner: ownerInput.value,
           path: pathInput.value,
@@ -17,8 +17,8 @@ const Container: StatelessComponent<any> = ({ dispatch }) => {
         ownerInput.value = "";
         pathInput.value = "";
       }}>
-        <input ref={node => { ownerInput = node }} placeholder="Owner" />
-        <input ref={node => { pathInput = node }} placeholder="Path" />
+        <input ref={node => { ownerInput = node; }} placeholder="Owner" />
+        <input ref={node => { pathInput = node; }} placeholder="Path" />
         <button type="submit">
           Add Backend
         </button>

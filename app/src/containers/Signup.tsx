@@ -11,7 +11,7 @@ const Container = ({error, dispatch}) => {
       <div className={styles.component}>
         <div>{error}</div>
         <form className={styles.form} onSubmit={e => {
-          e.preventDefault()
+          e.preventDefault();
           dispatch(signupUser({
             name: nameInput.value,
             password: passwordInput.value,
@@ -21,17 +21,17 @@ const Container = ({error, dispatch}) => {
         }}>
           <div>
             <label>User Name</label>
-            <input type="text" ref={node => { nameInput = node }}/>
+            <input type="text" ref={node => { nameInput = node; }}/>
           </div>
           <div>
             <label>Password</label>
-            <input type="password" ref={node => { passwordInput = node }}/>
+            <input type="password" ref={node => { passwordInput = node; }}/>
           </div>
           <button className={styles.submit} type="submit">Sign up</button>
           or <Link to="/login">Log in</Link>
         </form>
       </div>
-  )
-}
+  );
+};
 
 export const Signup = connect()(Container as any);

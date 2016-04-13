@@ -39,9 +39,9 @@ export default function configureStore(initialState) {
             }
           },
         },
+        changeFilter: doc => doc.type == type.singular,
         db: db,
         path: `/${type.plural}`,
-        changeFilter: doc => doc.type == type.singular
     })));
 
   const applyMiddlewares = applyMiddleware(

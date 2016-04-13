@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch
+    dispatch,
   };
 };
 
@@ -20,7 +20,7 @@ const Container: StatelessComponent<any> = ({backends, dispatch}) => {
       <BackendList backends={backends}/>
       <AddBackend dispatch={dispatch}/>
     </div>
-  )
-}
+  );
+};
 
 export const Settings = connect(mapStateToProps, mapDispatchToProps)(Container as any);
