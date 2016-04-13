@@ -1,6 +1,10 @@
 language: rust
 rust:
+  - nightly-2016-03-22
   - nightly
+matrix:
+  allow_failures:
+    - rust: nightly
 services:
   - couchdb
 env:
