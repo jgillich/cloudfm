@@ -27,23 +27,7 @@ impl Backend for Fs {
     }
 
     fn index(&self, db: &chill::Client) -> Result<(), Error> {
-        fn is_file_type(e: &DirEntry, ext: &str) -> bool {
-            let p = e.path();
-            p.is_file() && p.extension().map(|s| s == ext).unwrap_or(false)
-        }
 
-
-        fn is_music(e: &DirEntry) -> bool {
-            is_file_type(e, "mp3") || is_file_type(e, "ogg")
-        }
-
-        fn walk_path(path: &str) -> Vec<DirEntry> {
-            WalkDir::new(path)
-                .into_iter()
-                .filter_map(|e| e.ok())
-                .filter(|e| is_music(e))
-                .collect()
-        }
 
         let paths = vec!["/home/jakob/Downloads"]; // TODO fetch from db
 

@@ -2,7 +2,6 @@
 name = "cloudfm-server"
 version = "0.1.0"
 dependencies = [
- "base64 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "chill 0.1.1+master (git+https://github.com/jgillich/chill.git)",
  "dotenv 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",

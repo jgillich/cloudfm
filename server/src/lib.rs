@@ -13,21 +13,15 @@ extern crate dotenv;
 extern crate uuid;
 extern crate serde;
 extern crate serde_json;
-extern crate base64;
 extern crate machine_id;
 extern crate jamendo;
 extern crate logger;
 extern crate staticfile;
 
 mod models;
-mod backends;
+//mod index;
 mod error;
-mod server;
-mod routes;
+mod views;
 
 pub use error::Error;
 pub use models::*;
-
-fn main() {
-    server::Server::new().start();
-}
