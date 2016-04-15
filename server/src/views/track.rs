@@ -6,7 +6,7 @@ pub const TRACK_VIEWS: &'static [ &'static View ] = &[
         map: "
             function (doc) {
                 if(doc.type == \"track\") {
-                    emit(doc.title);
+                    emit(doc.name);
                 }
             }
         ",

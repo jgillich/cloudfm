@@ -1,5 +1,5 @@
 [root]
-name = "cloudfm-server"
+name = "cloudfm"
 version = "0.1.0"
 dependencies = [
  "chill 0.1.1+master (git+https://github.com/jgillich/chill.git)",

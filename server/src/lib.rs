@@ -18,10 +18,10 @@ extern crate jamendo;
 extern crate logger;
 extern crate staticfile;
 
-mod models;
-//mod index;
-mod error;
-mod views;
+pub mod models;
+//pub mod index;
+pub mod error;
+pub mod views;
 
 pub use error::Error;
 pub use models::*;
