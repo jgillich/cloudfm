@@ -10,12 +10,10 @@ dependencies = [
  "jamendo 0.1.0 (git+https://github.com/jgillich/jamendo-rs)",
  "logger 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "machine-id 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "mount 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "router 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_macros 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "staticfile 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "uuid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "walkdir 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -356,15 +354,6 @@ version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "mount"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "iron 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "sequence_trie 0.0.13 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "num"
 version = "0.1.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -573,11 +562,6 @@ version = "0.1.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "sequence_trie"
-version = "0.0.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
 name = "serde"
 version = "0.6.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -624,18 +608,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "hpack 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "staticfile"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "iron 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "log 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "mount 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "time 0.1.35 (registry+https://github.com/rust-lang/crates.io-index)",
- "url 0.5.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
