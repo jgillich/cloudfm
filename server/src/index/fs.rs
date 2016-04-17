@@ -1,6 +1,7 @@
 use id3::Tag;
 use chill;
 use super::Indexer;
+use walkdir::{DirEntry, WalkDir};
 use {Track, User, Artist, Album};
 
 pub struct Fs;
@@ -28,7 +29,7 @@ impl Indexer for Fs {
             }
         }
 
-
+        Ok(())
     }
 
     fn is_file_type(e: &DirEntry, ext: &str) -> bool {
@@ -45,7 +46,7 @@ impl Indexer for Fs {
         WalkDir::new(path)
             .into_iter()
             .filter_map(|e| e.ok())
-            .filter(is_music)
+            .filter(|e| is_music(e))
             .collect()
     }
 }

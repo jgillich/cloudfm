@@ -4,4 +4,5 @@ pub struct Track {
     pub number: u32,
     pub artist: String,
     pub album: String,
+    pub uri: String,
 }

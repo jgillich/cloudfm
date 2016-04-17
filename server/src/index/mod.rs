@@ -1,5 +1,5 @@
 use chill;
-use {Track, User, Artist, Album};
+use {Track, User, Artist, Album, Error};
 
 mod fs;
 
@@ -12,7 +12,7 @@ pub trait Indexer {
 }
 
 pub struct IndexResult {
-    pub albums: Vec<Albums>,
+    pub albums: Vec<Album>,
     pub artists: Vec<Artist>,
     pub tracks: Vec<Track>,
 }

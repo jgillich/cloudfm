@@ -7,7 +7,6 @@ extern crate mount;
 extern crate router;
 extern crate walkdir;
 extern crate id3;
-extern crate crypto;
 extern crate chill;
 extern crate dotenv;
 extern crate uuid;
