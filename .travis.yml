@@ -13,6 +13,6 @@ install:
   - N_PREFIX=$HOME n stable
   - cargo install mdbook
 script:
-  - pushd server && cargo build && cargo test && popd
+  - pushd lib && cargo build && cargo test && popd
   - pushd app && npm i && typings i && webpack && popd
-  - pushd docs && ~/.cargo/bin/mdbook build && popd
+  - pushd doc && ~/.cargo/bin/mdbook build && popd
