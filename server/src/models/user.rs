@@ -1,7 +1,7 @@
+#[derive(Serialize, Deserialize, Debug)]
 pub struct User {
-    name: String,
-    email: String,
-    db: String,
+    pub name: String,
+    pub email: Option<String>,
 }
 
 impl User {
