@@ -4,6 +4,6 @@ app/target
 app/node_modules
 app/typings
 
-server/target
+lib/target
 
 docs/book
