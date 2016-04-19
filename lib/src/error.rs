@@ -8,6 +8,7 @@ pub enum Error {
     Chill(chill::Error),
     Jamendo(jamendo::Error),
     View(ViewError),
+    Impossible(ImpossibleError),
 }
 
 impl From<env::VarError> for Error {
@@ -34,6 +35,12 @@ impl From<ViewError> for Error {
     }
 }
 
+impl From<ImpossibleError> for Error {
+    fn from(err: ImpossibleError) -> Error {
+        Error::Impossible(err)
+    }
+}
+
 impl error::Error for Error {
     fn description(&self) -> &str {
         match self {
@@ -42,7 +49,10 @@ impl error::Error for Error {
             &Error::Jamendo(ref e) => e.description(),
             &Error::View(ref e) => match e {
                 &ViewError::NewerRevision => "Database view revision is higher than ours"
-            }
+            },
+            &Error::Impossible(ref e) => match e {
+                &ImpossibleError::ViewReduced => "View is reduced"
+            },
         }
     }
 
@@ -58,4 +68,9 @@ impl fmt::Display for Error {
 #[derive(Debug)]
 pub enum ViewError {
     NewerRevision,
+}
+
+#[derive(Debug)]
+pub enum ImpossibleError {
+    ViewReduced,
 }

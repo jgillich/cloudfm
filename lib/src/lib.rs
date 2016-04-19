@@ -21,7 +21,7 @@ pub mod index;
 pub mod error;
 pub mod views;
 
-pub use error:: {Error, ViewError};
+pub use error::*;
 pub use models::*;
 pub use index::{Index, Indexer};
 

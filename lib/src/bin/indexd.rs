@@ -19,7 +19,7 @@ pub fn main() {
     let (count, errors) = index_all(db);
     println!("index_all done. success: {}, failed: {}", count - errors.len(), errors.len());
     for error in errors {
-        println!("error: {}", error);
+        println!("error: {:#?}", error);
     }
 }
 
@@ -56,7 +56,7 @@ pub fn index_all(db: chill::Client) -> (usize, Vec<Error>) {
 
 pub fn index_user(db: &chill::Client, row: &ViewRow<DocumentId, AllDocumentsViewValue>) -> Result<(), Error> {
     let doc = db.read_document(("/_users", row.key()))?.run()?; // TODO use include_docs
-    let user: User = doc.get_content().unwrap();
+    let user: User = doc.get_content()?;
 
     views::apply(db, &user.db_name())?;
 

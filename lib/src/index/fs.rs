@@ -6,7 +6,7 @@ use {Track, User, Artist, Album, Error, FsBackend};
 
 impl Indexer<FsBackend> for Index {
     fn index(db: &chill::Client, user: &User, backend: &FsBackend) -> Result<(), Error> {
-
+        Index::take_result(db, &user.db_name(), Vec::new())?;
         Ok(())
     }
 }
