@@ -16,24 +16,27 @@ pub fn main() {
     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let db = chill::Client::new(&db_url).expect("DATABASE_URL must be a valid URL");
 
-    let errors = index_all(db);
-    println!("index_all done. error count: {}", errors.len());
+    let (count, errors) = index_all(db);
+    println!("index_all done. success: {}, failed: {}", count - errors.len(), errors.len());
     for error in errors {
         println!("error: {}", error);
     }
 }
 
-pub fn index_all(db: chill::Client) -> Vec<Error> {
+pub fn index_all(db: chill::Client) -> (usize, Vec<Error>) {
     let mut errors: Vec<Error> = Vec::new();
 
+    // skips design docs
+    let start_key = &DocumentId::from("org.couchdb.user:");
+
     let action = match db.read_all_documents("/_users") {
-        Ok(action) => action,
-        Err(error) => return vec![Error::from(error)]
+        Ok(action) => action.with_start_key(start_key),
+        Err(error) => return (0, vec![Error::from(error)])
     };
 
     let res = match action.run() {
         Ok(res) => res,
-        Err(error) => return vec![Error::from(error)]
+        Err(error) => return (0, vec![Error::from(error)])
     };
 
     let view = match res.as_unreduced() {
@@ -47,7 +50,7 @@ pub fn index_all(db: chill::Client) -> Vec<Error> {
         }
     }
 
-    errors
+    (view.rows().len(), errors)
 }
 
 
