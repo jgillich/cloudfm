@@ -50,7 +50,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "chill"
 version = "0.1.1+master"
-source = "git+https://github.com/jgillich/chill.git#23d2003b331e2664982856e711cb2a6f58dfff86"
+source = "git+https://github.com/jgillich/chill.git#49e9f28ff387c4ec4dee908fdf3d3e152ee07a93"
 dependencies = [
  "base64 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
