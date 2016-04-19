@@ -1,7 +1,5 @@
-use serde_json;
 use chill;
 use chill::{IntoDatabasePath};
-use std::error::Error as StdError;
 use {Error, ViewError};
 
 mod track;

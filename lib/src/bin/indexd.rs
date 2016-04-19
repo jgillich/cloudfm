@@ -3,10 +3,10 @@
 extern crate cloudfm;
 extern crate chill;
 extern crate dotenv;
+extern crate serde_json;
 
-use std::{error};
-use cloudfm::{views, User, Error};
-use chill::{UnreducedView, ViewRow, DocumentId, AllDocumentsViewValue};
+use cloudfm::{Index, Indexer, views, User, Error, Backend};
+use chill::{ViewRow, DocumentId, AllDocumentsViewValue};
 use std::env;
 use dotenv::dotenv;
 
@@ -56,7 +56,18 @@ pub fn index_all(db: chill::Client) -> (usize, Vec<Error>) {
 
 pub fn index_user(db: &chill::Client, row: &ViewRow<DocumentId, AllDocumentsViewValue>) -> Result<(), Error> {
     let doc = db.read_document(("/_users", row.key()))?.run()?; // TODO use include_docs
-    let user: User = doc.get_content()?;
+    let user: User = doc.get_content().unwrap();
+
     views::apply(db, &user.db_name())?;
+
+    if let Some(ref backends) = user.backends {
+        for backend in backends {
+            match backend {
+                &Backend::Fs(ref backend) => Index::index(db, &user, backend)?,
+                &Backend::Jamendo(ref backend) => Index::index(db, &user, backend)?,
+            }
+        }
+    }
+
     Ok(())
 }

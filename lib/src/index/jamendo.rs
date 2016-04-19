@@ -1,13 +1,11 @@
 
 use id3::Tag;
 use chill;
-use super::Indexer;
-use {Track, User, Artist, Album, Error};
+use super::{Index, Indexer};
+use {Track, User, Artist, Album, Error, JamendoBackend};
 
-pub struct Jamendo;
-
-impl Indexer for Jamendo {
-    fn index(user: &User, db: &chill::Client) -> Result<(), Error> {
+impl Indexer<JamendoBackend> for Index {
+    fn index(db: &chill::Client, user: &User, backend: &JamendoBackend) -> Result<(), Error> {
         Ok(())
     }
 }

@@ -23,5 +23,6 @@ pub mod views;
 
 pub use error:: {Error, ViewError};
 pub use models::*;
+pub use index::{Index, Indexer};
 
 pub use chill::path::DocumentId;

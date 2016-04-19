@@ -1,18 +1,15 @@
 use id3::Tag;
 use chill;
-use super::Indexer;
+use super::{Index, Indexer};
 use walkdir::{DirEntry, WalkDir};
-use {Track, User, Artist, Album, Error};
+use {Track, User, Artist, Album, Error, FsBackend};
 
-pub struct Fs;
-
-impl Indexer for Fs {
-    fn index(user: &User, db: &chill::Client) -> Result<(), Error> {
+impl Indexer<FsBackend> for Index {
+    fn index(db: &chill::Client, user: &User, backend: &FsBackend) -> Result<(), Error> {
 
         Ok(())
     }
 }
-
 
 fn is_file_type(e: &DirEntry, ext: &str) -> bool {
     let p = e.path();
