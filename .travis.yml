@@ -17,9 +17,10 @@ script:
   - pushd app && npm i && typings i && webpack && popd
   - pushd doc && ~/.cargo/bin/mdbook build && popd
 after_success: |
+  export PATH=$HOME/.local/bin:$PATH &&
   [ $TRAVIS_BRANCH = master ] &&
   [ $TRAVIS_PULL_REQUEST = false ] &&
-  sudo pip install ghp-import &&
+  pip install ghp-import --user `whoami` &&
   ghp-import -n build &&
   git push -fq https://${TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
 env:
