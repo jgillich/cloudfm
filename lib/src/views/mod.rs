@@ -1,7 +1,8 @@
 use serde_json;
 use chill;
+use chill::{IntoDatabasePath};
 use std::error::Error as StdError;
-use Error;
+use {Error, ViewError};
 
 mod track;
 
@@ -9,21 +10,26 @@ mod track;
 // if you touch any of the views, increase this by one
 const VIEW_REV: i32 = 1;
 
-pub fn apply(db_path: chill::DatabaseNameRef, db: &chill::Client) -> Result<(), Error> {
-    let view_id = chill::DocumentIdRef::from("_design/server");
+pub fn apply<'a, P>(db: &'a chill::Client, db_path: P) -> Result<(), Error> where P: IntoDatabasePath<'a> {
+    let db_path = db_path.into_database_path()?;
+    let view_id = chill::DocumentIdRef::from("_design/cloudfm");
 
     match db.read_document((db_path, view_id))?.run() {
         Ok(mut doc) => {
-            // TODO
-            // only update if rev < VIEW_REV
-            // panic if view is rev > VIEW_REV
-            // do nothing if rev == VIEW_REV
-            doc.set_content(&view_doc())?;
-            db.update_document(&doc)?.run()?;
-            Ok(())
+            let view_doc: ViewDocument = doc.get_content()?;
+
+            if view_doc.view_rev < VIEW_REV {
+                doc.set_content(&ViewDocument::new())?;
+                db.update_document(&doc)?.run()?;
+                Ok(())
+            } else if view_doc.view_rev > VIEW_REV {
+                Err(Error::from(ViewError::NewerRevision))
+            } else {
+                Ok(())
+            }
         },
         Err(chill::Error::NotFound(_)) => {
-            db.create_document(db_path, &view_doc())?.with_document_id(view_id).run()?;
+            db.create_document(db_path, &ViewDocument::new())?.with_document_id(view_id).run()?;
             Ok(())
         },
         Err(e) => {
@@ -33,21 +39,26 @@ pub fn apply(db_path: chill::DatabaseNameRef, db: &chill::Client) -> Result<(), 
 
 }
 
-fn view_doc() -> serde_json::value::Value {
-    serde_json::builder::ObjectBuilder::new()
-        .insert_object("views", |builder| {
-            let mut b = builder;
-            for view in track::TRACK_VIEWS {
-                b = b.insert_object("views", |builder| {
-                    builder.insert("map", view.map)
-                });
-            }
-            b
-        }
-    ).unwrap()
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ViewDocument {
+    pub view_rev: i32,
+    pub views: Vec<View>,
 }
 
+impl ViewDocument {
+    pub fn new() -> Self {
+        let mut views = Vec::new();
+        views.append(&mut track::views());
+
+        ViewDocument {
+            view_rev: VIEW_REV,
+            views: views,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct View {
-    name: &'static str,
-    map: &'static str,
+    name: String,
+    map: String,
 }

@@ -14,13 +14,14 @@ extern crate serde;
 extern crate serde_json;
 extern crate machine_id;
 extern crate jamendo;
+extern crate hex;
 
 pub mod models;
 pub mod index;
 pub mod error;
 pub mod views;
 
-pub use error::Error;
+pub use error:: {Error, ViewError};
 pub use models::*;
 
 pub use chill::path::DocumentId;

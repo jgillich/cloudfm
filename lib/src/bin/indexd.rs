@@ -4,6 +4,7 @@ extern crate cloudfm;
 extern crate chill;
 extern crate dotenv;
 
+use std::{error};
 use cloudfm::{views, User, Error};
 use chill::{UnreducedView, ViewRow, DocumentId, AllDocumentsViewValue};
 use std::env;
@@ -17,6 +18,9 @@ pub fn main() {
 
     let errors = index_all(db);
     println!("index_all done. error count: {}", errors.len());
+    for error in errors {
+        println!("error: {}", error);
+    }
 }
 
 pub fn index_all(db: chill::Client) -> Vec<Error> {
@@ -50,6 +54,6 @@ pub fn index_all(db: chill::Client) -> Vec<Error> {
 pub fn index_user(db: &chill::Client, row: &ViewRow<DocumentId, AllDocumentsViewValue>) -> Result<(), Error> {
     let doc = db.read_document(("/_users", row.key()))?.run()?; // TODO use include_docs
     let user: User = doc.get_content()?;
-    println!("{}", user.name);
+    views::apply(db, &user.db_name())?;
     Ok(())
 }

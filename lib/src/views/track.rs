@@ -1,14 +1,16 @@
 use super::{View};
 
-pub const TRACK_VIEWS: &'static [ &'static View ] = &[
-    &View {
-        name: "all",
-        map: "
-            function (doc) {
-                if(doc.type == \"track\") {
-                    emit(doc.name);
+pub fn views() -> Vec<View> {
+    vec!(
+        View {
+            name: "all".into(),
+            map: "
+                function (doc) {
+                    if(doc.type == \"track\") {
+                        emit(doc.name);
+                    }
                 }
-            }
-        ",
-  }
-];
+            ".into(),
+        }
+    )
+}
