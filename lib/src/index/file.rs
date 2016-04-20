@@ -14,15 +14,17 @@ impl Indexer<FileBackend> for Index {
         for path in backend.paths.iter() {
             for entry in walk_path(&path) {
                 if let Ok(tag) = Tag::read_from_path(entry.path()) {
-                    let uri = FileUri::new(&machine_id, &path);
+                    if let Some(file_path) = entry.path().to_str() {
+                        let uri = FileUri::new(&machine_id, file_path);
 
-                    tracks.push(DecodedTrack {
-                        artist: tag.artist().unwrap_or("").into(),
-                        album: tag.album().unwrap_or("").into(),
-                        name: tag.title().unwrap_or("").into(),
-                        number: tag.track().unwrap_or(0),
-                        uri: Uri::File(uri),
-                    });
+                        tracks.push(DecodedTrack {
+                            artist: tag.artist().unwrap_or("").into(),
+                            album: tag.album().unwrap_or("").into(),
+                            name: tag.title().unwrap_or("").into(),
+                            number: tag.track().unwrap_or(0),
+                            uri: Uri::File(uri),
+                        });
+                    }
                 }
             }
         }

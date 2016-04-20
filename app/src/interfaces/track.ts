@@ -5,5 +5,5 @@ export interface Track extends Doc  {
   artist: number;
   name: string;
   number: number;
-  uri: string;
+  uris: string[];
 }

@@ -2,12 +2,11 @@ import {connect} from "react-redux";
 import {Audio} from "../components";
 
 const mapStateToProps = (state) => {
-  if (!state.player.uri) {
+  if (!state.player.uris) {
     return {src: "" };
   };
-  let {backend, owner, id} = state.player.uri;
   return {
-    src: `${process.env.SERVER_URL}/v1/tracks/${backend}:${owner}:${id}`,
+    src: `${process.env.SERVER_URL}/tracks/${state.player.uris[0]}`,
   };
 };
 
