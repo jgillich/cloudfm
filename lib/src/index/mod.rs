@@ -1,6 +1,6 @@
 use chill;
-use chill::{IntoDatabasePath, IntoViewPath};
-use {DecodedTrack, User, Error, ImpossibleError};
+use chill::{IntoDatabasePath, IntoViewPath, DocumentId, DocumentIdRef};
+use {DecodedTrack, User, Error, Artist, Album, Track, ImpossibleError};
 
 mod fs;
 mod jamendo;
@@ -13,17 +13,64 @@ impl Index {
 
         let res = db.execute_view::<String, Option<String>, _>((db_path, "cloudfm", "all_tracks"))?.run()?;
         let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
-        let tracks = res.rows();
+        let mut tracks: Vec<(DocumentId, String)> = res.rows().iter()
+            .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
+
 
         let res = db.execute_view::<String, Option<String>, _>((db_path, "cloudfm", "all_albums"))?.run()?;
         let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
-        let albums = res.rows();
+        let mut albums: Vec<(DocumentId, String)> = res.rows().iter()
+            .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
+
 
         let res = db.execute_view::<String, Option<String>, _>((db_path, "cloudfm", "all_artists"))?.run()?;
         let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
-        let artists = res.rows();
+        let mut artists: Vec<(DocumentId, String)> = res.rows().iter()
+            .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
 
         for track in result {
+
+            // is_new works around https://github.com/rust-lang/rfcs/issues/811
+            // vec can't be mutated inside match block
+            let (artist_id, is_new) = match artists.iter().find(|&&(ref i, ref a)| a == &track.artist) {
+                Some(&(ref i, _)) => (i.clone(), false),
+                None => {
+                    let (id, _) = db.create_document(db_path, &Artist { name: track.artist.clone() })?.run()?;
+                    (id, true)
+                }
+            };
+            if is_new {
+                artists.push((artist_id.clone(), track.artist.clone()));
+            };
+
+            let (album_id, is_new) = match albums.iter().find(|&&(ref i, ref a)| a == &track.album) {
+                Some(&(ref i, _)) => (i.clone(), false),
+                None => {
+                    let (id, _) = db.create_document(db_path, &Album { name: track.album.clone(), artist: artist_id.clone() })?.run()?;
+                    (id, true)
+                }
+            };
+            if is_new {
+                albums.push((album_id.clone(), track.album.clone()));
+            };
+
+            let new_track = match tracks.iter().find(|&&(ref i, ref t)| t == &track.name) {
+                Some(&(ref i, _)) => None,
+                None => {
+                    let track = Track {
+                        name: track.name,
+                        number: track.number,
+                        uri: track.uri,
+                        artist: artist_id,
+                        album: album_id,
+                    };
+                    let (id, _) = db.create_document(db_path, &track)?.run()?;
+                    Some((id, track.name))
+                }
+            };
+            if let Some(t) = new_track {
+                tracks.push(t);
+            }
 
         }
 
