@@ -1,4 +1,4 @@
-#![feature(custom_derive, plugin, question_mark)]
+#![feature(custom_derive, plugin, question_mark, slice_patterns)]
 #![plugin(serde_macros)]
 
 extern crate hyper;

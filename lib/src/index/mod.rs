@@ -1,5 +1,5 @@
 use chill;
-use chill::{IntoDatabasePath, IntoViewPath, DocumentId, DocumentIdRef};
+use chill::{IntoDatabasePath, DocumentId};
 use {DecodedTrack, User, Error, Artist, Album, Track, ImpossibleError};
 
 mod fs;
@@ -32,7 +32,7 @@ impl Index {
 
             // is_new works around https://github.com/rust-lang/rfcs/issues/811
             // vec can't be mutated inside match block
-            let (artist_id, is_new) = match artists.iter().find(|&&(ref i, ref a)| a == &track.artist) {
+            let (artist_id, is_new) = match artists.iter().find(|&&(_, ref a)| a == &track.artist) {
                 Some(&(ref i, _)) => (i.clone(), false),
                 None => {
                     let (id, _) = db.create_document(db_path, &Artist { name: track.artist.clone() })?.run()?;
@@ -43,7 +43,7 @@ impl Index {
                 artists.push((artist_id.clone(), track.artist.clone()));
             };
 
-            let (album_id, is_new) = match albums.iter().find(|&&(ref i, ref a)| a == &track.album) {
+            let (album_id, is_new) = match albums.iter().find(|&&(_, ref a)| a == &track.album) {
                 Some(&(ref i, _)) => (i.clone(), false),
                 None => {
                     let (id, _) = db.create_document(db_path, &Album { name: track.album.clone(), artist: artist_id.clone() })?.run()?;
@@ -54,8 +54,8 @@ impl Index {
                 albums.push((album_id.clone(), track.album.clone()));
             };
 
-            let new_track = match tracks.iter().find(|&&(ref i, ref t)| t == &track.name) {
-                Some(&(ref i, _)) => None,
+            let new_track = match tracks.iter().find(|&&(_, ref t)| t == &track.name) {
+                Some(&(_, _)) => None,
                 None => {
                     let track = Track {
                         name: track.name,

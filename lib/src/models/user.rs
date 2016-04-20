@@ -12,7 +12,7 @@ pub struct User {
 
 impl User {
     pub fn db_name<'a>(&self) -> DatabaseName {
-        let db_name = format!("userdb-{}", (&self.name).as_bytes().to_hex());
+        let db_name = format!("userdb-{}", self.name.to_hex());
         DatabaseName::from(db_name)
     }
 }
@@ -28,13 +28,13 @@ impl serde::Serialize for Backend {
         where S: serde::Serializer
     {
         match self {
-            &Backend::Fs(ref backend) => backend.serialize::<S>(serializer)?,
-            &Backend::Jamendo(ref backend) => backend.serialize::<S>(serializer)?,
-        };
-        Ok(())
+            &Backend::Fs(ref backend) => backend.serialize::<S>(serializer),
+            &Backend::Jamendo(ref backend) => backend.serialize::<S>(serializer),
+        }
     }
 }
 
+// FIXME parse type field
 impl serde::Deserialize for Backend {
     fn deserialize<D>(deserializer: &mut D) -> Result<Self, D::Error>
         where D: serde::Deserializer
@@ -55,8 +55,6 @@ pub struct FsBackend {
     pub _type: String,
     pub machine_id: String,
 }
-
-
 
 impl FsBackend {
     pub fn new(machine_id: &str) -> Self {
