@@ -19,7 +19,7 @@ impl User {
 
 #[derive(Debug)]
 pub enum Backend {
-    Fs(FsBackend),
+    File(FileBackend),
     Jamendo(JamendoBackend),
 }
 
@@ -28,7 +28,7 @@ impl serde::Serialize for Backend {
         where S: serde::Serializer
     {
         match self {
-            &Backend::Fs(ref backend) => backend.serialize::<S>(serializer),
+            &Backend::File(ref backend) => backend.serialize::<S>(serializer),
             &Backend::Jamendo(ref backend) => backend.serialize::<S>(serializer),
         }
     }
@@ -39,8 +39,8 @@ impl serde::Deserialize for Backend {
     fn deserialize<D>(deserializer: &mut D) -> Result<Self, D::Error>
         where D: serde::Deserializer
     {
-        if let Ok(fs) = FsBackend::deserialize::<D>(deserializer) {
-            Ok(Backend::Fs(fs))
+        if let Ok(file) = FileBackend::deserialize::<D>(deserializer) {
+            Ok(Backend::File(file))
         } else if let Ok(jamendo) = JamendoBackend::deserialize::<D>(deserializer) {
             Ok(Backend::Jamendo(jamendo))
         } else {
@@ -50,31 +50,15 @@ impl serde::Deserialize for Backend {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct FsBackend {
+pub struct FileBackend {
     #[serde(rename="type")]
     pub _type: String,
     pub machine_id: String,
-}
-
-impl FsBackend {
-    pub fn new(machine_id: &str) -> Self {
-        FsBackend {
-            _type: "fs".into(),
-            machine_id: machine_id.into(),
-        }
-    }
+    pub paths: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct JamendoBackend {
     #[serde(rename="type")]
     pub _type: String,
-}
-
-impl JamendoBackend {
-    pub fn new() -> Self {
-        JamendoBackend {
-            _type: "jamendo".into(),
-        }
-    }
 }

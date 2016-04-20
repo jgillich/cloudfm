@@ -63,7 +63,7 @@ pub fn index_user(db: &chill::Client, row: &ViewRow<DocumentId, AllDocumentsView
     if let Some(ref backends) = user.backends {
         for backend in backends {
             match backend {
-                &Backend::Fs(ref backend) => Index::index(db, &user, backend)?,
+                &Backend::File(ref backend) => Index::index(db, &user, backend)?,
                 &Backend::Jamendo(ref backend) => Index::index(db, &user, backend)?,
             }
         }

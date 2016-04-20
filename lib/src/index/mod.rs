@@ -2,7 +2,7 @@ use chill;
 use chill::{IntoDatabasePath, DocumentId};
 use {DecodedTrack, User, Error, Artist, Album, Track, ImpossibleError};
 
-mod fs;
+mod file;
 mod jamendo;
 
 pub struct Index;
@@ -11,19 +11,17 @@ impl Index {
     pub fn take_result<'a, P>(db: &'a chill::Client, db_path: P, result: Vec<DecodedTrack>) -> Result<(), Error> where P: IntoDatabasePath<'a> {
         let db_path = db_path.into_database_path()?;
 
-        let res = db.execute_view::<String, Option<String>, _>((db_path, "cloudfm", "all_tracks"))?.run()?;
+        let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_tracks"))?.run()?;
         let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
         let mut tracks: Vec<(DocumentId, String)> = res.rows().iter()
             .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
 
-
-        let res = db.execute_view::<String, Option<String>, _>((db_path, "cloudfm", "all_albums"))?.run()?;
+        let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_albums"))?.run()?;
         let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
         let mut albums: Vec<(DocumentId, String)> = res.rows().iter()
             .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
 
-
-        let res = db.execute_view::<String, Option<String>, _>((db_path, "cloudfm", "all_artists"))?.run()?;
+        let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_artists"))?.run()?;
         let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
         let mut artists: Vec<(DocumentId, String)> = res.rows().iter()
             .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
@@ -35,7 +33,7 @@ impl Index {
             let (artist_id, is_new) = match artists.iter().find(|&&(_, ref a)| a == &track.artist) {
                 Some(&(ref i, _)) => (i.clone(), false),
                 None => {
-                    let (id, _) = db.create_document(db_path, &Artist { name: track.artist.clone() })?.run()?;
+                    let (id, _) = db.create_document(db_path, &Artist::new(&track.artist))?.run()?;
                     (id, true)
                 }
             };
@@ -43,10 +41,10 @@ impl Index {
                 artists.push((artist_id.clone(), track.artist.clone()));
             };
 
-            let (album_id, is_new) = match albums.iter().find(|&&(_, ref a)| a == &track.album) {
+            let (album_id, is_new) = match albums.iter().find(|&&(_, ref a)| a == &track.album) { // TODO compare artist
                 Some(&(ref i, _)) => (i.clone(), false),
                 None => {
-                    let (id, _) = db.create_document(db_path, &Album { name: track.album.clone(), artist: artist_id.clone() })?.run()?;
+                    let (id, _) = db.create_document(db_path, &Album::new(&track.album, artist_id.clone()))?.run()?;
                     (id, true)
                 }
             };
@@ -54,16 +52,10 @@ impl Index {
                 albums.push((album_id.clone(), track.album.clone()));
             };
 
-            let new_track = match tracks.iter().find(|&&(_, ref t)| t == &track.name) {
-                Some(&(_, _)) => None,
+            let new_track = match tracks.iter().find(|&&(_, ref t)| t == &track.name) { // TODO compare album, artist
+                Some(&(_, _)) => None, // TODO read track, compare uris
                 None => {
-                    let track = Track {
-                        name: track.name,
-                        number: track.number,
-                        uri: track.uri,
-                        artist: artist_id,
-                        album: album_id,
-                    };
+                    let track = Track::new(&track.name, track.number, artist_id, album_id, vec![track.uri]);
                     let (id, _) = db.create_document(db_path, &track)?.run()?;
                     Some((id, track.name))
                 }
