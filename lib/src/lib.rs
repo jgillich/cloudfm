@@ -16,11 +16,15 @@ extern crate machine_id;
 extern crate jamendo;
 extern crate hex;
 
-pub mod models;
 pub mod index;
+pub mod models;
+pub mod proxy;
 pub mod error;
+pub mod uri;
 pub mod views;
 
-pub use error::*;
-pub use models::*;
 pub use index::{Index, Indexer};
+pub use models::*;
+pub use proxy::{Proxy, ProxyHandler};
+pub use error::*;
+pub use uri::{Uri, FileUri, JamendoUri};

@@ -7,23 +7,20 @@ extern crate dotenv;
 
 use std::env;
 use iron::Iron;
-use iron::{IronResult, Request, Response, status};
+use iron::{IronResult, Request, Response};
 use iron::middleware::Chain;
 use router::Router;
 use logger::Logger;
 use dotenv::dotenv;
-
+use cloudfm::{Uri, Proxy, ProxyHandler};
 
 pub fn main() {
     dotenv().ok();
 
-    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    let db = chill::Client::new(&db_url).expect("DATABASE_URL must be a valid URL");
-
     let (logger_before, logger_after) = Logger::new(None);
 
     let mut router = Router::new();
-    router.get("/tracks/:id", handle);
+    router.get("/tracks/:uri", handle);
 
     let mut chain = Chain::new(router);
     chain.link_before(logger_before);
@@ -36,7 +33,11 @@ pub fn main() {
 }
 
 fn handle(req: &mut Request) -> IronResult<Response> {
-    let ref id = req.extensions.get::<Router>().unwrap().find("id").unwrap();
-    //let doc =
-    Ok(Response::with((status::Ok, "TODO")))
+    let ref uri = req.extensions.get::<Router>().unwrap().find("uri").unwrap();
+    let uri = uri.parse::<Uri>().unwrap();
+
+    match uri {
+        Uri::File(u) => Proxy::handle(u),
+        Uri::Jamendo(u) => unimplemented!(),
+    }
 }

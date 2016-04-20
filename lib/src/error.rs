@@ -1,6 +1,7 @@
-use std::{env, fmt, error};
+use std::{fmt, env, error};
 use chill;
 use jamendo;
+use uri;
 
 #[derive(Debug)]
 pub enum Error {
@@ -9,6 +10,7 @@ pub enum Error {
     Jamendo(jamendo::Error),
     View(ViewError),
     Impossible(ImpossibleError),
+    UriParse(uri::UriParseError),
 }
 
 impl From<env::VarError> for Error {
@@ -41,6 +43,12 @@ impl From<ImpossibleError> for Error {
     }
 }
 
+impl From<uri::UriParseError> for Error {
+    fn from(err: uri::UriParseError) -> Error {
+        Error::UriParse(err)
+    }
+}
+
 impl error::Error for Error {
     fn description(&self) -> &str {
         match self {
@@ -53,6 +61,7 @@ impl error::Error for Error {
             &Error::Impossible(ref e) => match e {
                 &ImpossibleError::ViewReduced => "View is reduced"
             },
+            &Error::UriParse(ref e) => e.description(),
         }
     }
 

@@ -9,7 +9,7 @@ impl Indexer<FileBackend> for Index {
     fn index(db: &chill::Client, user: &User, backend: &FileBackend) -> Result<(), Error> {
 
         let mut tracks: Vec<DecodedTrack> = Vec::new();
-        let machine_id = format!("{}", MachineId::get()); // FIXME reimplement machine_id crate
+        let machine_id = format!("{}", MachineId::get().to_string()); // FIXME reimplement machine_id crate
 
         for path in backend.paths.iter() {
             for entry in walk_path(&path) {
