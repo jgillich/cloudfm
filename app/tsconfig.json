@@ -5,7 +5,6 @@
     "jsx": "react"
   },
   "files": [
-    "src/actions/backend.ts",
     "src/actions/index.ts",
     "src/actions/player.ts",
     "src/actions/track.ts",
@@ -14,12 +13,10 @@
     "src/containers/Player.ts",
     "src/containers/VisibleTrackList.ts",
     "src/interfaces/action.ts",
-    "src/interfaces/backend.ts",
     "src/interfaces/doc.ts",
     "src/interfaces/index.ts",
     "src/interfaces/track.ts",
     "src/main.d.ts",
-    "src/reducers/backend.ts",
     "src/reducers/error.ts",
     "src/reducers/index.ts",
     "src/reducers/player.ts",

@@ -1,7 +1,6 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {connect} from "react-redux";
-import {insertBackend} from "../actions";
 
 const Container: StatelessComponent<any> = ({ dispatch }) => {
   let ownerInput, pathInput;
@@ -10,10 +9,10 @@ const Container: StatelessComponent<any> = ({ dispatch }) => {
     <div>
       <form onSubmit={e => {
         e.preventDefault();
-        dispatch(insertBackend({
-          owner: ownerInput.value,
-          path: pathInput.value,
-        }));
+        //dispatch(insertBackend({
+        //  owner: ownerInput.value,
+        //  path: pathInput.value,
+        //}));
         ownerInput.value = "";
         pathInput.value = "";
       }}>
