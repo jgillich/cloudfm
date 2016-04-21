@@ -17,6 +17,29 @@ extern crate hex;
 #[macro_use]
 extern crate lazy_static;
 
+// TODO support visibility modifier instead of using pub
+macro_rules! trait_enum {
+
+    (enum $name:ident: $_trait:ident { $($var:ident($ty:ty)),*, }) => {
+        #[derive(Debug)]
+        pub enum $name {
+            $(
+                $var($ty),
+            )*
+        }
+
+        use std::ops::Deref;
+        impl<'a> Deref for $name {
+		    type Target = ($_trait + 'a);
+		    fn deref<'b>(&'b self) -> &'b $_trait {
+		        match self {
+                    $(& $name::$var(ref x) => x,)*
+                }
+		    }
+		}
+    }
+}
+
 lazy_static! {
     pub static ref MACHINE_ID: uuid::Uuid = {
         let file = std::fs::File::open("/etc/machine-id").unwrap();

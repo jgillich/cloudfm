@@ -1,16 +1,18 @@
 use std::{fmt, env, error};
+use std::error::Error as StdError;
 use chill;
 use jamendo;
 use uri;
 use views;
 
-#[derive(Debug)]
-pub enum Error {
-    Env(env::VarError),
-    Chill(chill::Error),
-    Jamendo(jamendo::Error),
-    View(views::ViewError),
-    UriParse(uri::UriParseError),
+trait_enum! {
+    enum Error: StdError {
+        Env(env::VarError),
+        Chill(chill::Error),
+        Jamendo(jamendo::Error),
+        View(views::ViewError),
+        UriParse(uri::UriParseError),
+    }
 }
 
 impl From<env::VarError> for Error {
@@ -40,25 +42,5 @@ impl From<views::ViewError> for Error {
 impl From<uri::UriParseError> for Error {
     fn from(err: uri::UriParseError) -> Error {
         Error::UriParse(err)
-    }
-}
-
-impl error::Error for Error {
-    fn description(&self) -> &str {
-        match self {
-            &Error::Env(ref e) => e.description(),
-            &Error::Chill(ref e) => e.description(),
-            &Error::Jamendo(ref e) => e.description(),
-            &Error::View(ref e) => e.description(),
-            &Error::UriParse(ref e) => e.description(),
-        }
-    }
-
-    fn cause(&self) -> Option<&error::Error> { None }
-}
-
-impl fmt::Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-        write!(f, "{}", error::Error::description(self))
     }
 }
