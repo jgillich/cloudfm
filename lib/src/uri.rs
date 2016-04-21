@@ -2,7 +2,7 @@ use std::{fmt, error};
 use std::str::FromStr;
 use serde;
 use hex::{ToHex, FromHex};
-use serde::de::Error;
+use std::error::Error;
 
 #[derive(Debug, PartialEq)]
 pub enum Uri {
@@ -33,7 +33,7 @@ impl FromStr for Uri {
                         ).map_err(|_| UriParseError::UnknownFilePathEncoding)?,
                 })),
                 ["jamendo", jamendo_id] => Ok(Uri::Jamendo(JamendoUri {
-                    jamendo_id: jamendo_id.into(),
+                    jamendo_id: jamendo_id.parse().map_err(|_| UriParseError::InvalidFormat)?,
                 })),
                 _ => Err(UriParseError::InvalidFormat),
             }
@@ -82,9 +82,12 @@ impl serde::Deserialize for Uri {
             type Value =  Uri;
 
             fn visit_str<E>(&mut self, value: &str) -> Result<Uri, E>
-                where E: Error,
+                where E: serde::de::Error,
             {
-                value.parse::<Uri>().map_err(|e| serde::de::Error::custom("")) // FIXME e.description()
+                match Uri::from_str(value) {
+                    Ok(u) => Ok(u),
+                    Err(e) => Err(E::custom(e.description()))
+                }
             }
 
         }
@@ -110,7 +113,7 @@ impl FileUri {
 
 #[derive(Debug, PartialEq)]
 pub struct JamendoUri {
-    pub jamendo_id: String,
+    pub jamendo_id: i32,
 }
 
 #[cfg(test)]
@@ -123,20 +126,18 @@ mod test {
         let uri = Uri::File(FileUri { machine_id: "foo-bar".into(), file_path: "/home/baz".into() });
         assert_eq!(uri.to_string(), "file:foo-bar:2f686f6d652f62617a");
 
-        assert_eq!(serde_json::to_string(&uri).unwrap(), "\"file:foo-bar:2f686f6d652f62617a\"");
-
-        let uri = Uri::Jamendo(JamendoUri { jamendo_id: "foo".into() });
-        assert_eq!(serde_json::to_string(&uri).unwrap(), "\"jamendo:foo\"");
+        let uri = Uri::Jamendo(JamendoUri { jamendo_id: 1 });
+        assert_eq!(uri.to_string(), "jamendo:1");
     }
 
     #[test]
     fn deserialize_uri() {
-        let got: Uri = serde_json::from_str("\"file:foo-bar:2f686f6d652f62617a\"").unwrap();
+        let got: Uri = "file:foo-bar:2f686f6d652f62617a".parse().unwrap();
         let expected = Uri::File(FileUri { machine_id: "foo-bar".into(), file_path: "/home/baz".into() });
         assert_eq!(got, expected);
 
-        let got: Uri = serde_json::from_str("\"jamendo:foo\"").unwrap();
-        let expected = Uri::Jamendo(JamendoUri { jamendo_id: "foo".into() });
+        let got: Uri = "jamendo:1".parse().unwrap();
+        let expected = Uri::Jamendo(JamendoUri { jamendo_id: 1 });
         assert_eq!(got, expected);
     }
 }

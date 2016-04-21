@@ -38,6 +38,6 @@ fn handle(req: &mut Request) -> IronResult<Response> {
 
     match uri {
         Uri::File(u) => Proxy::handle(u),
-        Uri::Jamendo(u) => unimplemented!(),
+        Uri::Jamendo(u) => Proxy::handle(u),
     }
 }

@@ -1,6 +1,7 @@
 use iron::{IronResult, Response};
 
 mod file;
+mod jamendo;
 
 pub struct Proxy;
 
