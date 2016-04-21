@@ -15,7 +15,7 @@ dependencies = [
  "serde 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_macros 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "uuid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "uuid 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "walkdir 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -252,7 +252,7 @@ dependencies = [
 [[package]]
 name = "jamendo"
 version = "0.1.0"
-source = "git+https://github.com/jgillich/jamendo-rs#e23799a01c81041afbbdf05aebc63d37f163ebb2"
+source = "git+https://github.com/jgillich/jamendo-rs#2f882d1006bb83cb681b78e13dec3f6a6cee9323"
 dependencies = [
  "hyper 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -720,7 +720,7 @@ dependencies = [
  "rustc-serialize 0.3.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "unicode-bidi 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "unicode-normalization 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "uuid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "uuid 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -749,7 +749,7 @@ dependencies = [
 
 [[package]]
 name = "uuid"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "rand 0.3.14 (registry+https://github.com/rust-lang/crates.io-index)",

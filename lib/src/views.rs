@@ -35,7 +35,6 @@ pub fn apply<'a, P>(db: &'a chill::Client, db_path: P) -> Result<(), Error> wher
             Err(Error::from(e))
         }
     }
-
 }
 
 pub fn all_artists<'a, P>(db: &'a chill::Client, db_path: P) -> Result<Vec<(DocumentId, String)>, Error> where P: IntoDatabasePath<'a> {
@@ -56,6 +55,7 @@ pub fn all_tracks<'a, P>(db: &'a chill::Client, db_path: P) -> Result<Vec<(Docum
     Ok(res.rows().iter().map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect())
 }
 
+// TODO make views static
 fn views() -> serde_json::value::Value {
     let mut builder = serde_json::builder::ObjectBuilder::new();
 

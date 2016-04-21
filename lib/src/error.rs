@@ -1,4 +1,4 @@
-use std::{fmt, env, error};
+use std::env;
 use std::error::Error as StdError;
 use chill;
 use jamendo;

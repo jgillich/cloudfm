@@ -4,6 +4,7 @@ extern crate iron;
 extern crate router;
 extern crate logger;
 extern crate dotenv;
+extern crate serde;
 
 use std::env;
 use iron::Iron;
@@ -12,7 +13,7 @@ use iron::middleware::Chain;
 use router::Router;
 use logger::Logger;
 use dotenv::dotenv;
-use cloudfm::{Uri, Proxy, ProxyHandler};
+use cloudfm::{Uri, Proxy, ProxyHandler, Backend};
 
 pub fn main() {
     dotenv().ok();

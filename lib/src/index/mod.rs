@@ -1,5 +1,5 @@
 use chill;
-use chill::{IntoDatabasePath, DocumentId};
+use chill::IntoDatabasePath;
 use {views, DecodedTrack, User, Error, Artist, Album, Track};
 
 mod file;

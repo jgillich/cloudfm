@@ -110,31 +110,34 @@ impl FileUri {
 
 #[derive(Debug, PartialEq)]
 pub struct JamendoUri {
-    pub jamendo_id: i32,
+    pub jamendo_id: u32,
+}
+
+impl JamendoUri {
+    pub fn new(jamendo_id: u32) -> Self {
+        JamendoUri {
+            jamendo_id: jamendo_id,
+        }
+    }
 }
 
 #[cfg(test)]
 mod test {
     use super::*;
-    use serde_json;
 
     #[test]
-    fn file() {
+    fn file_uri() {
         let uri = Uri::File(FileUri { machine_id: "foo-bar".into(), file_path: "/home/baz".into() });
-        assert_eq!(uri.to_string(), "file:foo-bar:2f686f6d652f62617a");
-
-        let uri = Uri::Jamendo(JamendoUri { jamendo_id: 1 });
-        assert_eq!(uri.to_string(), "jamendo:1");
+        let uri_str = uri.to_string();
+        assert_eq!(uri_str, "file:foo-bar:2f686f6d652f62617a");
+        assert_eq!(uri, uri_str.parse::<Uri>().unwrap());
     }
 
     #[test]
-    fn deserialize_uri() {
-        let got: Uri = "file:foo-bar:2f686f6d652f62617a".parse().unwrap();
-        let expected = Uri::File(FileUri { machine_id: "foo-bar".into(), file_path: "/home/baz".into() });
-        assert_eq!(got, expected);
-
-        let got: Uri = "jamendo:1".parse().unwrap();
-        let expected = Uri::Jamendo(JamendoUri { jamendo_id: 1 });
-        assert_eq!(got, expected);
+    fn jamendo_uri() {
+        let uri = Uri::Jamendo(JamendoUri { jamendo_id: 123 });
+        let uri_str = uri.to_string();
+        assert_eq!(uri_str, "jamendo:123");
+        assert_eq!(uri, uri_str.parse::<Uri>().unwrap());
     }
 }

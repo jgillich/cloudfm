@@ -13,7 +13,7 @@ impl ProxyHandler<JamendoUri> for Proxy {
         // TODO make id configurable
         let jamendo_client = jamendo::Client::new(jamendo::TEST_ID);
 
-        let tracks = match jamendo_client.get_tracks().id(uri.jamendo_id).run() {
+        let tracks = match jamendo_client.get_tracks().track_id(uri.jamendo_id).run() {
             Ok(tracks) => tracks,
             Err(err) => return Ok(Response::with((status::InternalServerError, err.description()))),
         };
