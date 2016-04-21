@@ -1,21 +1,19 @@
 use id3::Tag;
 use chill;
-use machine_id::MachineId;
 use super::{Index, Indexer};
 use walkdir::{DirEntry, WalkDir};
-use {DecodedTrack, User, Error, FileBackend, Uri, FileUri};
+use {DecodedTrack, User, Error, FileBackend, Uri, FileUri, MACHINE_ID};
 
 impl Indexer<FileBackend> for Index {
     fn index(db: &chill::Client, user: &User, backend: &FileBackend) -> Result<(), Error> {
 
         let mut tracks: Vec<DecodedTrack> = Vec::new();
-        let machine_id = MachineId::get().to_string(); // FIXME reimplement machine_id crate
 
         for path in backend.paths.iter() {
             for entry in walk_path(&path) {
                 if let Ok(tag) = Tag::read_from_path(entry.path()) {
                     if let Some(file_path) = entry.path().to_str() {
-                        let uri = FileUri::new(&machine_id, file_path);
+                        let uri = FileUri::new(&MACHINE_ID.to_string(), file_path);
 
                         tracks.push(DecodedTrack {
                             artist: tag.artist().unwrap_or("").into(),

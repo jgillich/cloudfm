@@ -55,7 +55,7 @@ pub fn index_all(db: chill::Client) -> (usize, Vec<Error>) {
 
 
 pub fn index_user(db: &chill::Client, row: &ViewRow<DocumentId, AllDocumentsViewValue>) -> Result<(), Error> {
-    let doc = db.read_document(("/_users", row.key()))?.run()?; // TODO use include_docs
+    let doc = db.read_document(("/_users", row.key()))?.run()?;
     let user: User = doc.get_content()?;
 
     views::apply(db, &user.db_name())?;

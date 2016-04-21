@@ -84,10 +84,7 @@ impl serde::Deserialize for Uri {
             fn visit_str<E>(&mut self, value: &str) -> Result<Uri, E>
                 where E: serde::de::Error,
             {
-                match Uri::from_str(value) {
-                    Ok(u) => Ok(u),
-                    Err(e) => Err(E::custom(e.description()))
-                }
+                value.parse::<Uri>().map_err(|e| E::custom(e.description()))
             }
 
         }
