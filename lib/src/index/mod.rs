@@ -1,6 +1,6 @@
 use chill;
 use chill::{IntoDatabasePath, DocumentId};
-use {DecodedTrack, User, Error, Artist, Album, Track, ImpossibleError};
+use {views, DecodedTrack, User, Error, Artist, Album, Track};
 
 mod file;
 mod jamendo;
@@ -11,20 +11,9 @@ impl Index {
     pub fn take_result<'a, P>(db: &'a chill::Client, db_path: P, result: Vec<DecodedTrack>) -> Result<(), Error> where P: IntoDatabasePath<'a> {
         let db_path = db_path.into_database_path()?;
 
-        let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_tracks"))?.run()?;
-        let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
-        let mut tracks: Vec<(DocumentId, String)> = res.rows().iter()
-            .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
-
-        let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_albums"))?.run()?;
-        let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
-        let mut albums: Vec<(DocumentId, String)> = res.rows().iter()
-            .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
-
-        let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_artists"))?.run()?;
-        let res = res.as_unreduced().ok_or(ImpossibleError::ViewReduced)?;
-        let mut artists: Vec<(DocumentId, String)> = res.rows().iter()
-            .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect();
+        let mut tracks = views::all_tracks(db, db_path)?;
+        let mut albums = views::all_albums(db, db_path)?;
+        let mut artists = views::all_artists(db, db_path)?;
 
         for track in result {
 

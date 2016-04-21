@@ -1,7 +1,8 @@
+use std::{error, fmt};
 use serde_json;
 use chill;
-use chill::{IntoDatabasePath};
-use {Error, ViewError};
+use chill::{DocumentId, IntoDatabasePath};
+use {Error};
 
 // IMPORTANT!
 // if you touch any of the views, increase this by one
@@ -21,7 +22,7 @@ pub fn apply<'a, P>(db: &'a chill::Client, db_path: P) -> Result<(), Error> wher
                 db.update_document(&doc)?.run()?;
                 Ok(())
             } else if view_doc.view_rev > VIEW_REV {
-                Err(Error::from(ViewError::NewerRevision))
+                Err(Error::View(ViewError::NewerRevision))
             } else {
                 Ok(())
             }
@@ -37,6 +38,23 @@ pub fn apply<'a, P>(db: &'a chill::Client, db_path: P) -> Result<(), Error> wher
 
 }
 
+pub fn all_artists<'a, P>(db: &'a chill::Client, db_path: P) -> Result<Vec<(DocumentId, String)>, Error> where P: IntoDatabasePath<'a> {
+    let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_artists"))?.run()?;
+    let res = res.as_unreduced().ok_or(ViewError::ViewReduced)?;
+    Ok(res.rows().iter().map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect())
+}
+
+pub fn all_albums<'a, P>(db: &'a chill::Client, db_path: P) -> Result<Vec<(DocumentId, String)>, Error> where P: IntoDatabasePath<'a> {
+    let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_albums"))?.run()?;
+    let res = res.as_unreduced().ok_or(ViewError::ViewReduced)?;
+    Ok(res.rows().iter().map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect())
+}
+
+pub fn all_tracks<'a, P>(db: &'a chill::Client, db_path: P) -> Result<Vec<(DocumentId, String)>, Error> where P: IntoDatabasePath<'a> {
+    let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_tracks"))?.run()?;
+    let res = res.as_unreduced().ok_or(ViewError::ViewReduced)?;
+    Ok(res.rows().iter().map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect())
+}
 
 fn views() -> serde_json::value::Value {
     let mut builder = serde_json::builder::ObjectBuilder::new();
@@ -103,4 +121,27 @@ impl ViewDocument {
 pub struct View {
     name: String,
     map: String,
+}
+
+#[derive(Debug)]
+pub enum ViewError {
+    NewerRevision,
+    ViewReduced,
+}
+
+impl error::Error for ViewError {
+    fn description(&self) -> &str {
+        match self {
+            &ViewError::NewerRevision => "Database view revision is higher than ours",
+            &ViewError::ViewReduced => "View is reduced",
+        }
+    }
+
+    fn cause(&self) -> Option<&error::Error> { None }
+}
+
+impl fmt::Display for ViewError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+        write!(f, "{}", error::Error::description(self))
+    }
 }

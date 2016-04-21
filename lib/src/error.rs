@@ -2,14 +2,14 @@ use std::{fmt, env, error};
 use chill;
 use jamendo;
 use uri;
+use views;
 
 #[derive(Debug)]
 pub enum Error {
     Env(env::VarError),
     Chill(chill::Error),
     Jamendo(jamendo::Error),
-    View(ViewError),
-    Impossible(ImpossibleError),
+    View(views::ViewError),
     UriParse(uri::UriParseError),
 }
 
@@ -31,15 +31,9 @@ impl From<jamendo::Error> for Error {
     }
 }
 
-impl From<ViewError> for Error {
-    fn from(err: ViewError) -> Error {
+impl From<views::ViewError> for Error {
+    fn from(err: views::ViewError) -> Error {
         Error::View(err)
-    }
-}
-
-impl From<ImpossibleError> for Error {
-    fn from(err: ImpossibleError) -> Error {
-        Error::Impossible(err)
     }
 }
 
@@ -55,12 +49,7 @@ impl error::Error for Error {
             &Error::Env(ref e) => e.description(),
             &Error::Chill(ref e) => e.description(),
             &Error::Jamendo(ref e) => e.description(),
-            &Error::View(ref e) => match e {
-                &ViewError::NewerRevision => "Database view revision is higher than ours"
-            },
-            &Error::Impossible(ref e) => match e {
-                &ImpossibleError::ViewReduced => "View is reduced"
-            },
+            &Error::View(ref e) => e.description(),
             &Error::UriParse(ref e) => e.description(),
         }
     }
@@ -72,14 +61,4 @@ impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         write!(f, "{}", error::Error::description(self))
     }
-}
-
-#[derive(Debug)]
-pub enum ViewError {
-    NewerRevision,
-}
-
-#[derive(Debug)]
-pub enum ImpossibleError {
-    ViewReduced,
 }
