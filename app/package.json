@@ -10,6 +10,11 @@
   "author": "Jakob Gillich <jakob@gillich.me>",
   "license": "MIT",
   "dependencies": {
+    "basscss": "^8.0.1",
+    "basscss-background-colors": "^2.1.0",
+    "basscss-btn": "^1.1.1",
+    "basscss-btn-outline": "^1.1.0",
+    "basscss-colors": "^2.2.0",
     "core-js": "~2.2.2",
     "node-uuid": "^1.4.7",
     "normalize.css": "~4.1.1",

@@ -1,7 +1,6 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {Track} from "../interfaces/track";
-const styles = require("../stylesheets/TrackItem.css");
 
 interface PropTypes {
   track: Track;
@@ -9,5 +8,5 @@ interface PropTypes {
 };
 
 export const TrackItem: StatelessComponent<PropTypes> = ({track, onClick}) => (
-  <li className={styles.component} onClick={onClick}>{track.name}</li>
+  <li className="" onClick={onClick}>{track.name}</li>
 );

@@ -2,15 +2,14 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {signupUser} from "../actions";
-const styles = require("../stylesheets/Signup.css");
 
 const Container = ({error, dispatch}) => {
   let nameInput, passwordInput;
 
   return (
-      <div className={styles.component}>
+      <div className="">
         <div>{error}</div>
-        <form className={styles.form} onSubmit={e => {
+        <form className="" onSubmit={e => {
           e.preventDefault();
           dispatch(signupUser({
             name: nameInput.value,
@@ -27,7 +26,7 @@ const Container = ({error, dispatch}) => {
             <label>Password</label>
             <input type="password" ref={node => { passwordInput = node; }}/>
           </div>
-          <button className={styles.submit} type="submit">Sign up</button>
+          <button className="" type="submit">Sign up</button>
           or <Link to="/login">Log in</Link>
         </form>
       </div>

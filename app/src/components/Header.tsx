@@ -1,17 +1,23 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {Link} from "react-router";
-const styles = require("../stylesheets/Header.css");
-const logo = require("../assets/logo_white.svg");
 
 export const Header: StatelessComponent<any> = () => (
-  <div className={styles.component}>
 
-    <div className={styles.nav}>
-      <img className={styles.logo} src={logo}/>
-      <Link to="/collection" className={styles.navItem}>Collection</Link>
-      <Link to="/discover" className={styles.navItem}>Discover</Link>
-      <Link to="/settings" className={styles.navItem}>Settings</Link>
-    </div>
-  </div>
+    <nav className="flex bg-black">
+      <ul className="list-reset">
+          <li className="inline-block mr1">
+            <Link to="/" className="btn red">cloudfm</Link>
+          </li>
+          <li className="inline-block mr1">
+            <Link to="/collection" className="btn white">Collection</Link>
+          </li>
+          <li className="inline-block mr1">
+            <Link to="/discover" className="btn white">Discover</Link>
+          </li>
+          <li className="inline-block mr1">
+            <Link to="/settings" className="btn white">Settings</Link>
+          </li>
+      </ul>
+    </nav>
 );
