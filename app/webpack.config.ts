@@ -20,9 +20,12 @@ module.exports = {
   entry: "./src/main.tsx",
   module: {
     loaders: [
-      {loader: "file", test: /\.(jpe?g|png|gif|svg)$/i},
+      {loader: "file", test: /\.(jpe?g|png|gif)$/i},
+      {loader: "file", test: /\.(svg|woff2?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/i},
       {loader: "ts-loader", test: /\.tsx?$/},
-      {loader: "style-loader!css-loader", test: /\.css$/},
+      {loader: "style!css", test: /\.css$/},
+
+
     ],
     preLoaders: [
       {loader: "tslint", test: /\.tsx?$/},

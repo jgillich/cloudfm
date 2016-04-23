@@ -11,9 +11,15 @@ export const TrackList: StatelessComponent<PropTypes> = ({tracks, onTrackClick})
   <div className="flex flex-auto">
     <ul className="list-reset flex-auto">
       {tracks.map (track =>
-        <li className="border-bottom px1 py1" key={track._id} onClick={() => onTrackClick(track)}>
-          {track.name}
-        </li>
+
+          <li className="px1 flex flex-wrap items-center" key={track._id}>
+            <div className="col6">
+              <a className="btn" onClick={() => onTrackClick(track)}><i className="fa fa-play-circle"></i></a>
+            </div>
+            <div>
+              {track.name}
+            </div>
+          </li>
       )}
     </ul>
   </div>

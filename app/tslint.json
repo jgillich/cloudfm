@@ -6,7 +6,7 @@
     "eofline": true,
     "indent": [true, "spaces"],
     "interface-name": [true, "never-prefix"],
-    "max-line-length": [true, 80],
+    "max-line-length": [true, 100],
     "member-access": true,
     "no-any": false,
     "no-conditional-assignment": true,
