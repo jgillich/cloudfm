@@ -1,6 +1,11 @@
 @import "../../node_modules/normalize.css/normalize.css";
-@import "../../node_modules/basscss/css/basscss.css";
-@import "../../node_modules/basscss-btn/css/btn.css";
-@import "../../node_modules/basscss-btn-outline/css/btn-outline.css";
-@import "../../node_modules/basscss-colors/css/colors.css";
-@import "../../node_modules/basscss-background-colors/css/background-colors.css";
+@import "~basscss/css/basscss.css";
+@import "~basscss-btn/css/btn.css";
+@import "~basscss-btn-outline/css/btn-outline.css";
+@import "~basscss-colors/css/colors.css";
+@import "~basscss-background-colors/css/background-colors.css";
+@import "~basscss-forms";
+
+* {
+  box-sizing: border-box;
+}
