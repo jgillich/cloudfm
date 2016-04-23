@@ -1,8 +1,8 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {Route, IndexRoute} from "react-router";
-import {App, Collection} from "./";
-import {Login, Signup, Settings} from "../containers";
+import {App} from "./";
+import {Login, Signup, Settings, Collection} from "../containers";
 import {Router as ReactRouter} from "react-router";
 
 export const Router: StatelessComponent<any> = ({history}) => (

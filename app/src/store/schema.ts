@@ -1,7 +1,6 @@
 export default [
   {
     plural: "tracks",
-
     relations: {
       album: {belongsTo: "album"},
       artist: {belongsTo: "artist"},
