@@ -1,4 +1,4 @@
-use std::{error, fmt};
+use std::{error, fmt, default};
 use serde_json;
 use chill;
 use chill::{DocumentId, IntoDatabasePath};
@@ -108,12 +108,18 @@ pub struct ViewDocument {
     pub views: serde_json::value::Value,
 }
 
-impl ViewDocument {
-    pub fn new() -> Self {
+impl default::Default for ViewDocument {
+    fn default() -> Self {
         ViewDocument {
             view_rev: VIEW_REV,
             views: views(),
         }
+    }
+}
+
+impl ViewDocument {
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 
@@ -131,9 +137,9 @@ pub enum ViewError {
 
 impl error::Error for ViewError {
     fn description(&self) -> &str {
-        match self {
-            &ViewError::NewerRevision => "Database view revision is higher than ours",
-            &ViewError::ViewReduced => "View is reduced",
+        match *self {
+            ViewError::NewerRevision => "Database view revision is higher than ours",
+            ViewError::ViewReduced => "View is reduced",
         }
     }
 

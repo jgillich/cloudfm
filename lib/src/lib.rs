@@ -1,5 +1,8 @@
 #![feature(custom_derive, plugin, question_mark, slice_patterns)]
-#![plugin(serde_macros)]
+#![plugin(serde_macros, clippy)]
+
+// https://github.com/Manishearth/rust-clippy/issues/852
+#![allow(used_underscore_binding)]
 
 extern crate hyper;
 extern crate iron;
@@ -31,9 +34,9 @@ macro_rules! trait_enum {
         use std::ops::Deref;
         impl<'a> Deref for $name {
 		    type Target = ($_trait + 'a);
-		    fn deref<'b>(&'b self) -> &'b $_trait {
-		        match self {
-                    $(& $name::$var(ref x) => x,)*
+		    fn deref(&self) -> &$_trait {
+		        match *self {
+                    $($name::$var(ref x) => x,)*
                 }
 		    }
 		}

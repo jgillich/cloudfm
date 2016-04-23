@@ -9,7 +9,7 @@ impl Indexer<FileBackend> for Index {
 
         let mut tracks: Vec<DecodedTrack> = Vec::new();
 
-        for path in backend.paths.iter() {
+        for path in &backend.paths {
             for entry in walk_path(&path) {
                 if let Ok(tag) = Tag::read_from_path(entry.path()) {
                     if let Some(file_path) = entry.path().to_str() {
@@ -34,7 +34,7 @@ impl Indexer<FileBackend> for Index {
 
 fn is_file_type(e: &DirEntry, ext: &str) -> bool {
     let p = e.path();
-    p.is_file() && p.extension().map(|s| s == ext).unwrap_or(false)
+    p.is_file() && p.extension().map_or(false, |s| s == ext)
 }
 
 

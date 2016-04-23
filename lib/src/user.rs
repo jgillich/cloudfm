@@ -12,7 +12,7 @@ pub struct User {
 }
 
 impl User {
-    pub fn db_name<'a>(&self) -> DatabaseName {
+    pub fn db_name(&self) -> DatabaseName {
         let db_name = format!("userdb-{}", self.name.to_hex());
         DatabaseName::from(db_name)
     }
@@ -28,9 +28,9 @@ impl serde::Serialize for Backend {
     fn serialize<S>(&self, serializer: &mut S) -> Result<(), S::Error>
         where S: serde::Serializer
     {
-        match self {
-            &Backend::File(ref backend) => backend.serialize::<S>(serializer),
-            &Backend::Jamendo(ref backend) => backend.serialize::<S>(serializer),
+        match *self {
+            Backend::File(ref backend) => backend.serialize::<S>(serializer),
+            Backend::Jamendo(ref backend) => backend.serialize::<S>(serializer),
         }
     }
 }

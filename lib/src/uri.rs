@@ -12,9 +12,9 @@ pub enum Uri {
 
 impl fmt::Display for Uri {
     fn fmt(&self, formatter: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-         match self {
-            &Uri::File(ref uri) => write!(formatter, "file:{}:{}", uri.machine_id, uri.file_path.to_hex()),
-            &Uri::Jamendo(ref uri) => write!(formatter, "jamendo:{}", uri.jamendo_id),
+         match *self {
+            Uri::File(ref uri) => write!(formatter, "file:{}:{}", uri.machine_id, uri.file_path.to_hex()),
+            Uri::Jamendo(ref uri) => write!(formatter, "jamendo:{}", uri.jamendo_id),
         }
     }
 }
@@ -48,9 +48,9 @@ pub enum UriParseError {
 
 impl error::Error for UriParseError {
     fn description(&self) -> &str {
-        match self {
-            &UriParseError::UnknownFilePathEncoding => "file_path is not hex encoded or invalid UTF8",
-            &UriParseError::InvalidFormat => "Invalid uri format",
+        match *self {
+            UriParseError::UnknownFilePathEncoding => "file_path is not hex encoded or invalid UTF8",
+            UriParseError::InvalidFormat => "Invalid uri format",
         }
     }
 
