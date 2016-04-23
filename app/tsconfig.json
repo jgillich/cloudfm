@@ -56,7 +56,6 @@
     "src/components/index.tsx",
     "src/components/Root.tsx",
     "src/components/Router.tsx",
-    "src/components/TrackItem.tsx",
     "src/components/TrackList.tsx",
     "src/containers/AddBackend.tsx",
     "src/containers/Login.tsx",
