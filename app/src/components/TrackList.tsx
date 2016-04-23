@@ -14,7 +14,9 @@ export const TrackList: StatelessComponent<PropTypes> = ({tracks, onTrackClick})
 
           <li className="px1 flex flex-wrap items-center" key={track._id}>
             <div className="col6">
-              <a className="btn" onClick={() => onTrackClick(track)}><i className="fa fa-play-circle"></i></a>
+              <a className="btn" onClick={() => onTrackClick(track)}>
+                <i className="fa fa-play-circle"/>
+              </a>
             </div>
             <div>
               {track.name}

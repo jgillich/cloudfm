@@ -1,13 +1,13 @@
 import {Track} from "../interfaces";
-import {INSERT_TRACK, REMOVE_TRACK, UPDATE_TRACK, TrackAction} from "../actions";
+import {Action, TrackAction} from "../actions";
 
 const trackReducer = (state: Track[] = [], action: TrackAction) => {
   switch (action.type) {
-    case INSERT_TRACK:
+    case Action.InsertTrack:
       return [ ...state, action.track ];
-    case REMOVE_TRACK:
+    case Action.RemoveTrack:
       return state.filter(t => t._id != action.track._id);
-    case UPDATE_TRACK:
+    case Action.UpdateTrack:
       return state.map(t => t._id == action.track._id ? action.track : t);
     default:
       return state;

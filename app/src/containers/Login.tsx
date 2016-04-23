@@ -13,7 +13,7 @@ const Container = ({error, dispatch}) => {
   let nameInput, passwordInput;
 
   return (
-      <form className="flex flex-column items-center justify-center pt4" onSubmit={e => {
+      <form className="flex flex-column items-center pt4" onSubmit={e => {
         e.preventDefault();
         dispatch(loginUser({
           name: nameInput.value,
@@ -22,11 +22,11 @@ const Container = ({error, dispatch}) => {
         nameInput.value = "";
         passwordInput.value = "";
       }}>
-        <div className="flex md-col-6">
+        <div className="flex md-col-6 items-center">
           <label className="label mr2">User Name</label>
           <input className="input" type="text" ref={node => { nameInput = node; }}/>
         </div>
-        <div className="flex md-col-6">
+        <div className="flex md-col-6 items-center">
           <label className="label mr2">Password</label>
           <input className="input" type="password" ref={node => { passwordInput = node; }}/>
         </div>

@@ -9,10 +9,10 @@ const Container: StatelessComponent<any> = ({ dispatch }) => {
     <div>
       <form onSubmit={e => {
         e.preventDefault();
-        //dispatch(insertBackend({
-        //  owner: ownerInput.value,
-        //  path: pathInput.value,
-        //}));
+        // dispatch(insertBackend({
+        //   owner: ownerInput.value,
+        //   path: pathInput.value,
+        // }));
         ownerInput.value = "";
         pathInput.value = "";
       }}>

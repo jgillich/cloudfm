@@ -1,10 +1,10 @@
-import {LOGIN_USER, SIGNUP_USER, UserAction} from "../actions";
+import {Action, UserAction} from "../actions";
 
 const userReducer = (state = {}, action: UserAction) => {
   switch (action.type) {
-    case LOGIN_USER:
+    case Action.LoginUser:
       return Object.assign({}, state, {user: action.user});
-    case SIGNUP_USER:
+    case Action.SignupUser:
       return Object.assign({}, state, {user: action.user});
     default:
       return state;

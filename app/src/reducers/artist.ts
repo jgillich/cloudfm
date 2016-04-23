@@ -1,14 +1,13 @@
 import {Artist} from "../interfaces";
-import {INSERT_ARTIST, REMOVE_ARTIST, UPDATE_ARTIST, ArtistAction} from "../actions";
-
+import {Action, ArtistAction} from "../actions";
 
 const artistReducer = (state: Artist[] = [], action: ArtistAction) => {
    switch (action.type) {
-    case INSERT_ARTIST:
+    case Action.InsertArtist:
       return [ ...state, action.artist ];
-    case REMOVE_ARTIST:
+    case Action.RemoveArtist:
       return state.filter(t => t._id != action.artist._id);
-    case UPDATE_ARTIST:
+    case Action.UpdateArtist:
       return state.map(t => t._id == action.artist._id ? action.artist : t);
     default:
       return state;

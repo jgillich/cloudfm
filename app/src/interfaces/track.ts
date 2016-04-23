@@ -1,6 +1,6 @@
 import {Doc} from "./";
 
-export interface Track extends Doc  {
+export interface Track extends Doc {
   album: number;
   artist: number;
   name: string;

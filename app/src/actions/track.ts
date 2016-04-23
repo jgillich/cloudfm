@@ -1,9 +1,7 @@
-import {Track, Action} from "../interfaces";
+import {Action} from "./";
+import {Track} from "../interfaces";
 
-export const INSERT_TRACK = "INSERT_TRACK";
-export const REMOVE_TRACK = "REMOVE_TRACK";
-export const UPDATE_TRACK = "UPDATE_TRACK";
-
-export interface TrackAction extends Action {
+export interface TrackAction {
+  type: Action;
   track: Track;
 };

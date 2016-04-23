@@ -31,12 +31,12 @@ pub fn index_all(db: chill::Client) -> (usize, Vec<Error>) {
 
     let action = match db.read_all_documents("/_users") {
         Ok(action) => action.with_start_key(start_key),
-        Err(error) => return (0, vec![Error::from(error)])
+        Err(error) => return (1, vec![Error::from(error)])
     };
 
     let res = match action.run() {
         Ok(res) => res,
-        Err(error) => return (0, vec![Error::from(error)])
+        Err(error) => return (1, vec![Error::from(error)])
     };
 
     let view = match res.as_unreduced() {

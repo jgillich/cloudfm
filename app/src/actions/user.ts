@@ -1,17 +1,12 @@
-import {Action} from "../interfaces";
+import {Action} from "./";
 import * as PouchDB from "pouchdb";
 import db from "../store/db";
 import {push} from "react-router-redux";
+import {User} from "../interfaces";
 
-export const LOGIN_USER = "LOGIN_USER";
-export const SIGNUP_USER = "SIGNUP_USER";
-
-export interface UserAction extends Action {
-  user: {
-    name: string;
-    password: string;
-    email: string;
-  };
+export interface UserAction {
+  type: Action;
+  user: User;
   status?: string;
 };
 
@@ -22,12 +17,12 @@ export function resumeSession() {
 
     remoteDb.getSession(function (err, response) {
       if (!err && response.userCtx.name) {
-        const userDb: any = new (PouchDB as any)(userDbUrl(response.userCtx.name), {skip_setup: true});
+        const userDb = getUserDb(response.userCtx.name);
         db.sync(userDb, {live: true, retry: true})
           .on("error", console.error.bind(console));
 
         dispatch({
-          type: LOGIN_USER,
+          type: Action.LoginUser,
           user: response.userCtx,
         });
         dispatch(push("/collection"));
@@ -36,55 +31,47 @@ export function resumeSession() {
   };
 }
 
-export function loginUser(user) {
-  return loginOrSignup({
-    type: LOGIN_USER,
-    user,
-  });
-}
-
-export function signupUser(user) {
-  return loginOrSignup({
-    type: SIGNUP_USER,
-    user,
-  });
-}
-
-function loginOrSignup(action: UserAction) {
+export function loginUser(user: User) {
+  console.info("loginUser", user);
   return function (dispatch) {
-    const {name, password, email} = action.user;
-    const userDb: any = new (PouchDB as any)(userDbUrl(name), {skip_setup: true});
+    const userDb = getUserDb(user.name);
 
-    if(action.type == LOGIN_USER) {
-      userDb.login(name, password, function (err, response) {
+    userDb.login(user.name, user.password, (err, response) => {
         if (err) {
-          return dispatch(Object.assign({}, action, {error: err.name}));
+          console.error(err);
+          return dispatch({error: err.name, type: Action.LoginUser});
         }
 
         db.sync(userDb, {live: true, retry: true})
           .on("error", console.error.bind(console));
-        dispatch(Object.assign({}, action));
+        dispatch({type: Action.LoginUser, user});
         dispatch(push("/collection"));
       });
-    } else if(action.type == SIGNUP_USER) {
-      userDb.signup(name, password, {metadata: {email}}, function (err, response) {
-        if (err) {
-          return dispatch(Object.assign({}, action, {error: err.name}));
-        }
-        dispatch(Object.assign({}, action));
-
-        // signup succeeded, let's login
-        dispatch(loginOrSignup(Object.assign({}, action, {type: LOGIN_USER})));
-      });
-    }
   };
 }
 
-function userDbUrl(name: string): string {
-  return process.env.DATABASE_URL + "/userdb-" + toHex(name);
+export function signupUser(user: User) {
+  console.info("signupUser", user);
+  return function (dispatch) {
+    const userDb = getUserDb(user.name);
+    userDb.signup(user.name, user.password, {metadata: {email: user.email}}, (err, response) => {
+        if (err) {
+          console.error(err);
+          return dispatch({error: err.name, type: Action.SignupUser});
+        }
+
+        dispatch({type: Action.SignupUser, user});
+        dispatch(loginUser(user));
+    });
+  };
 }
 
-function toHex(str) {
+function getUserDb(name: string) {
+  let dbUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
+  return new (PouchDB as any)(dbUrl, {skip_setup: true});
+}
+
+function toHex(str: string) {
   let result = "";
   for (let i=0; i<str.length; i++) {
     result += str.charCodeAt(i).toString(16);

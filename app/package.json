@@ -31,7 +31,8 @@
     "react-router-redux": "~4.0.2",
     "redux": "~3.4.0",
     "redux-logger": "~2.6.1",
-    "redux-thunk": "~2.0.1"
+    "redux-thunk": "~2.0.1",
+    "howler": "goldfire/howler.js#2.0"
   },
   "devDependencies": {
     "css-loader": "~0.23.1",

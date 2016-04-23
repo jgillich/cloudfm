@@ -16,6 +16,7 @@ const Container = ({error, dispatch}) => {
     <form className="flex flex-column items-center justify-center pt4" onSubmit={e => {
       e.preventDefault();
         dispatch(signupUser({
+          email: emailInput.value,
           name: nameInput.value,
           password: passwordInput.value,
         }));

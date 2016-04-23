@@ -2,6 +2,7 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {TrackList, ArtistList} from "../components";
 import {playTrack} from "../actions";
+import {Player} from "./";
 
 const mapStateToProps = (state) => {
   return {
@@ -21,6 +22,7 @@ const Container = ({artists, tracks, onTrackClick}) => {
     <div className="flex flex-wrap">
       <ArtistList artists={artists}/>
       <TrackList tracks={tracks} onTrackClick={onTrackClick}/>
+      <Player/>
     </div>
   );
 };

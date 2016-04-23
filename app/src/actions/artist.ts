@@ -1,9 +1,7 @@
-import {Artist, Action} from "../interfaces";
+import {Action} from "./";
+import {Artist} from "../interfaces";
 
-export const INSERT_ARTIST = "INSERT_ARTIST";
-export const REMOVE_ARTIST = "REMOVE_ARTIST";
-export const UPDATE_ARTIST = "UPDATE_ARTIST";
-
-export interface ArtistAction extends Action {
+export interface ArtistAction {
+  type: Action;
   artist: Artist;
 };

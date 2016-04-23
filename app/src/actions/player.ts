@@ -1,14 +1,14 @@
-import {Track, Action} from "../interfaces";
+import {Action} from "./";
+import {Track} from "../interfaces";
 
-export const PLAY_TRACK = "PLAY_TRACK";
-
-export interface PlayerAction extends Action {
+export interface PlayerAction {
+  type: Action;
   track: Track;
 };
 
 export function playTrack(track: Track): PlayerAction {
   return {
-    type: PLAY_TRACK,
+    type: Action.PlayTrack,
     track,
   };
 }

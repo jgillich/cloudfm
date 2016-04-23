@@ -1,4 +1,4 @@
 export interface Doc {
-  _id: string;
-  type: string;
+  _id?: string;
+  type?: string;
 }
