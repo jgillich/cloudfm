@@ -13,7 +13,7 @@ use iron::middleware::Chain;
 use router::Router;
 use logger::Logger;
 use dotenv::dotenv;
-use cloudfm::{Uri, Proxy, ProxyHandler, Backend};
+use cloudfm::{Uri, Proxy, ProxyHandler};
 
 pub fn main() {
     dotenv().ok();

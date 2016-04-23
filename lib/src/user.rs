@@ -65,7 +65,7 @@ impl serde::Deserialize for Backend {
                 };
 
                 let paths = match object.remove("paths") {
-                    Some(paths) => Vec::new(), // TODO serde_json::value::from_value::<Vec<String>>(paths)?,
+                    Some(paths) => serde_json::value::from_value(paths).map_err(|_| serde::de::Error::invalid_value("paths is not a string array"))?,
                     None => { return Err(serde::de::Error::missing_field("paths")); }
                 };
 
@@ -96,6 +96,7 @@ impl serde::Deserialize for Backend {
         }
     }
 }
+
 
 // TODO implement custom serializer to get rid of _type
 #[derive(Serialize, Debug, PartialEq)]
