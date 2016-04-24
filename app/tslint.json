@@ -8,9 +8,10 @@
     "interface-name": [true, "never-prefix"],
     "max-line-length": [true, 100],
     "member-access": true,
-    "no-any": false,
+    "no-any": true,
     "no-conditional-assignment": true,
     "no-consecutive-blank-lines": true,
+    "no-console": [true, "log"],
     "no-eval": true,
     "no-trailing-whitespace": true,
     "no-unreachable": true,
@@ -20,20 +21,20 @@
     "no-var-keyword": true,
     "object-literal-sort-keys": true,
     "one-line": [true,
-      "check-open-brace",
       "check-catch",
       "check-else",
       "check-finally",
+      "check-open-brace",
       "check-whitespace"
     ],
     "quotemark": [true, "double", "jsx-double"],
     "radix": true,
     "semicolon": [true, "always"],
     "switch-default": true,
+    "typedef": [true, "call-signature", "parameter"],
     "trailing-comma": [true, {
       "singleline": "never",
       "multiline": "always"
-    }],
-    "typedef": [false]
+    }]
   }
 }

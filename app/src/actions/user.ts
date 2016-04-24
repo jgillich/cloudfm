@@ -10,7 +10,7 @@ export interface UserAction {
   status?: string;
 };
 
-export function updateUser(user) {
+export function updateUser(user: User): UserAction {
   return {
     type: Action.UpdateUser,
     user: user,
@@ -22,7 +22,7 @@ export function resumeSession() {
     const remoteUrl = process.env.DATABASE_URL + "/_users";
     const remoteDb: any = new (PouchDB as any)(remoteUrl, {skip_setup: true});
 
-    remoteDb.getSession(function (err, response) {
+    remoteDb.getSession((err, response) => {
       if (!err && response.userCtx.name) {
         const userDb = getUserDb(response.userCtx.name);
         db.sync(userDb, {live: true, retry: true})
@@ -71,12 +71,12 @@ export function signupUser(user: User) {
   };
 }
 
-function getUserDb(name: string) {
+function getUserDb(name: string): any {
   let dbUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
   return new (PouchDB as any)(dbUrl, {skip_setup: true});
 }
 
-function toHex(str: string) {
+function toHex(str: string): string {
   let result = "";
   for (let i=0; i<str.length; i++) {
     result += str.charCodeAt(i).toString(16);

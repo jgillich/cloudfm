@@ -8,7 +8,7 @@ import {browserHistory } from "react-router";
 import schema from "./schema";
 import db from "./db";
 
-export default function configureStore(initialState) {
+export default function configureStore(initialState = {}) {
   let store;
 
   const pouchMiddleware = PouchMiddleware(
