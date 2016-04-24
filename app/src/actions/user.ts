@@ -10,6 +10,13 @@ export interface UserAction {
   status?: string;
 };
 
+export function updateUser(user) {
+  return {
+    type: Action.UpdateUser,
+    user: user,
+  };
+}
+
 export function resumeSession() {
   return function (dispatch) {
     const remoteUrl = process.env.DATABASE_URL + "/_users";
@@ -32,7 +39,6 @@ export function resumeSession() {
 }
 
 export function loginUser(user: User) {
-  console.info("loginUser", user);
   return function (dispatch) {
     const userDb = getUserDb(user.name);
 
@@ -51,7 +57,6 @@ export function loginUser(user: User) {
 }
 
 export function signupUser(user: User) {
-  console.info("signupUser", user);
   return function (dispatch) {
     const userDb = getUserDb(user.name);
     userDb.signup(user.name, user.password, {metadata: {email: user.email}}, (err, response) => {

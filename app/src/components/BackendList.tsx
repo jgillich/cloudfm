@@ -1,11 +1,16 @@
+import {User} from "../interfaces";
 import * as React from "react";
 import {StatelessComponent} from "react";
 
-export const BackendList: StatelessComponent<any> = ({backends}) => (
+interface PropTypes {
+  user: User;
+};
+
+export const BackendList: StatelessComponent<any> = ({user}) => (
   <div className="">
     <ul className="">
-      {backends.map (b =>
-        <li key={b._id}>{b._id}</li>
+      {user.backends.map (b =>
+        <li key={b.type}>{b.type}</li>
       )}
     </ul>
   </div>

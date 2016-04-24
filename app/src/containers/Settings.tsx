@@ -5,7 +5,9 @@ import {BackendList} from "../components";
 import {AddBackend} from "./";
 
 const mapStateToProps = (state) => {
-  return state;
+  return {
+    user: state.user,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -14,11 +16,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Container: StatelessComponent<any> = ({backends, dispatch}) => {
+const Container: StatelessComponent<any> = ({user, dispatch}) => {
   return (
     <div>
-      <BackendList backends={backends}/>
-      <AddBackend dispatch={dispatch}/>
+      <BackendList user={user}/>
+      <AddBackend user={user} dispatch={dispatch}/>
     </div>
   );
 };
