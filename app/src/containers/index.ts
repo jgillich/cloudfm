@@ -4,3 +4,4 @@ export * from "./Signup";
 export * from "./Player";
 export * from "./Collection";
 export * from "./Settings";
+export * from "./Discover";
