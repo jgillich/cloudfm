@@ -11,10 +11,20 @@ export interface UserAction {
   status?: string;
 };
 
-export function updateUser(user: User): UserAction {
-  return {
-    type: Action.UpdateUser,
-    user: user,
+export function updateUser(user: User): (dispatch: Dispatch) => void {
+  return function (dispatch: Dispatch): void {
+    const userDb = getUserDb(user.name);
+    const metadata = {backends: user.backends, email: user.email};
+
+    userDb.putUser(user.name, {metadata: metadata},
+      (err, response) => {
+      if (err) {
+        console.error(err);
+        return dispatch({error: err.name, type: Action.UpdateUser});
+      }
+
+      dispatch({type: Action.UpdateUser, user});
+    });
   };
 }
 
@@ -31,11 +41,17 @@ export function resumeSession(): (dispatch: Dispatch) => void {
         db.sync(userDb, {live: true, retry: true})
           .on("error", console.error.bind(console));
 
-        dispatch({
-          type: Action.LoginUser,
-          user: response.userCtx,
+        remoteDb.getUser(response.userCtx.name, (err, response) => {
+          if (err) {
+            console.error(err);
+            return dispatch({error: err.name, type: Action.LoginUser});
+          }
+
+          dispatch({type: Action.LoginUser, user: response});
+          dispatch(push("/collection"));
         });
-        dispatch(push("/collection"));
+      } else {
+        dispatch(push("/login"));
       }
     });
   };
@@ -51,10 +67,18 @@ export function loginUser(user: User): (dispatch: Dispatch) => void {
           return dispatch({error: err.name, type: Action.LoginUser});
         }
 
-        db.sync(userDb, {live: true, retry: true})
-          .on("error", console.error.bind(console));
-        dispatch({type: Action.LoginUser, user});
-        dispatch(push("/collection"));
+        userDb.getUser(user.name, (err, response) => {
+          if (err) {
+            console.error(err);
+            return dispatch({error: err.name, type: Action.LoginUser});
+          }
+
+          db.sync(userDb, {live: true, retry: true})
+            .on("error", console.error.bind(console));
+
+          dispatch({type: Action.LoginUser, user: response});
+          dispatch(push("/collection"));
+        });
       });
   };
 }
@@ -63,14 +87,14 @@ export function signupUser(user: User): (dispatch: Dispatch) => void {
   return function (dispatch: Dispatch): void {
     const userDb = getUserDb(user.name);
     userDb.signup(user.name, user.password, {metadata: {email: user.email}},
-    (err, response) => {
-        if (err) {
-          console.error(err);
-          return dispatch({error: err.name, type: Action.SignupUser});
-        }
+      (err, response) => {
+      if (err) {
+        console.error(err);
+        return dispatch({error: err.name, type: Action.SignupUser});
+      }
 
-        dispatch({type: Action.SignupUser, user});
-        dispatch(loginUser(user));
+      dispatch({type: Action.SignupUser, user});
+      dispatch(loginUser(user));
     });
   };
 }

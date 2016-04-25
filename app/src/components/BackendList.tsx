@@ -12,7 +12,7 @@ export const BackendList: StatelessComponent<BackendListProps> = ({user}) => (
       <div className="h2">Backends</div>
       <ul className="">
         {user.backends.length ? user.backends.map (b =>
-          <li key={b.type}>{b.type}</li>
+          <li key={b.jamendo_id}>{b.type}</li>
         ) : <li>No backends found</li>}
       </ul>
     </div>
