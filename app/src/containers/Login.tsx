@@ -25,15 +25,19 @@ const Container: StatelessComponent<LoginProps> = ({error, dispatch}) => {
       }}>
         <div className="flex md-col-6 items-center">
           <label className="label mr2">User Name</label>
-          <input className="input" type="text" ref={node => { nameInput = node; }}/>
+          <input className="input" type="text"
+            ref={node => { nameInput = node; }}/>
         </div>
         <div className="flex md-col-6 items-center">
           <label className="label mr2">Password</label>
-          <input className="input" type="password" ref={node => { passwordInput = node; }}/>
+          <input className="input" type="password"
+            ref={node => { passwordInput = node; }}/>
         </div>
         <div className="flex md-col-6 justify-center">
           <span className="mr1">
-            <button className="btn btn-outline blue" type="submit">Log in</button>
+            <button className="btn btn-outline blue" type="submit">
+              Log in
+            </button>
           </span>
           <Link className="btn btn-outline" to="/signup">Sign up</Link>
         </div>

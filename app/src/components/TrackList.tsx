@@ -7,7 +7,8 @@ interface PropTypes {
   onTrackClick: (track: Track) => void;
 };
 
-export const TrackList: StatelessComponent<PropTypes> = ({tracks, onTrackClick}) => (
+export const TrackList: StatelessComponent<PropTypes> =
+({tracks, onTrackClick}) => (
   <div className="flex flex-auto">
     <ul className="list-reset flex-auto">
       {tracks.length ? tracks.map (track =>

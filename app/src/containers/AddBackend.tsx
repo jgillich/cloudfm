@@ -21,16 +21,24 @@ const Container: StatelessComponent<AddBackendProps> = ({user, dispatch}) => {
       </div>
       <div className="flex flex-wrap justify-center flex-auto pt2">
         <div className="col-2 pr1" >
-          <a className="btn btn-outline fit"><img className="fit" src={jamendoIcon}/></a>
+          <a className="btn btn-outline fit">
+            <img className="fit" src={jamendoIcon}/>
+          </a>
         </div>
         <div className="col-2 pr1">
-          <a className="btn btn-outline fit"><img className="fit" src={jamendoIcon}/></a>
+          <a className="btn btn-outline fit">
+            <img className="fit" src={jamendoIcon}/>
+          </a>
         </div>
         <div className="col-2 pr1">
-          <a className="btn btn-outline fit"><img className="fit" src={jamendoIcon}/></a>
+          <a className="btn btn-outline fit">
+            <img className="fit" src={jamendoIcon}/>
+          </a>
         </div>
         <div className="col-2 pr1">
-          <a className="btn btn-outline fit"><img className="fit" src={jamendoIcon}/></a>
+          <a className="btn btn-outline fit">
+            <img className="fit" src={jamendoIcon}/>
+          </a>
         </div>
       </div>
       <form className="flex flex-wrap justify-center pt2" onSubmit={e => {

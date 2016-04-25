@@ -14,7 +14,8 @@ const Container: StatelessComponent<SignupProps> = ({error, dispatch}) => {
   let nameInput, passwordInput, emailInput;
 
   return (
-    <form className="flex flex-column items-center justify-center pt4" onSubmit={e => {
+    <form className="flex flex-column items-center justify-center pt4"
+    onSubmit={e => {
       e.preventDefault();
         dispatch(signupUser({
           email: emailInput.value,
@@ -26,19 +27,24 @@ const Container: StatelessComponent<SignupProps> = ({error, dispatch}) => {
       }}>
         <div className="flex md-col-6">
           <label className="label mr2">User Name</label>
-          <input className="input" type="text" ref={node => { nameInput = node; }}/>
+          <input className="input" type="text"
+            ref={node => { nameInput = node; }}/>
         </div>
         <div className="flex md-col-6">
           <label className="label mr2">Password</label>
-          <input className="input" type="password" ref={node => { passwordInput = node; }}/>
+          <input className="input" type="password"
+            ref={node => { passwordInput = node; }}/>
         </div>
         <div className="flex md-col-6">
           <label className="label mr2">Email</label>
-          <input className="input" type="email" ref={node => { emailInput = node; }}/>
+          <input className="input" type="email"
+            ref={node => { emailInput = node; }}/>
         </div>
         <div className="flex md-col-6 justify-center">
           <span className="mr1">
-            <button className="btn btn-outline blue" type="submit">Sign up</button>
+            <button className="btn btn-outline blue" type="submit">
+              Sign up
+            </button>
           </span>
           <Link className="btn btn-outline" to="/login">Login</Link>
         </div>

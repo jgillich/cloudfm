@@ -62,7 +62,8 @@ export function loginUser(user: User): (dispatch: Dispatch) => void {
 export function signupUser(user: User): (dispatch: Dispatch) => void {
   return function (dispatch: Dispatch): void {
     const userDb = getUserDb(user.name);
-    userDb.signup(user.name, user.password, {metadata: {email: user.email}}, (err, response) => {
+    userDb.signup(user.name, user.password, {metadata: {email: user.email}},
+    (err, response) => {
         if (err) {
           console.error(err);
           return dispatch({error: err.name, type: Action.SignupUser});
