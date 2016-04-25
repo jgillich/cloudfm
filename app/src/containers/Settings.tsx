@@ -13,7 +13,10 @@ interface SettingsProps {
 
 const Container: StatelessComponent<SettingsProps> = ({user, dispatch}) => {
   return (
-    <div>
+    <div className="flex justify-center flex-column">
+      <div className="flex justify-center mt2">
+        <div className="col-8">Logged in as: {user.name}</div>
+      </div>
       <BackendList user={user}/>
       <AddBackend user={user} dispatch={dispatch}/>
     </div>

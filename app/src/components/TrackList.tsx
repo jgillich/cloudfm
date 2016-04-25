@@ -10,8 +10,7 @@ interface PropTypes {
 export const TrackList: StatelessComponent<PropTypes> = ({tracks, onTrackClick}) => (
   <div className="flex flex-auto">
     <ul className="list-reset flex-auto">
-      {tracks.map (track =>
-
+      {tracks.length ? tracks.map (track =>
           <li className="px1 flex flex-wrap items-center" key={track._id}>
             <div className="col6">
               <a className="btn" onClick={() => onTrackClick(track)}>
@@ -22,7 +21,7 @@ export const TrackList: StatelessComponent<PropTypes> = ({tracks, onTrackClick})
               {track.name}
             </div>
           </li>
-      )}
+      ) : <div>No tracks found</div>}
     </ul>
   </div>
 );

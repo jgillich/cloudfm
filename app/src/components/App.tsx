@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {StatelessComponent} from "react";
-import {Header} from "./";
+import {Header} from "../containers";
 require("../stylesheets/App.css");
 
 interface AppProps {
@@ -13,6 +13,6 @@ interface AppProps {
 export const App: StatelessComponent<AppProps> = ({children}) => (
   <div className="flex flex-column">
     <Header/>
-    <div>{children}</div>
+    {children}
   </div>
 );
