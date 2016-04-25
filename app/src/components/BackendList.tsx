@@ -2,11 +2,11 @@ import {User} from "../interfaces";
 import * as React from "react";
 import {StatelessComponent} from "react";
 
-interface PropTypes {
+interface BackendListProps {
   user: User;
 };
 
-export const BackendList: StatelessComponent<any> = ({user}) => (
+export const BackendList: StatelessComponent<BackendListProps> = ({user}) => (
   <div className="">
     <ul className="">
       {user.backends.map (b =>

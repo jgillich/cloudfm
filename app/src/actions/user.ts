@@ -1,4 +1,5 @@
 import {Action} from "./";
+import {Dispatch} from "redux";
 import * as PouchDB from "pouchdb";
 import db from "../store/db";
 import {push} from "react-router-redux";
@@ -17,10 +18,12 @@ export function updateUser(user: User): UserAction {
   };
 }
 
-export function resumeSession() {
-  return function (dispatch) {
+export function resumeSession(): (dispatch: Dispatch) => void {
+  return function (dispatch: Dispatch): void {
     const remoteUrl = process.env.DATABASE_URL + "/_users";
-    const remoteDb: any = new (PouchDB as any)(remoteUrl, {skip_setup: true});
+    /* tslint:disable:no-any */
+    const remoteDb = new (PouchDB as any)(remoteUrl, {skip_setup: true});
+    /* tslint:enable */
 
     remoteDb.getSession((err, response) => {
       if (!err && response.userCtx.name) {
@@ -38,8 +41,8 @@ export function resumeSession() {
   };
 }
 
-export function loginUser(user: User) {
-  return function (dispatch) {
+export function loginUser(user: User): (dispatch: Dispatch) => void {
+  return function (dispatch: Dispatch): void {
     const userDb = getUserDb(user.name);
 
     userDb.login(user.name, user.password, (err, response) => {
@@ -56,8 +59,8 @@ export function loginUser(user: User) {
   };
 }
 
-export function signupUser(user: User) {
-  return function (dispatch) {
+export function signupUser(user: User): (dispatch: Dispatch) => void {
+  return function (dispatch: Dispatch): void {
     const userDb = getUserDb(user.name);
     userDb.signup(user.name, user.password, {metadata: {email: user.email}}, (err, response) => {
         if (err) {
@@ -71,10 +74,12 @@ export function signupUser(user: User) {
   };
 }
 
+/* tslint:disable:no-any */
 function getUserDb(name: string): any {
   let dbUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
   return new (PouchDB as any)(dbUrl, {skip_setup: true});
 }
+/* tslint:enable */
 
 function toHex(str: string): string {
   let result = "";

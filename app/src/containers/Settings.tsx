@@ -1,22 +1,17 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
+import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {BackendList} from "../components";
+import {User} from "../interfaces";
 import {AddBackend} from "./";
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
+interface SettingsProps {
+  user: User;
+  dispatch: Dispatch;
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatch,
-  };
-};
-
-const Container: StatelessComponent<any> = ({user, dispatch}) => {
+const Container: StatelessComponent<SettingsProps> = ({user, dispatch}) => {
   return (
     <div>
       <BackendList user={user}/>
@@ -25,4 +20,7 @@ const Container: StatelessComponent<any> = ({user, dispatch}) => {
   );
 };
 
-export const Settings = connect(mapStateToProps, mapDispatchToProps)(Container as any);
+export const Settings = connect(
+  state => ({user: state.user}),
+  dispatch => ({dispatch})
+)(Container);

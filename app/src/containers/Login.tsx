@@ -1,15 +1,16 @@
 import * as React from "react";
+import {StatelessComponent} from "react";
+import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {loginUser} from "../actions";
 import {Link} from "react-router";
 
-const mapStateToProps = (state) => {
-  return {
-    error: state.error,
-  };
+interface LoginProps {
+  error: string;
+  dispatch: Dispatch;
 };
 
-const Container = ({error, dispatch}) => {
+const Container: StatelessComponent<LoginProps> = ({error, dispatch}) => {
   let nameInput, passwordInput;
 
   return (
@@ -41,4 +42,6 @@ const Container = ({error, dispatch}) => {
   );
 };
 
-export const Login = connect(mapStateToProps)(Container as any);
+export const Login = connect(
+  state => ({error: state.error})
+)(Container);

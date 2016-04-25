@@ -19,4 +19,6 @@ export enum Action {
   LoginUser,
   SignupUser,
   UpdateUser,
+
+  ResetError,
 };

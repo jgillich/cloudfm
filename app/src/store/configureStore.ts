@@ -1,4 +1,5 @@
 import {createStore, applyMiddleware, compose } from "redux";
+import {Store} from "redux";
 import rootReducer from "../reducers";
 import * as createLogger from "redux-logger";
 import thunkMiddleware from "redux-thunk";
@@ -8,13 +9,15 @@ import {browserHistory } from "react-router";
 import schema from "./schema";
 import db from "./db";
 
-export default function configureStore(initialState = {}) {
+/* tslint:disable:no-any */
+export default function configureStore(initialState: any = {}): Store {
+  /* tslint:enable */
   let store;
 
   const pouchMiddleware = PouchMiddleware(
     schema.map(type => ({
         actions: {
-          insert: doc => {
+          insert: (doc): void => {
             if(doc.type == type.singular) {
               store.dispatch({
                 [type.singular]: doc,
@@ -22,7 +25,7 @@ export default function configureStore(initialState = {}) {
               });
             }
           },
-          remove: doc => {
+          remove: (doc): void => {
             if(doc.type == type.singular) {
               store.dispatch({
                 [type.singular]: doc,
@@ -30,7 +33,7 @@ export default function configureStore(initialState = {}) {
               });
             }
           },
-          update: doc => {
+          update: (doc): void => {
             if(doc.type == type.singular) {
               store.dispatch({
                 [type.singular]: doc,
@@ -39,7 +42,7 @@ export default function configureStore(initialState = {}) {
             }
           },
         },
-        changeFilter: doc => doc.type == type.singular,
+        changeFilter: (doc): boolean => doc.type == type.singular,
         db: db,
         path: `/${type.plural}`,
     })));
@@ -48,7 +51,7 @@ export default function configureStore(initialState = {}) {
     pouchMiddleware,
     thunkMiddleware,
     routerMiddleware(browserHistory),
-    (createLogger as any)()
+    (createLogger)()
   );
 
   const createStoreWithMiddleware = compose(

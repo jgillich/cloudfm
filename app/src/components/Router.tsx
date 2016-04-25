@@ -4,8 +4,13 @@ import {Route, IndexRoute} from "react-router";
 import {App} from "./";
 import {Login, Signup, Settings, Collection} from "../containers";
 import {Router as ReactRouter} from "react-router";
+import {ReactRouterReduxHistory} from "react-router-redux";
 
-export const Router: StatelessComponent<any> = ({history}) => (
+interface RouterProps {
+  history: ReactRouterReduxHistory;
+};
+
+export const Router: StatelessComponent<RouterProps> = ({history}) => (
   <ReactRouter history={history}>
     <Route path="/" component={App}>
       <IndexRoute component={Login}/>

@@ -2,7 +2,7 @@ import * as React from "react";
 import {StatelessComponent} from "react";
 import {Link} from "react-router";
 
-export const Header: StatelessComponent<any> = () => (
+export const Header: StatelessComponent<{}> = () => (
 
     <nav className="flex bg-black">
       <ul className="list-reset">

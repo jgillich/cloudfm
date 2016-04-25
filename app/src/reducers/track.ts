@@ -1,7 +1,7 @@
 import {Track} from "../interfaces";
 import {Action, TrackAction} from "../actions";
 
-const trackReducer = (state: Track[] = [], action: TrackAction) => {
+function trackReducer(state: Track[] = [], action: TrackAction): Track[] {
   switch (action.type) {
     case Action.InsertTrack:
       return [ ...state, action.track ];

@@ -4,7 +4,7 @@ import {Track} from "../interfaces";
 
 interface PropTypes {
   tracks: Track[];
-  onTrackClick: any;
+  onTrackClick: (track: Track) => void;
 };
 
 export const TrackList: StatelessComponent<PropTypes> = ({tracks, onTrackClick}) => (

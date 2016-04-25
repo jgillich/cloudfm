@@ -1,9 +1,16 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
+import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {updateUser} from "../actions";
+import {User} from "../interfaces";
 
-const Container: StatelessComponent<any> = ({ user, dispatch }) => {
+interface AddBackendProps {
+  user: User;
+  dispatch: Dispatch;
+}
+
+const Container: StatelessComponent<AddBackendProps> = ({ user, dispatch }) => {
   let machineIdInput, pathInput;
 
   return (
@@ -29,4 +36,4 @@ const Container: StatelessComponent<any> = ({ user, dispatch }) => {
   );
 };
 
-export const AddBackend = connect()(Container as any);
+export const AddBackend = connect()(Container);
