@@ -1,8 +1,8 @@
-import {Doc} from "./";
+import {Doc, Backend} from "./";
 
 export interface User extends Doc {
   name?: string;
   password?: string;
   email?: string;
-  backends?: any;
+  backends?: Backend[];
 }

@@ -5,4 +5,4 @@ export * from "./Player";
 export * from "./Collection";
 export * from "./Settings";
 export * from "./Discover";
-export * from "./Header";
+export * from "./IfUser";

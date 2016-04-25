@@ -1,15 +1,10 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {Link} from "react-router";
-import {User} from "../interfaces";
-import {connect} from "react-redux";
+import {IfUser} from "../containers";
 
-interface HeaderProps {
-  user: User;
-}
-
-const Container: StatelessComponent<HeaderProps> = ({user}) => (
-  user.name ?
+export const Header: StatelessComponent<{}> = () => (
+  <IfUser>
     <nav className="flex bg-black">
       <ul className="list-reset">
           <li className="inline-block mr1">
@@ -32,10 +27,5 @@ const Container: StatelessComponent<HeaderProps> = ({user}) => (
           </li>
       </ul>
     </nav>
-  : <div></div>
-
+  </IfUser>
 );
-
-export const Header = connect(
-  state => ({user: state.user})
-)(Container);

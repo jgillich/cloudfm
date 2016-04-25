@@ -8,7 +8,6 @@ import {User} from "../interfaces";
 export interface UserAction {
   type: Action;
   user: User;
-  status?: string;
 };
 
 export function updateUser(user: User): (dispatch: Dispatch) => void {
@@ -20,7 +19,7 @@ export function updateUser(user: User): (dispatch: Dispatch) => void {
       (err, response) => {
       if (err) {
         console.error(err);
-        return dispatch({error: err.name, type: Action.UpdateUser});
+        return dispatch({error: err.name, type: Action.AddError});
       }
 
       dispatch({type: Action.UpdateUser, user});
@@ -44,7 +43,7 @@ export function resumeSession(): (dispatch: Dispatch) => void {
         remoteDb.getUser(response.userCtx.name, (err, response) => {
           if (err) {
             console.error(err);
-            return dispatch({error: err.name, type: Action.LoginUser});
+            return dispatch({error: err.name, type: Action.AddError});
           }
 
           dispatch({type: Action.LoginUser, user: response});
@@ -70,7 +69,7 @@ export function loginUser(user: User): (dispatch: Dispatch) => void {
         userDb.getUser(user.name, (err, response) => {
           if (err) {
             console.error(err);
-            return dispatch({error: err.name, type: Action.LoginUser});
+            return dispatch({error: err.name, type: Action.AddError});
           }
 
           db.sync(userDb, {live: true, retry: true})
@@ -90,7 +89,7 @@ export function signupUser(user: User): (dispatch: Dispatch) => void {
       (err, response) => {
       if (err) {
         console.error(err);
-        return dispatch({error: err.name, type: Action.SignupUser});
+        return dispatch({error: err.name, type: Action.AddError});
       }
 
       dispatch({type: Action.SignupUser, user});

@@ -7,7 +7,8 @@ import * as React from "react";
 import {render} from "react-dom";
 import {browserHistory} from "react-router";
 import {syncHistoryWithStore} from "react-router-redux";
-import {Root} from "./components";
+import {Provider} from "react-redux";
+import {Router} from "./components";
 import configureStore from "./store/configureStore";
 import {resumeSession} from "./actions";
 
@@ -18,7 +19,9 @@ const container = document.createElement("div");
 container.id = "cloudfm";
 
 render(
-  <Root store={store} history={history}/>,
+  <Provider store={store}>
+    <Router history={history}/>
+  </Provider>,
   container
 );
 

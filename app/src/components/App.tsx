@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {StatelessComponent} from "react";
-import {Header} from "../containers";
+import {Header} from "./";
 require("../stylesheets/App.css");
 
 interface AppProps {
