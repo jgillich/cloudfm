@@ -19,6 +19,7 @@
     "colors.css": "^3.0.0",
     "core-js": "~2.3.0",
     "font-awesome": "^4.6.1",
+    "howler": "goldfire/howler.js#2.0",
     "node-uuid": "^1.4.7",
     "normalize.css": "~4.1.1",
     "pouch-redux-middleware": "~0.2.0",
@@ -27,12 +28,12 @@
     "react": "~15.0.1",
     "react-dom": "~15.0.1",
     "react-redux": "~4.4.5",
+    "react-redux-form": "^0.11.0",
     "react-router": "~2.3.0",
     "react-router-redux": "~4.0.4",
     "redux": "~3.5.2",
     "redux-logger": "~2.6.1",
-    "redux-thunk": "~2.0.1",
-    "howler": "goldfire/howler.js#2.0"
+    "redux-thunk": "~2.0.1"
   },
   "devDependencies": {
     "css-loader": "~0.23.1",

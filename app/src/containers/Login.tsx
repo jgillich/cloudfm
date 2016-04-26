@@ -6,11 +6,10 @@ import {loginUser} from "../actions";
 import {Link} from "react-router";
 
 interface LoginProps {
-  error: string;
   dispatch: Dispatch;
 };
 
-const Container: StatelessComponent<LoginProps> = ({error, dispatch}) => {
+const Container: StatelessComponent<LoginProps> = ({dispatch}) => {
   let nameInput, passwordInput;
 
   return (
@@ -41,11 +40,8 @@ const Container: StatelessComponent<LoginProps> = ({error, dispatch}) => {
           </span>
           <Link className="btn btn-outline" to="/signup">Sign up</Link>
         </div>
-        <div className="flex md-col-6 red justify-center pt2">{error}</div>
       </form>
   );
 };
 
-export const Login = connect(
-  state => ({error: state.error})
-)(Container);
+export const Login = connect()(Container);

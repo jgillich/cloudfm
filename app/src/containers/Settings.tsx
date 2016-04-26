@@ -18,7 +18,7 @@ const Container: StatelessComponent<SettingsProps> = ({user, dispatch}) => {
         <div className="col-8">Logged in as: {user.name}</div>
       </div>
       <BackendList user={user}/>
-      <AddBackend user={user} dispatch={dispatch}/>
+      <AddBackend/>
     </div>
   );
 };
