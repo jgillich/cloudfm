@@ -1,19 +1,22 @@
 
 use chill;
-use super::{Index, Indexer};
-use {DecodedTrack, JamendoUri, Uri, User, Error, JamendoBackend};
 use jamendo;
+use super::{Index, IndexError, Indexer};
+use {DecodedTrack, JamendoUri, Uri, User, Error, JamendoBackend};
 
 impl Indexer<JamendoBackend> for Index {
     fn index(db: &chill::Client, user: &User, backend: &JamendoBackend) -> Result<(), Error> {
-        let client = jamendo::Client::new(jamendo::TEST_ID); // FIXME we shall not use TEST_ID
-        let users = client.get_users_tracks().user_id(backend.user_id).run()?;
         let mut decoded: Vec<DecodedTrack> = Vec::new();
 
-        for user in users {
+        let jamendo = jamendo::Client::new(jamendo::TEST_ID); // FIXME we shall not use TEST_ID
+
+        let jamendo_user = jamendo.get_users().user_name(&backend.user_name).run()?;
+        let jamendo_user = jamendo_user.first().ok_or(IndexError::UserNotFound)?;
+
+        for user in jamendo.get_users_tracks().user_id(jamendo_user.id).run()? {
             for track in user.tracks {
                 // users/tracks does not include position, so we have to fetch the track again
-                if let Some(track) = client.get_tracks().track_id(track.id).run()?.first() {
+                if let Some(track) = jamendo.get_tracks().track_id(track.id).run()?.first() {
                     decoded.push(DecodedTrack {
                         artist: track.artist_name.clone(),
                         album: track.album_name.clone(),

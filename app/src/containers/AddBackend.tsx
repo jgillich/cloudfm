@@ -72,9 +72,9 @@ class Container extends Component<AddBackendProps, {}> {
                 case "jamendo":
                   return (
                   <div>
-                    <Field  model="addBackend.jamendo_id">
+                    <Field  model="addBackend.user_name">
                       <input className="input" type="text"
-                        placeholder="User ID" />
+                        placeholder="Jamendo Username" />
                     </Field>
                   </div>
                   );

@@ -76,20 +76,19 @@ impl serde::Deserialize for Backend {
                 }))
             },
             "jamendo" => {
-
-                let user_id = match object.remove("user_id") {
+                let user_name = match object.remove("user_name") {
                     Some(v) => {
-                        match v.as_u64() {
-                            Some(user_id) => user_id,
-                            None => { return Err(serde::de::Error::invalid_value("user_id is not a u64")); }
+                        match v.as_string() {
+                            Some(user_name) => user_name.to_string(),
+                            None => { return Err(serde::de::Error::invalid_value("user_name is not a string")); }
                         }
                     }
-                    None => { return Err(serde::de::Error::missing_field("user_id")); }
+                    None => { return Err(serde::de::Error::missing_field("user_name")); }
                 };
 
                 Ok(Backend::Jamendo(JamendoBackend {
                     _type: "jamendo".to_string(),
-                    user_id: user_id as u32,
+                    user_name: user_name,
                 }))
             },
             _ => Err(serde::de::Error::invalid_value("unkown type"))
@@ -112,7 +111,7 @@ pub struct FileBackend {
 pub struct JamendoBackend {
     #[serde(rename="type")]
     pub _type: String,
-    pub user_id: u32,
+    pub user_name: String,
 }
 
 #[cfg(test)]
@@ -130,9 +129,9 @@ mod test {
 
     #[test]
     fn jamendo_backend() {
-        let uri = Backend::Jamendo(JamendoBackend { user_id: 123, _type: "jamendo".into() });
+        let uri = Backend::Jamendo(JamendoBackend { user_name: "foo", _type: "jamendo".into() });
         let uri_str = serde_json::to_string(&uri).unwrap();
-        assert_eq!(uri_str, "{\"type\":\"jamendo\",\"user_id\":123}");
+        assert_eq!(uri_str, "{\"type\":\"jamendo\",\"user_name\":\"foo\"}");
         assert_eq!(serde_json::from_str::<Backend>(&uri_str).unwrap(), uri);
     }
 

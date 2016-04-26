@@ -4,6 +4,7 @@ use chill;
 use jamendo;
 use uri;
 use views;
+use index;
 
 trait_enum! {
     enum Error: StdError {
@@ -12,6 +13,7 @@ trait_enum! {
         Jamendo(jamendo::Error),
         View(views::ViewError),
         UriParse(uri::UriParseError),
+        Index(index::IndexError),
     }
 }
 
@@ -44,3 +46,10 @@ impl From<uri::UriParseError> for Error {
         Error::UriParse(err)
     }
 }
+
+impl From<index::IndexError> for Error {
+    fn from(err: index::IndexError) -> Error {
+        Error::Index(err)
+    }
+}
+

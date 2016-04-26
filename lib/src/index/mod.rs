@@ -1,3 +1,4 @@
+use std::{error, fmt};
 use chill;
 use chill::IntoDatabasePath;
 use {views, DecodedTrack, User, Error, Artist, Album, Track};
@@ -61,4 +62,25 @@ impl Index {
 
 pub trait Indexer<T> {
     fn index(&chill::Client, &User, &T) -> Result<(), Error>;
+}
+
+#[derive(Debug)]
+pub enum IndexError {
+    UserNotFound,
+}
+
+impl error::Error for IndexError {
+    fn description(&self) -> &str {
+        match *self {
+            IndexError::UserNotFound => "user was not found",
+        }
+    }
+
+    fn cause(&self) -> Option<&error::Error> { None }
+}
+
+impl fmt::Display for IndexError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+        write!(f, "{}", error::Error::description(self))
+    }
 }

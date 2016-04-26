@@ -11,7 +11,7 @@ interface SettingsProps {
   dispatch: Dispatch;
 };
 
-const Container: StatelessComponent<SettingsProps> = ({user, dispatch}) => {
+const Container: StatelessComponent<SettingsProps> = ({user}) => {
   return (
     <div className="flex justify-center flex-column">
       <div className="flex justify-center mt2">
@@ -24,6 +24,5 @@ const Container: StatelessComponent<SettingsProps> = ({user, dispatch}) => {
 };
 
 export const Settings = connect(
-  state => ({user: state.user}),
-  dispatch => ({dispatch})
+  state => ({user: state.user})
 )(Container);

@@ -1,12 +1,12 @@
-import {User, Backend, JamendoBackend, FsBackend} from "../interfaces";
+import {User, Backend, isJamendoBackend, isFileBackend} from "../interfaces";
 import * as React from "react";
 import {StatelessComponent} from "react";
 
 function backendKey(backend: Backend): string {
-  if(backend.type === "jamendo") {
-    return (backend as JamendoBackend).jamendo_id.toString();
-  } else if(backend.type === "file") {
-    return (backend as FsBackend).machine_id;
+  if(isJamendoBackend(backend)) {
+    return `jamendo-${backend.user_name}`;
+  } else if(isFileBackend(backend)) {
+    return backend.machine_id;
   }
   throw new Error("failed to get backend key: " + JSON.stringify(backend));
 }
