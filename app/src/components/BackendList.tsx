@@ -3,9 +3,9 @@ import * as React from "react";
 import {StatelessComponent} from "react";
 
 function backendKey(backend: Backend): string {
-  if(typeof (backend as JamendoBackend).jamendo_id == "number") {
+  if(typeof (backend as JamendoBackend).jamendo_id === "number") {
     return (backend as JamendoBackend).jamendo_id.toString();
-  } else if(typeof (backend as FsBackend).machine_id == "string") {
+  } else if(typeof (backend as FsBackend).machine_id === "string") {
     return (backend as FsBackend).machine_id;
   }
 }

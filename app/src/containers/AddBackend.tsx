@@ -20,6 +20,7 @@ class Container extends Component<AddBackendProps, {}> {
   constructor(props: AddBackendProps) {
     super();
     this.props = props;
+    this.fields = {};
   }
 
   public render(): ReactElement<string> {

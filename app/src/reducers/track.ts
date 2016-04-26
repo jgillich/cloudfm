@@ -6,9 +6,9 @@ function trackReducer(state: Track[] = [], action: TrackAction): Track[] {
     case Action.InsertTrack:
       return [ ...state, action.track ];
     case Action.RemoveTrack:
-      return state.filter(t => t._id != action.track._id);
+      return state.filter(t => t._id !== action.track._id);
     case Action.UpdateTrack:
-      return state.map(t => t._id == action.track._id ? action.track : t);
+      return state.map(t => t._id === action.track._id ? action.track : t);
     default:
       return state;
   };

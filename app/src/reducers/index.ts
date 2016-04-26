@@ -4,11 +4,11 @@ import artistReducer from "./artist";
 import trackReducer from "./track";
 import playerReducer from "./player";
 import userReducer from "./user";
-import errorReducer from "./error";
+import errorsReducer from "./errors";
 
 const rootReducer = combineReducers({
   artists: artistReducer,
-  error: errorReducer,
+  errors: errorsReducer,
   player: playerReducer,
   routing: routerReducer,
   tracks: trackReducer,

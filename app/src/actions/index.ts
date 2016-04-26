@@ -2,6 +2,7 @@ export * from "./track";
 export * from "./player";
 export * from "./user";
 export * from "./artist";
+export * from "./error";
 
 // Workaround until we get proper string enums
 // https://github.com/Microsoft/TypeScript/issues/3192

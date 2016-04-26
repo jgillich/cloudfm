@@ -8,16 +8,23 @@
     "interface-name": [true, "never-prefix"],
     "max-line-length": [true, 80],
     "member-access": true,
+    "no-angle-bracket-type-assertion": true,
     "no-any": true,
+    "no-arg": true,
+    "no-bitwise": true,
     "no-conditional-assignment": true,
     "no-consecutive-blank-lines": true,
     "no-console": [true, "log"],
+    "no-construct": true,
     "no-eval": true,
+    "no-invalid-this": true,
+    "no-require-imports": false,
+    "no-string-literal": true,
     "no-trailing-whitespace": true,
     "no-unreachable": true,
-    "no-use-before-declare": true,
     "no-unused-expression": true,
     "no-unused-variable": [true, "react"],
+    "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": true,
     "one-line": [true,
@@ -31,10 +38,14 @@
     "radix": true,
     "semicolon": [true, "always"],
     "switch-default": true,
+    "trailing-comma": [true, {"singleline": "never", "multiline": "always"}],
+    "triple-equals": true,
     "typedef": [true, "call-signature", "parameter"],
-    "trailing-comma": [true, {
-      "singleline": "never",
-      "multiline": "always"
-    }]
+    "use-strict": [true, "check-module"],
+    "variable-name": [true,
+      "check-format",
+      "ban-keywords",
+      "allow-pascal-case"
+    ]
   }
 }
