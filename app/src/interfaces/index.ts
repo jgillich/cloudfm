@@ -5,3 +5,4 @@ export * from "./artist";
 export * from "./user";
 export * from "./backend";
 export * from "./player";
+export * from "./album";

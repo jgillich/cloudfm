@@ -14,7 +14,7 @@ export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
         {artists.map(a => {
           return (
             <Link to={`/collection/artist/${a._id}`}>
-              <li className="px2 py1">
+              <li key={a._id} className="px2 py1">
                 {a.name}
               </li>
             </Link>

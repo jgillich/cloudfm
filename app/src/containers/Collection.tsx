@@ -1,5 +1,5 @@
 import * as React from "react";
-import {StatelessComponent} from "react";
+import {StatelessComponent, ReactElement} from "react";
 import {connect} from "react-redux";
 import {TrackList, CollectionSidebar} from "../components";
 import {playTrack} from "../actions";
@@ -9,13 +9,16 @@ interface CollectionProps {
   artists: Artist[];
   tracks: Track[];
   onTrackClick: () => void;
+  /* tslint:disable:no-any */
+  children: ReactElement<any>;
+  /* tslint:enable */
 };
 
 const Container: StatelessComponent<CollectionProps> =
-  ({artists, tracks, onTrackClick}) => (
+  ({children, artists, tracks, onTrackClick}) => (
     <div className="flex flex-auto">
       <CollectionSidebar artists={artists}/>
-      <TrackList tracks={tracks} onTrackClick={onTrackClick}/>
+      {children}
     </div>
   );
 

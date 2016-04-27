@@ -6,3 +6,4 @@ export * from "./Discover";
 export * from "./IfUser";
 export * from "./BackendsSettings";
 export * from "./UserSettings";
+export * from "./AlbumList";

@@ -1,7 +1,7 @@
 import {Track} from "../interfaces";
 import {Action, TrackAction} from "../actions";
 
-function trackReducer(state: Track[] = [], action: TrackAction): Track[] {
+function tracksReducer(state: Track[] = [], action: TrackAction): Track[] {
   switch (action.type) {
     case Action.InsertTrack:
       return [ ...state, action.track ];
@@ -14,4 +14,4 @@ function trackReducer(state: Track[] = [], action: TrackAction): Track[] {
   };
 };
 
-export default trackReducer;
+export default tracksReducer;

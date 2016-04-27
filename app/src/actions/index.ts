@@ -3,10 +3,12 @@ export * from "./player";
 export * from "./user";
 export * from "./artist";
 export * from "./error";
+export * from "./album";
 
 // Workaround until we get proper string enums
 // https://github.com/Microsoft/TypeScript/issues/3192
 export type Action =
+  "INSERT_ALBUM" | "UPDATE_ALBUM" | "REMOVE_ALBUM" |
   "INSERT_ARTIST" | "UPDATE_ARTIST" | "REMOVE_ARTIST" |
   "INSERT_TRACK" | "UPDATE_TRACK" | "REMOVE_TRACK" |
   "PLAY_ALBUM" | "PLAY_ARTIST" | "PLAY_TRACK" | "PAUSE_PLAYER" |
@@ -15,6 +17,10 @@ export type Action =
 
 /* tslint:disable:object-literal-sort-keys */
 export const Action = {
+  InsertAlbum: "INSERT_ALBUM" as Action,
+  RemoveAlbum: "UPDATE_ALBUM" as Action,
+  UpdateAlbum: "REMOVE_ALBUM" as Action,
+
   InsertArtist: "INSERT_ARTIST" as Action,
   RemoveArtist: "UPDATE_ARTIST" as Action,
   UpdateArtist: "REMOVE_ARTIST" as Action,

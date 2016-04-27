@@ -1,7 +1,7 @@
 import {Artist} from "../interfaces";
 import {Action, ArtistAction} from "../actions";
 
-function artistReducer(state: Artist[] = [], action: ArtistAction): Artist[] {
+function artistsReducer(state: Artist[] = [], action: ArtistAction): Artist[] {
    switch (action.type) {
     case Action.InsertArtist:
       return [ ...state, action.artist ];
@@ -14,4 +14,4 @@ function artistReducer(state: Artist[] = [], action: ArtistAction): Artist[] {
   };
 };
 
-export default artistReducer;
+export default artistsReducer;
