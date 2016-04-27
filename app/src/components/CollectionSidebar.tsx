@@ -13,7 +13,7 @@ export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
       <ul className="list-reset mb0 border-right">
         {artists.map(a => {
           return (
-            <Link to="/collection/artist/{a._id}">
+            <Link to={`/collection/artist/${a._id}`}>
               <li className="px2 py1">
                 {a.name}
               </li>
@@ -22,6 +22,5 @@ export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
         })
       }
       </ul>
-
   );
 };

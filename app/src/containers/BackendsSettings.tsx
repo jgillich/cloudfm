@@ -3,7 +3,7 @@ import {Component, ReactElement} from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {updateUser} from "../actions";
-import {User, Backend} from "../interfaces";
+import {User, Backend, isJamendoBackend, isFileBackend} from "../interfaces";
 import { Field, Form } from "react-redux-form";
 const jamendoIcon = require("../assets/backends/jamendo.png");
 
@@ -24,10 +24,38 @@ class Container extends Component<AddBackendProps, {}> {
   }
 
   public render(): ReactElement<string> {
-      let { addBackend } = this.props;
+      let { user, addBackend } = this.props;
 
       return (
       <div>
+        <div className="h2 col-12">All Backends</div>
+        <table className="table-light col-12">
+          <thead>
+            <tr>
+              <th>Type</th> <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            { user.backends.length ? user.backends.map(b => {
+              if(isJamendoBackend(b)) {
+                return (
+                  <tr key={`jamendo-${b.user_name}`}>
+                    <td>Jamendo</td>
+                    <td>{b.user_name}</td>
+                  </tr>
+                );
+              } else if(isFileBackend(b)) {
+                return (
+                  <tr key={`file-${b.machine_id}`}>
+                    <td>File</td>
+                    <td>{b.machine_id}</td>
+                  </tr>
+                );
+              }
+            }) : <li>No backends found</li>}
+          </tbody>
+        </table>
+
         <div className="h3">Add Backend</div>
         <Field model="addBackend.type">
           <div className="py1">
@@ -104,7 +132,7 @@ class Container extends Component<AddBackendProps, {}> {
   }
 };
 
-export const AddBackend = connect(
+export const BackendsSettings = connect(
   (state) => ({addBackend: state.addBackend, user: state.user}),
   (dispatch) => ({dispatch})
 )(Container);

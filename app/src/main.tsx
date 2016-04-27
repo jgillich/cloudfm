@@ -17,9 +17,6 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 const container = document.createElement("div");
 container.id = "cloudfm";
-container.style.height = "100%";
-container.style.width = "100%";
-
 
 render(
   <Provider store={store}>
