@@ -3,7 +3,7 @@ import {StatelessComponent, ReactElement} from "react";
 import {connect} from "react-redux";
 import {CollectionSidebar} from "../components";
 import {playTrack} from "../actions";
-import {Artist, Track} from "../interfaces";
+import {Artist, Album, Track} from "../interfaces";
 
 interface CollectionProps {
   artists: Artist[];
@@ -14,6 +14,10 @@ interface CollectionProps {
   /* tslint:enable */
 };
 
+function artistsWithAlbums(artists: Artist[], albums: Album[]): Artist[] {
+  return artists.filter(a => !!albums.filter(al => al.artist === a._id).length);
+}
+
 const Container: StatelessComponent<CollectionProps> =
   ({children, artists}) => (
     <div className="flex flex-auto">
@@ -23,7 +27,10 @@ const Container: StatelessComponent<CollectionProps> =
   );
 
 export const Collection = connect(
-  state => ({artists: state.artists, tracks: state.tracks}),
+  state => ({
+    artists: artistsWithAlbums(state.artists, state.albums),
+    tracks: state.tracks,
+  }),
   dispatch => ({onTrackClick: (track): void => dispatch(playTrack(track))})
 )(Container);
 

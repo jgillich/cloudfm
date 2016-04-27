@@ -27,5 +27,23 @@ const Container: StatelessComponent<AlbumListProps> = ({albums}) => {
 };
 
 export const AlbumList = connect(
-  (state) => ({albums: state.albums})
+  (state, ownProps) => {
+    let id = (ownProps as any).params.id;
+
+    if(id) {
+      let artist = state.artists.find(a => a._id === id);
+
+      if(!artist) {
+        throw new Error("invalid artist id");
+      }
+
+      return {
+        albums: state.albums.filter(a => a.artist === id),
+      };
+    }
+
+    return {
+      albums: state.albums,
+    };
+  }
 )(Container);
