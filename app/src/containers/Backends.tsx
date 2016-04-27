@@ -27,9 +27,9 @@ class Container extends Component<AddBackendProps, {}> {
       let { user, addBackend } = this.props;
 
       return (
-      <div className="overflow-y-scroll">
-        <div className="h2 col-12">All Backends</div>
-        <table className="table-light col-12">
+      <div>
+        <div className="h2">All Backends</div>
+        <table className="table-light">
           <thead>
             <tr>
               <th>Type</th> <th>Name</th>
@@ -132,7 +132,7 @@ class Container extends Component<AddBackendProps, {}> {
   }
 };
 
-export const BackendsSettings = connect(
+export const Backends = connect(
   (state) => ({addBackend: state.addBackend, user: state.user}),
   (dispatch) => ({dispatch})
 )(Container);

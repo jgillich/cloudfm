@@ -12,7 +12,7 @@ export const Settings: StatelessComponent<SettingsProps> = ({children}) => {
   return (
     <div className="flex flex-auto">
       <SettingsSidebar/>
-      <div className="flex flex-column px2 py2 lg-col-8">
+      <div className="flex flex-auto overflow-y-scroll flex-column px2 py2">
         {children}
       </div>
     </div>

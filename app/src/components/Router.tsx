@@ -3,7 +3,7 @@ import {StatelessComponent} from "react";
 import {Route} from "react-router";
 import {App, Settings} from "../components";
 import {
-  Login, Signup, Collection, Discover, BackendsSettings, UserSettings,
+  Login, Signup, Collection, Discover, Backends, UserSettings,
   AlbumList, AlbumView,
 } from "../containers";
 import {Router as ReactRouter, IndexRoute} from "react-router";
@@ -27,7 +27,7 @@ export const Router: StatelessComponent<RouterProps> = ({history}) => (
       <Route path="/settings" component={Settings}>
         <IndexRoute component={UserSettings}/>
         <Route path="user" component={UserSettings}/>
-        <Route path="backends" component={BackendsSettings}/>
+        <Route path="backends" component={Backends}/>
       </Route>
     </Route>
   </ReactRouter>

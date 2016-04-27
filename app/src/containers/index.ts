@@ -4,7 +4,7 @@ export * from "./Player";
 export * from "./Collection";
 export * from "./Discover";
 export * from "./IfUser";
-export * from "./BackendsSettings";
+export * from "./Backends";
 export * from "./UserSettings";
 export * from "./AlbumList";
 export * from "./AlbumView";
