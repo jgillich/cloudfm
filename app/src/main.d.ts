@@ -12,7 +12,7 @@ declare module "pouch-redux-middleware" {
 
 interface ReactReduxForm {
   modelReducer(a: any, b?: any): any;
-  formReducer(a: any): any;
+  formReducer(a: any, b?: any): any;
   Field(a: any): any;
   Form(a: any): any;
   actions(a: any): any;

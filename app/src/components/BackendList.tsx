@@ -16,16 +16,34 @@ interface BackendListProps {
 };
 
 export const BackendList: StatelessComponent<BackendListProps> = ({user}) => (
-  <div className="flex justify-center mt2">
-    <div className="col-8">
-      <div className="h2">Backends</div>
-      <ul className="">
-        {user.backends.length ? user.backends.map(b =>
-          <li key={backendKey(b)}>
-            {b.type}
-          </li>
-        ) : <li>No backends found</li>}
-      </ul>
-    </div>
+  <div>
+    <div className="h2 col-12">All Backends</div>
+    <table className="table-light col-12">
+      <thead>
+        <tr>
+          <th>Type</th> <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        { user.backends.length ? user.backends.map(b => {
+          if(isJamendoBackend(b)) {
+            return (
+              <tr>
+                <td>Jamendo</td>
+                <td>{b.user_name}</td>
+              </tr>
+            );
+          } else if(isFileBackend(b)) {
+            return (
+              <tr>
+                <td>File</td>
+                <td>{b.machine_id}</td>
+              </tr>
+            );
+          }
+        }) : <li>No backends found</li>}
+      </tbody>
+    </table>
+
   </div>
 );

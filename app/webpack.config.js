@@ -36,7 +36,7 @@ module.exports = {
   plugins: [failPlugin, htmlPlugin, envPlugin],
   postcss: function () {
       return [
-        //"autoprefixer",
+        "autoprefixer",
         "postcss-import",
         "postcss-custom-media",
         "postcss-custom-properties",

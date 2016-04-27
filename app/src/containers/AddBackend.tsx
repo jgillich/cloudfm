@@ -27,46 +27,43 @@ class Container extends Component<AddBackendProps, {}> {
       let { addBackend } = this.props;
 
       return (
-      <div className="flex flex-column justify-center">
-        <div className="flex flex-wrap justify-center pt2">
-          <div className="col-8"><div className="h3">Add Backend</div></div>
-        </div>
+      <div>
+        <div className="h3">Add Backend</div>
         <Field model="addBackend.type">
-          <div className="flex flex-wrap justify-center flex-auto pt2">
-            <label className="col-2 pr1" >
+          <div className="py1">
+            <label className="pr1">
               <a className="btn btn-outline fit">
                 <input style={{display:"none"}}
                   type="radio" name="type" value="jamendo" />
-                <img className="fit" src={jamendoIcon}/>
+                <img style={{width: "5em"}} src={jamendoIcon}/>
               </a>
             </label>
-            <label className="col-2 pr1" >
+            <label className="pr1">
               <a className="btn btn-outline fit">
                 <input style={{display:"none"}}
                   type="radio" name="type" value="file" />
-                <img className="fit" src={jamendoIcon}/>
+                <img style={{width: "5em"}} src={jamendoIcon}/>
               </a>
             </label>
-            <label className="col-2 pr1" >
+            <label className="pr1">
               <a className="btn btn-outline fit">
                 <input style={{display:"none"}}
                   type="radio" name="type" value="jamendo" />
-                <img className="fit" src={jamendoIcon}/>
+                <img style={{width: "5em"}} src={jamendoIcon}/>
               </a>
             </label>
-            <label className="col-2 pr1" >
+            <label className="pr1">
               <a className="btn btn-outline fit">
                 <input style={{display:"none"}}
                   type="radio" name="type" value="jamendo" />
-                <img className="fit" src={jamendoIcon}/>
+                <img style={{width: "5em"}} src={jamendoIcon}/>
               </a>
             </label>
           </div>
         </Field>
         <Form model="addBackend"
-          className="flex flex-wrap justify-center pt2"
           onSubmit={backend => this.handleSubmit(backend) }>
-          <div className="col-8">
+          <div>
             {(() => {
             switch (addBackend.type) {
                 case "jamendo":

@@ -1,11 +1,13 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "basscss";
 @import "basscss-base-reset";
-@import 'basscss-base-typography';
+@import "basscss-base-typography";
 @import "basscss-btn";
 @import "basscss-btn-outline";
-@import 'basscss-color-base';
-@import 'basscss-color-borders';
+@import "basscss-btn-primary";
+@import "basscss-color-base";
+@import "basscss-color-borders";
+@import "basscss-color-tables";
 @import "basscss-colors";
 @import "basscss-background-colors";
 @import "basscss-forms";
@@ -47,10 +49,4 @@
   --blue: #0099dd;
   --border-color: var(--gray);
 
-}
-
-.xs-hide { display: none; }
-
-@media (--breakpoint-sm) {
-  .xs-hide { display: initial; }
 }

@@ -11,7 +11,8 @@ interface AppProps {
 };
 
 export const App: StatelessComponent<AppProps> = ({children}) => (
-  <div className="flex flex-column">
+  <div className="flex flex-column absolute"
+    style={{height: "100%", width: "100%"}}>
     <Header/>
     {children}
   </div>
