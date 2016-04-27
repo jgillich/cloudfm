@@ -10,8 +10,6 @@ interface AlbumListProps {
 }
 
 const Container: StatelessComponent<AlbumListProps> = ({albums}) => {
-
-
   return (
     <div className="flex flex-wrap flex-auto overflow-y-scroll">
     {albums.map(a => (
@@ -23,7 +21,6 @@ const Container: StatelessComponent<AlbumListProps> = ({albums}) => {
     ))}
     </div>
   );
-
 };
 
 export const AlbumList = connect(

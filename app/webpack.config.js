@@ -32,6 +32,7 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: path.resolve("target"),
+    publicPath: "/",
   },
   plugins: [failPlugin, htmlPlugin, envPlugin],
   postcss: function () {
