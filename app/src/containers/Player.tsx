@@ -16,37 +16,38 @@ interface AddBackendProps {
   dispatch: Dispatch;
 }
 
-const Container: StatelessComponent<AddBackendProps> = ({player, dispatch}) => (
-        <IfUser>
-        <div className="flex justify-center bg-black white">
-          <div>
+const PlayerComponent: StatelessComponent<AddBackendProps> =
+({player, dispatch}) => (
+  <IfUser>
+    <div className="flex justify-center bg-black white">
+      <div>
 
-          { player.playing ?
-            <a className="btn" onClick={() => dispatch(pausePlayer())}>
-              <i className="fa fa-pause"></i>
-            </a>
-            :
-            <a className="btn"
-              onClick={() => dispatch(playTrack(player.track))}>
-              <i className="fa fa-play"></i>
-            </a>
-          }
-          { player.track ?
-            <span>{player.track.name}
-              <div>
-                <ReactHowler
-                  src={trackUrl(player.track)}
-                  playing={player.playing}
-                />
-              </div>
-            </span>
-          : null }
+      { player.playing ?
+        <a className="btn" onClick={() => dispatch(pausePlayer())}>
+          <i className="fa fa-pause"></i>
+        </a>
+        :
+        <a className="btn"
+          onClick={() => dispatch(playTrack(player.track))}>
+          <i className="fa fa-play"></i>
+        </a>
+      }
+      { player.track ?
+        <span>{player.track.name}
+          <div>
+            <ReactHowler
+              src={trackUrl(player.track)}
+              playing={player.playing}
+            />
           </div>
-        </div>
-      </IfUser>
+        </span>
+      : null }
+      </div>
+    </div>
+  </IfUser>
 );
 
 export const Player = connect(
   (state) => ({player: state.player}),
   (dispatch) => ({dispatch})
-)(Container);
+)(PlayerComponent);

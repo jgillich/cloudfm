@@ -11,7 +11,7 @@ interface AlbumListProps {
   tracks: Track[];
 }
 
-const Container: StatelessComponent<AlbumListProps> =
+const AlbumViewComponent: StatelessComponent<AlbumListProps> =
 ({album, tracks, dispatch}) => {
   return (
     <div className="flex flex-auto flex-column overflow-y-scroll px2 py2">
@@ -43,4 +43,4 @@ export const AlbumView = connect(
     };
   },
   (dispatch) => ({dispatch})
-)(Container);
+)(AlbumViewComponent);

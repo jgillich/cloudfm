@@ -9,7 +9,7 @@ interface SignupProps {
   dispatch: Dispatch;
 };
 
-const Container: StatelessComponent<SignupProps> = ({dispatch}) => {
+const SignupComponent: StatelessComponent<SignupProps> = ({dispatch}) => {
   let nameInput, passwordInput, emailInput;
 
   return (
@@ -51,4 +51,4 @@ const Container: StatelessComponent<SignupProps> = ({dispatch}) => {
   );
 };
 
-export const Signup = connect()(Container);
+export const Signup = connect()(SignupComponent);

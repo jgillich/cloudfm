@@ -9,7 +9,7 @@ interface LoginProps {
   dispatch: Dispatch;
 };
 
-const Container: StatelessComponent<LoginProps> = ({dispatch}) => {
+const LoginComponent: StatelessComponent<LoginProps> = ({dispatch}) => {
   let nameInput, passwordInput;
 
   return (
@@ -44,4 +44,4 @@ const Container: StatelessComponent<LoginProps> = ({dispatch}) => {
   );
 };
 
-export const Login = connect()(Container);
+export const Login = connect()(LoginComponent);

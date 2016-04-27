@@ -9,10 +9,10 @@ interface IfUserProps {
   /* tslint:enable */
 };
 
-const Container: StatelessComponent<IfUserProps> = ({user, children}) => (
+const IfUserComponent: StatelessComponent<IfUserProps> = ({user, children}) => (
   user && user.name ? children : null
 );
 
 export const IfUser = connect(
   ({user}) => ({user})
-)(Container);
+)(IfUserComponent);

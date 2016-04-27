@@ -13,7 +13,7 @@ interface AddBackendProps {
   addBackend: Backend;
 }
 
-class Container extends Component<AddBackendProps, {}> {
+class BackendsComponent extends Component<AddBackendProps, {}> {
 
   public props: AddBackendProps;
 
@@ -52,7 +52,7 @@ class Container extends Component<AddBackendProps, {}> {
                   </tr>
                 );
               }
-            }) : <li>No backends found</li>}
+            }) : <tr><td>No backends found</td></tr>}
           </tbody>
         </table>
 
@@ -135,4 +135,4 @@ class Container extends Component<AddBackendProps, {}> {
 export const Backends = connect(
   (state) => ({addBackend: state.addBackend, user: state.user}),
   (dispatch) => ({dispatch})
-)(Container);
+)(BackendsComponent);

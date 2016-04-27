@@ -7,7 +7,7 @@ interface UserSettingsProps {
   user: User;
 }
 
-class Container extends Component<UserSettingsProps, {}> {
+class UserSettingsComponent extends Component<UserSettingsProps, {}> {
 
   public props: UserSettingsProps;
 
@@ -24,4 +24,4 @@ class Container extends Component<UserSettingsProps, {}> {
 
 export const UserSettings = connect(
   (state) => ({user: state.user})
-)(Container);
+)(UserSettingsComponent);
