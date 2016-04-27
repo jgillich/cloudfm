@@ -13,8 +13,8 @@ export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
       <ul className="list-reset mb0 border-right overflow-y-scroll">
         {artists.map(a => {
           return (
-            <Link to={`/collection/artist/${a._id}`}>
-              <li key={a._id} className="px2 py1">
+            <Link key={a._id} to={`/collection/artist/${a._id}`}>
+              <li className="px2 py1">
                 {a.name}
               </li>
             </Link>

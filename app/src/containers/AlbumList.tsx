@@ -13,7 +13,7 @@ const Container: StatelessComponent<AlbumListProps> = ({albums}) => {
   return (
     <div className="flex flex-wrap flex-auto overflow-y-scroll">
     {albums.map(a => (
-      <div>
+      <div key={a._id}>
         <Link to={`/collection/album/${a._id}`} className="btn">
           <img  width="256" src={logo}/>
         </Link>
