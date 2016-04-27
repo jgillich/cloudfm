@@ -24,3 +24,12 @@ declare module "react-redux-form" {
   export = ReactReduxForm;
 }
 
+interface ReactHowler {
+  (a: any, b?: any): any;
+}
+
+declare var ReactHowler: ReactHowler;
+
+declare module "react-howler" {
+  export = ReactHowler;
+}

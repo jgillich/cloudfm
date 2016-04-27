@@ -4,3 +4,4 @@ export * from "./track";
 export * from "./artist";
 export * from "./user";
 export * from "./backend";
+export * from "./player";

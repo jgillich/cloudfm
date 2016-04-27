@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {TrackList, CollectionSidebar} from "../components";
 import {playTrack} from "../actions";
 import {Artist, Track} from "../interfaces";
-import {Player} from "./";
 
 interface CollectionProps {
   artists: Artist[];
@@ -17,7 +16,6 @@ const Container: StatelessComponent<CollectionProps> =
     <div className="flex flex-auto">
       <CollectionSidebar artists={artists}/>
       <TrackList tracks={tracks} onTrackClick={onTrackClick}/>
-      <Player/>
     </div>
   );
 

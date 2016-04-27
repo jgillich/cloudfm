@@ -10,7 +10,7 @@ interface CollectionSidebarProps {
 export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
 ({artists}) => {
   return (
-      <ul className="list-reset mb0 border-right">
+      <ul className="list-reset mb0 border-right overflow-y-scroll">
         {artists.map(a => {
           return (
             <Link to={`/collection/artist/${a._id}`}>

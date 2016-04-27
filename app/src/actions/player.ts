@@ -3,7 +3,12 @@ import {Track} from "../interfaces";
 
 export interface PlayerAction {
   type: Action;
-  track: Track;
+  track?: Track;
+};
+
+export enum PlayerState {
+  Playing,
+  Paused
 };
 
 export function playTrack(track: Track): PlayerAction {
@@ -12,3 +17,9 @@ export function playTrack(track: Track): PlayerAction {
     track,
   };
 }
+
+export function pausePlayer(): PlayerAction {
+  return {
+    type: Action.PausePlayer,
+  };
+};

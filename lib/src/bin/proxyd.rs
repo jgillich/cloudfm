@@ -35,6 +35,9 @@ pub fn main() {
 
 fn handle(req: &mut Request) -> IronResult<Response> {
     let ref uri = req.extensions.get::<Router>().unwrap().find("uri").unwrap();
+
+    // FIXME proper format handling
+    let uri = uri.replace(".mp3", "");
     let uri = uri.parse::<Uri>().unwrap();
 
     match uri {

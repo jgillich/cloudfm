@@ -27,7 +27,7 @@ class Container extends Component<AddBackendProps, {}> {
       let { user, addBackend } = this.props;
 
       return (
-      <div>
+      <div className="overflow-y-scroll">
         <div className="h2 col-12">All Backends</div>
         <table className="table-light col-12">
           <thead>

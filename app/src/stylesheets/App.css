@@ -18,6 +18,10 @@
   box-sizing: border-box;
 }
 
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
 :root {
 
   --font-family: "Lato", "Helvetica Neue", Helvetica, sans-serif;

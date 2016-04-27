@@ -9,7 +9,7 @@ interface PropTypes {
 
 export const TrackList: StatelessComponent<PropTypes> =
 ({tracks, onTrackClick}) => (
-  <div className="flex flex-auto">
+  <div className="flex flex-auto overflow-y-scroll col-12">
     <ul className="list-reset flex-auto">
       {tracks.length ? tracks.map (track =>
           <li className="px1 flex flex-wrap items-center" key={track._id}>

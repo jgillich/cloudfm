@@ -8,22 +8,22 @@ export const Header: StatelessComponent<{}> = () => (
   <IfUser>
     <nav className="flex bg-black items-center">
       <ul className="list-reset mb0">
-          <li className="inline-block mr1 align-middle">
+          <li key="logo" className="inline-block mr1 align-middle">
             <img className="block mx-auto" height="32" src={logo}/>
           </li>
-          <li className="inline-block mr1">
+          <li key="collection" className="inline-block mr1">
             <Link to="/collection" className="btn white">
               <i className="fa fa-music mr1"></i>
               <span className="xs-hide">Collection</span>
             </Link>
           </li>
-          <li className="inline-block mr1">
+          <li key="discover" className="inline-block mr1">
             <Link to="/discover" className="btn white">
               <i className="fa fa-plus mr1"></i>
               <span className="xs-hide">Discover</span>
             </Link>
           </li>
-          <li className="inline-block mr1">
+          <li key="settings" className="inline-block mr1">
             <Link to="/settings" className="btn white">
               <i className="fa fa-cog mr1"></i>
               <span className="xs-hide">Settings</span>

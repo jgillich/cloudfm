@@ -1,7 +1,8 @@
 import * as React from "react";
 import {Component} from "react";
 import {StatelessComponent} from "react";
-import {Header} from "./";
+import {Header} from "../components";
+import {Player} from "../containers";
 require("../stylesheets/App.css");
 
 interface AppProps {
@@ -15,5 +16,6 @@ export const App: StatelessComponent<AppProps> = ({children}) => (
     style={{height: "100%", width: "100%"}}>
     <Header/>
     {children}
+    <Player/>
   </div>
 );

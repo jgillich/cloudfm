@@ -3,6 +3,7 @@
     "assert": "github:DefinitelyTyped/DefinitelyTyped/assert/assert.d.ts#58697597421d259f656dad7a2a5f20140c8a8051",
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
     "core-js": "registry:dt/core-js#0.0.0+20160317120654",
+    "howler": "registry:dt/howler#1.1.29+20160316155526",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#cf2a968f0edd7d30773f7d23fe3708fa029d5ab7",
     "jsdom": "github:DefinitelyTyped/DefinitelyTyped/jsdom/jsdom.d.ts#ffad52fa9cfba2ab1a08da7fecbb944264184d91",
     "mocha": "github:DefinitelyTyped/DefinitelyTyped/mocha/mocha.d.ts#d6dd320291705694ba8e1a79497a908e9f5e6617",
