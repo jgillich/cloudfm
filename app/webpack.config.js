@@ -23,9 +23,7 @@ module.exports = {
       {loader: "file", test: /\.(jpe?g|png|gif)$/i},
       {loader: "file", test: /\.(svg|woff2?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/i},
       {loader: "ts-loader", test: /\.tsx?$/},
-      {loader: "style!css", test: /\.css$/},
-
-
+      {loader: "style!css!postcss", test: /\.css$/},
     ],
     preLoaders: [
       {loader: "tslint", test: /\.tsx?$/},
@@ -36,7 +34,22 @@ module.exports = {
     path: path.resolve("target"),
   },
   plugins: [failPlugin, htmlPlugin, envPlugin],
+  postcss: function () {
+      return [
+        //"autoprefixer",
+        "postcss-import",
+        "postcss-custom-media",
+        "postcss-custom-properties",
+        "postcss-calc",
+        "postcss-discard-comments",
+        "postcss-remove-root",
+        "postcss-reporter",
+      ].map(require);
+  },
   resolve: {
-    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".css"]
+    extensions: ["", ".ts", ".tsx", ".js", ".css"],
+    alias: {
+      "basscss": "../node_modules/basscss/src/basscss.css",
+    }
   },
 };
