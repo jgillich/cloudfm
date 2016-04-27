@@ -1,10 +1,10 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {Route} from "react-router";
-import {App, Settings, TrackList} from "../components";
+import {App, Settings} from "../components";
 import {
   Login, Signup, Collection, Discover, BackendsSettings, UserSettings,
-  AlbumList,
+  AlbumList, AlbumView,
 } from "../containers";
 import {Router as ReactRouter, IndexRoute} from "react-router";
 import {ReactRouterReduxHistory} from "react-router-redux";
@@ -20,7 +20,8 @@ export const Router: StatelessComponent<RouterProps> = ({history}) => (
       <Route path="/signup" component={Signup} />
       <Route path="/collection" component={Collection}>
         <IndexRoute component={AlbumList}/>
-        <Route path="album/:id" component={TrackList}/>
+        <Route path="artist/:id" component={AlbumList}/>
+        <Route path="album/:id" component={AlbumView}/>
       </Route>
       <Route path="/discover" component={Discover} />
       <Route path="/settings" component={Settings}>

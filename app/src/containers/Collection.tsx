@@ -1,7 +1,7 @@
 import * as React from "react";
 import {StatelessComponent, ReactElement} from "react";
 import {connect} from "react-redux";
-import {TrackList, CollectionSidebar} from "../components";
+import {CollectionSidebar} from "../components";
 import {playTrack} from "../actions";
 import {Artist, Track} from "../interfaces";
 
@@ -15,7 +15,7 @@ interface CollectionProps {
 };
 
 const Container: StatelessComponent<CollectionProps> =
-  ({children, artists, tracks, onTrackClick}) => (
+  ({children, artists}) => (
     <div className="flex flex-auto">
       <CollectionSidebar artists={artists}/>
       {children}
