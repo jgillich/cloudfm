@@ -17,12 +17,6 @@ export const Header: StatelessComponent<{}> = () => (
               <span className="xs-hide">Collection</span>
             </Link>
           </li>
-          <li key="discover" className="inline-block mr1">
-            <Link to="/discover" className="btn white">
-              <i className="fa fa-plus mr1"></i>
-              <span className="xs-hide">Discover</span>
-            </Link>
-          </li>
           <li key="settings" className="inline-block mr1">
             <Link to="/settings" className="btn white">
               <i className="fa fa-cog mr1"></i>
