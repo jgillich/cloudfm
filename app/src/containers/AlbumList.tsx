@@ -11,14 +11,16 @@ interface AlbumListProps {
 
 const AlbumListComponent: StatelessComponent<AlbumListProps> = ({albums}) => {
   return (
-    <div className="flex flex-wrap flex-auto overflow-y-scroll">
-    {albums.map(a => (
-      <div key={a._id}>
-        <Link to={`/collection/album/${a._id}`} className="btn">
-          <img  width="256" src={logo}/>
+    <div className="flex flex-auto overflow-y-scroll">
+      <div>
+      {albums.map(a => (
+        <Link key={a._id} to={`/collection/album/${a._id}`} className="btn center">
+          <img width="200" src={logo}/>
+          <div>{a.name}</div>
+          <div className="gray">{a.artist}</div>
         </Link>
+      ))}
       </div>
-    ))}
     </div>
   );
 };
@@ -26,21 +28,29 @@ const AlbumListComponent: StatelessComponent<AlbumListProps> = ({albums}) => {
 export const AlbumList = connect(
   (state, ownProps) => {
     let id = (ownProps as any).params.id;
+    let albums;
 
     if(id) {
       let artist = state.artists.find(a => a._id === id);
 
       if(!artist) {
-        throw new Error("invalid artist id");
+        throw new Error("invalid artist id: " + id);
       }
 
-      return {
-        albums: state.albums.filter(a => a.artist === id),
-      };
+      albums = state.albums.filter(a => a.artist === id);
+    } else {
+      albums = state.albums;
     }
 
     return {
-      albums: state.albums,
+      albums: albums.map(a => {
+        let artist = state.artists.find(ar => ar._id === a.artist).name;
+        return {
+          _id: a._id,
+          artist: artist,
+          name: a.name,
+        };
+      }),
     };
   }
 )(AlbumListComponent);

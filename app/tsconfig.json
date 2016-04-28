@@ -4,8 +4,11 @@
     "sourceMap": true,
     "jsx": "react"
   },
-  "files": [
-    "src/main.tsx"
+  "exclude": [
+    "node_modules",
+    "target",
+    "typings/main",
+    "typings/main.d.ts"
   ],
   "compileOnSave": false
 }
