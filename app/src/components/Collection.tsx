@@ -3,7 +3,7 @@ import {StatelessComponent, ReactElement} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {playTrack} from "../actions";
-import {Artist, Album} from "../interfaces";
+import {Artist, Album, RouterProps} from "../interfaces";
 
 interface CollectionSidebarProps {
   artists: Artist[];
@@ -45,8 +45,8 @@ export const Collection: StatelessComponent<CollectionProps> =
   );
 
 export const CollectionContainer = connect(
-  (state, ownProps) => ({
-    active: (ownProps as any).params.id,
+  (state, ownProps: RouterProps) => ({
+    active: ownProps.params.id,
     artists: artistsWithAlbums(state.artists, state.albums),
   }),
   dispatch => ({onTrackClick: (track): void => dispatch(playTrack(track))})

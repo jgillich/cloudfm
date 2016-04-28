@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   addBackendForm: formReducer("addBackend", {}),
   albums: albumsReducer,
   artists: artistsReducer,
-  //errors: errorsReducer,
+  errors: errorsReducer,
   player: playerReducer,
   routing: routerReducer,
   tracks: tracksReducer,

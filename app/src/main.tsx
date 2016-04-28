@@ -9,10 +9,10 @@ import {browserHistory} from "react-router";
 import {syncHistoryWithStore} from "react-router-redux";
 import {Provider} from "react-redux";
 import {Router} from "./components";
-import configureStore from "./store/configureStore";
+import createStore from "./store/createStore";
 import {resumeSession} from "./actions";
 
-const store = configureStore();
+const store = createStore();
 
 const history = syncHistoryWithStore(browserHistory, store);
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {connect} from "react-redux";
-import {Album, Track} from "../interfaces";
+import {Album, Track, RouterProps} from "../interfaces";
 import {Link} from "react-router";
 import {playTrack} from "../actions";
 const logo = require("../assets/logo_white.svg");
@@ -15,7 +15,8 @@ export const AlbumList: StatelessComponent<AlbumListProps> = ({albums}) => {
     <div className="flex flex-auto overflow-y-scroll">
       <div>
       {albums.map(a => (
-        <Link key={a._id} to={`/collection/album/${a._id}`} className="btn center">
+        <Link key={a._id} to={`/collection/album/${a._id}`}
+          className="btn center">
           <img width="200" src={logo}/>
           <div>{a.name}</div>
           <div className="gray">{a.artist}</div>
@@ -27,8 +28,8 @@ export const AlbumList: StatelessComponent<AlbumListProps> = ({albums}) => {
 };
 
 export const AlbumListContainer = connect(
-  (state, ownProps) => {
-    let id = (ownProps as any).params.id;
+  (state, ownProps: RouterProps) => {
+    let id = ownProps.params.id;
     let albums;
 
     if(id) {
@@ -82,8 +83,8 @@ export const AlbumItem: StatelessComponent<AlbumItemProps> =
 };
 
 export const AlbumItemContainer = connect(
-  (state, ownProps) => {
-    let album = state.albums.find(a => a._id === (ownProps as any).params.id);
+  (state, ownProps: RouterProps) => {
+    let album = state.albums.find(a => a._id === ownProps.params.id);
     if(!album) {
       throw new Error("invalid album id");
     };
