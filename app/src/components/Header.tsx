@@ -6,7 +6,7 @@ const logo = require("../assets/logo_white.svg");
 
 export const Header: StatelessComponent<{}> = () => (
   <IfUser>
-    <nav className="flex bg-black items-center">
+    <nav className="flex bg-blue items-center">
       <ul className="list-reset mb0">
           <li key="logo" className="inline-block mr1 align-middle">
             <img className="block mx-auto" height="32" src={logo}/>
