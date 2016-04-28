@@ -7,3 +7,4 @@ export * from "./Backends";
 export * from "./UserSettings";
 export * from "./AlbumList";
 export * from "./AlbumView";
+export * from "./Settings";

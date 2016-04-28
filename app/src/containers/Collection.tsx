@@ -7,11 +7,11 @@ import {Artist, Album, Track} from "../interfaces";
 
 interface CollectionProps {
   artists: Artist[];
-  tracks: Track[];
   onTrackClick: () => void;
   /* tslint:disable:no-any */
   children: ReactElement<any>;
   /* tslint:enable */
+  active: string;
 };
 
 function artistsWithAlbums(artists: Artist[], albums: Album[]): Artist[] {
@@ -19,17 +19,17 @@ function artistsWithAlbums(artists: Artist[], albums: Album[]): Artist[] {
 }
 
 const CollectionComponent: StatelessComponent<CollectionProps> =
-  ({children, artists}) => (
+  ({children, artists, active}) => (
     <div className="flex flex-auto">
-      <CollectionSidebar artists={artists}/>
+      <CollectionSidebar artists={artists} active={active}/>
       {children}
     </div>
   );
 
 export const Collection = connect(
-  state => ({
+  (state, ownProps) => ({
+    active: (ownProps as any).params.id,
     artists: artistsWithAlbums(state.artists, state.albums),
-    tracks: state.tracks,
   }),
   dispatch => ({onTrackClick: (track): void => dispatch(playTrack(track))})
 )(CollectionComponent);

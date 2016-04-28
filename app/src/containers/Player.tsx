@@ -43,14 +43,14 @@ const PlayerComponent: StatelessComponent<PlayerProps> =
       </div>
       <div className="col-5 center">
        <div>
-        <div className="h3">{track ? `${track.name} - ${artist.name}`  : ""}</div>
+        <div className="h3">{track ? `${track.name} - ${artist.name}` : null}</div>
         <progress value="0.375" className="progress">0.375</progress>
         {track ?
           <ReactHowler
           src={trackUrl(track)}
           playing={playing}
         />
-        : <div></div>}
+        : null}
       </div>
       </div>
       <div>

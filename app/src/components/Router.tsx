@@ -1,9 +1,10 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {Route} from "react-router";
-import {App, Settings} from "../components";
+import {App} from "../components";
 import {
   Login, Signup, Collection, Backends, UserSettings, AlbumList, AlbumView,
+  Settings,
 } from "../containers";
 import {Router as ReactRouter, IndexRoute} from "react-router";
 import {ReactRouterReduxHistory} from "react-router-redux";
