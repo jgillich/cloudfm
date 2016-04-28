@@ -10,12 +10,12 @@ export const SettingsSidebar: StatelessComponent<SettingsSidebarProps> =
 ({active}) => (
   <ul className="list-reset mb0 overflow-y-scroll">
     <Link to="/settings/user">
-      <li className={"px2 py1" + (active === "user" || active === "settings" ? " bg-aqua" : "")}>
+      <li className={"px2 py1 black" + (active === "user" || active === "settings" ? " bg-aqua" : "")}>
         User
       </li>
     </Link>
     <Link to="/settings/backends">
-      <li className={"px2 py1" + (active === "backends" ? " bg-aqua" : "")}>
+      <li className={"px2 py1 black" + (active === "backends" ? " bg-aqua" : "")}>
         Backends
       </li>
     </Link>

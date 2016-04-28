@@ -22,6 +22,15 @@
   overflow-y: scroll;
 }
 
+a {
+   outline: 0;
+}
+
+.btn:focus {
+  border: none;
+  box-shadow: none;
+}
+
 :root {
 
   --font-family: "Lato", "Helvetica Neue", Helvetica, sans-serif;
