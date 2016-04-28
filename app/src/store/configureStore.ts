@@ -9,9 +9,7 @@ import {browserHistory } from "react-router";
 import schema from "./schema";
 import db from "./db";
 
-/* tslint:disable:no-any */
 export default function configureStore(initialState: any = {}): Store {
-  /* tslint:enable */
   let store;
 
   const pouchMiddleware = PouchMiddleware(
@@ -48,8 +46,8 @@ export default function configureStore(initialState: any = {}): Store {
     })));
 
   const applyMiddlewares = applyMiddleware(
-    pouchMiddleware,
     thunkMiddleware,
+    pouchMiddleware,
     routerMiddleware(browserHistory),
     (createLogger)()
   );

@@ -5,4 +5,5 @@ export interface User extends Doc {
   password?: string;
   email?: string;
   backends?: Backend[];
+  logged_in: boolean;
 }

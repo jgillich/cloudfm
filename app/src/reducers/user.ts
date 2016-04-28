@@ -1,11 +1,10 @@
 import {User} from "../interfaces";
 import {Action, UserAction} from "../actions";
 
-const userReducer = (state: User = {}, action: UserAction) => {
-  state.backends = state.backends || [];
+const userReducer = (state: User = {logged_in: false}, action: UserAction) => {
   switch (action.type) {
     case Action.LoginUser:
-      return Object.assign({}, state, action.user);
+      return Object.assign({}, state, action.user, {logged_in: true});
     case Action.SignupUser:
       return Object.assign({}, state, action.user);
     case Action.UpdateUser:

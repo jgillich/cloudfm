@@ -13,6 +13,7 @@ import configureStore from "./store/configureStore";
 import {resumeSession} from "./actions";
 
 const store = configureStore();
+
 const history = syncHistoryWithStore(browserHistory, store);
 
 const container = document.createElement("div");

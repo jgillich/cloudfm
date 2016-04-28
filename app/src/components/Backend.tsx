@@ -7,15 +7,15 @@ import {User, Backend, isJamendoBackend, isFileBackend} from "../interfaces";
 import { Field, Form } from "react-redux-form";
 const jamendoIcon = require("../assets/backends/jamendo.png");
 
-interface AddBackendProps {
+interface BackendSettingsProps {
   user: User;
   dispatch: Dispatch;
   addBackend: Backend;
 }
 
-class BackendsComponent extends Component<AddBackendProps, {}> {
+class BackendSettings extends Component<BackendSettingsProps, {}> {
 
-  public props: AddBackendProps;
+  public props: BackendSettingsProps;
 
   private handleSubmit(backend: Backend): void {
     let { dispatch, user } = this.props;
@@ -132,7 +132,7 @@ class BackendsComponent extends Component<AddBackendProps, {}> {
   }
 };
 
-export const Backends = connect(
+export const BackendSettingsContainer = connect(
   (state) => ({addBackend: state.addBackend, user: state.user}),
   (dispatch) => ({dispatch})
-)(BackendsComponent);
+)(BackendSettings);

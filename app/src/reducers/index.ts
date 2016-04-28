@@ -1,5 +1,5 @@
 import { routerReducer} from "react-router-redux";
-import {modelReducer, formReducer} from "react-redux-form";
+import {modelReducer, formReducer, modeled} from "react-redux-form";
 import { combineReducers} from "redux";
 import albumsReducer from "./albums";
 import artistsReducer from "./artists";
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   player: playerReducer,
   routing: routerReducer,
   tracks: tracksReducer,
-  user: userReducer,
+  user: modeled(userReducer, "user"),
 });
 
 export default rootReducer;

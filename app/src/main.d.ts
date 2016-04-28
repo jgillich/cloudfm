@@ -16,6 +16,7 @@ interface ReactReduxForm {
   Field(a: any): any;
   Form(a: any): any;
   actions(a: any): any;
+  modeled(a: any, b: any): any;
 }
 
 declare var ReactReduxForm: ReactReduxForm;
