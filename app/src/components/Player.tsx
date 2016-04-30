@@ -2,6 +2,7 @@ import * as React from "react";
 import {StatelessComponent} from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
+import {Link} from "react-router";
 import {Track, Artist} from "../interfaces";
 import {
   playTrack, pausePlayer, forwardPlayer, backwardPlayer,
@@ -43,8 +44,19 @@ export const Player: StatelessComponent<PlayerProps> =
     </div>
     <div className="col-5 center">
       <div>
-      <div className="h3">
-        {track ? `${track.name} - ${artist.name}` : null}
+      <div className="h3 nowrap truncate"
+        title={track ? `${track.name} - ${artist.name}` : null}>
+        {track ?
+          <span>
+            <Link className="white" to={`/collection/album/${track.album}`}>
+              {track.name}
+            </Link>
+            <span className="px1">-</span>
+            <Link className="white" to={`/collection/artist/${track.artist}`}>
+              {artist.name}
+            </Link>
+          </span>
+          : null}
       </div>
       <progress value="0.375" className="progress">0.375</progress>
       {track ?

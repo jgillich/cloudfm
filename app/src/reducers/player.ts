@@ -5,7 +5,6 @@ const playerReducer =
 (state: PlayerState = {playing: false, playlist: []}, action: PlayerAction) => {
   switch (action.type) {
     case Action.PlayTrack:
-      ;
       return Object.assign({}, state, {
         playing: true,
         track: action.track,
