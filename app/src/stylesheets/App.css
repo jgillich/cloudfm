@@ -27,7 +27,7 @@ a {
 }
 
 .btn:focus {
-  border: none;
+  border-color: transparent;
   box-shadow: none;
 }
 

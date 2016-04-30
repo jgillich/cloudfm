@@ -4,7 +4,7 @@ import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {Track, Artist} from "../interfaces";
 import {playTrack, pausePlayer} from "../actions";
-import * as ReactHowler from "react-howler";
+import {Howler} from "./";
 
 function trackUrl(track: Track): string {
   return `${process.env.SERVER_URL}/tracks/${track.uris[0]}.mp3`;
@@ -46,7 +46,7 @@ export const Player: StatelessComponent<PlayerProps> =
       </div>
       <progress value="0.375" className="progress">0.375</progress>
       {track ?
-        <ReactHowler
+        <Howler
         src={trackUrl(track)}
         playing={playing}
       />

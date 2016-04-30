@@ -2,12 +2,13 @@ import {PlayerState} from "../interfaces";
 import {Action, PlayerAction} from "../actions";
 
 const playerReducer =
-(state: PlayerState = {playing: false}, action: PlayerAction) => {
+(state: PlayerState = {playing: false, playlist: []}, action: PlayerAction) => {
   switch (action.type) {
     case Action.PlayTrack:
-      return {playing: true, track: action.track};
+      state.playlist.push(action.track);
+      return Object.assign({}, state, {playing: true, track: action.track});
     case Action.PausePlayer:
-      return {playing: false, track: state.track};
+      return Object.assign({}, state, {playing: false});
     default:
       return state;
   };
