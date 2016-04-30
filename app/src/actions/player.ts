@@ -18,6 +18,18 @@ export function playTrack(track: Track): PlayerAction {
   };
 }
 
+export function forwardPlayer(): PlayerAction {
+  return {
+    type: Action.ForwardPlayer,
+  };
+};
+
+export function backwardPlayer(): PlayerAction {
+  return {
+    type: Action.BackwardPlayer,
+  };
+};
+
 export function pausePlayer(): PlayerAction {
   return {
     type: Action.PausePlayer,

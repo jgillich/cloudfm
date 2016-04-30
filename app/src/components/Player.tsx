@@ -3,7 +3,9 @@ import {StatelessComponent} from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {Track, Artist} from "../interfaces";
-import {playTrack, pausePlayer} from "../actions";
+import {
+  playTrack, pausePlayer, forwardPlayer, backwardPlayer,
+} from "../actions";
 import {Howler} from "./";
 
 function trackUrl(track: Track): string {
@@ -21,7 +23,7 @@ export const Player: StatelessComponent<PlayerProps> =
 ({track, artist, playing, dispatch}) => (
   <div className="flex justify-between items-center bg-blue white py1">
     <div>
-      <a className="btn " onClick={() => dispatch(pausePlayer())}>
+      <a className="btn " onClick={() => dispatch(backwardPlayer())}>
         <i className="fa fa-fast-backward fa-lg px1"></i>
       </a>
       { playing ?
@@ -35,7 +37,7 @@ export const Player: StatelessComponent<PlayerProps> =
           <i className="fa fa-play fa-2x px1"></i>
         </a>
       }
-      <a className="btn" onClick={() => dispatch(pausePlayer())}>
+      <a className="btn" onClick={() => dispatch(forwardPlayer())}>
         <i className="fa fa-fast-forward fa-lg px1"></i>
       </a>
     </div>

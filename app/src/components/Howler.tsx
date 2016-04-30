@@ -1,5 +1,5 @@
-import { Component, ReactElement } from "react";
-import { Howl } from "howler";
+import {Component, ReactElement} from "react";
+import {Howl} from "howler";
 
 interface HowlerProps {
   src: String;
@@ -11,16 +11,20 @@ export class Howler extends Component<HowlerProps, {}> {
   private howl: Howl;
 
   public componentDidMount(): void {
+    this.initHowler();
+  }
+
+  public initHowler(props: HowlerProps = this.props): void {
     this.howl = new (Howl as any)({
-      autoplay: this.props.playing,
-      src: this.props.src,
+      autoplay: props.playing,
+      src: props.src,
     });
   }
 
   public componentWillUpdate(nextProps: HowlerProps, nextState: void): void {
     if(nextProps.src !== this.props.src) {
-      this.componentWillUnmount();
-      this.componentDidMount();
+      this.howl.unload();
+      this.initHowler(nextProps);
     }
 
     if(nextProps.playing && !this.props.playing) {
