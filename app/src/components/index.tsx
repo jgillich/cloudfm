@@ -7,4 +7,3 @@ export * from "./Player";
 export * from "./Router";
 export * from "./Settings";
 export * from "./User";
-export * from "./Howler";
