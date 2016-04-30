@@ -19,7 +19,6 @@ export const App: StatelessComponent<AppProps> = ({children, user}) => (
     {user.logged_in ? <Header/> : null}
     {children}
     {user.logged_in ? <PlayerContainer/> : null}
-
   </div>
 );
 
