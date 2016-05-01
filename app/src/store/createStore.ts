@@ -6,14 +6,22 @@ import thunkMiddleware from "redux-thunk";
 import * as PouchMiddleware from "pouch-redux-middleware";
 import {routerMiddleware } from "react-router-redux";
 import {browserHistory } from "react-router";
+import {Album, Artist, Track} from "../interfaces";
 import schema from "./schema";
 import db from "./db";
 
-export default function createStore(): Store {
+interface InitialState {
+  albums: Album[];
+  artists: Artist[];
+  tracks: Track[];
+};
+
+export default function createStore(initialState: InitialState): Store {
   let store;
 
   const pouchMiddleware = PouchMiddleware(
     schema.map(type => ({
+
         actions: {
           insert: (doc): void => {
             if(doc.type === type.singular) {
@@ -41,7 +49,9 @@ export default function createStore(): Store {
           },
         },
         changeFilter: (doc): boolean => doc.type === type.singular,
+        changesSince: "now",
         db: db,
+        docs: initialState[type.plural],
         path: `/${type.plural}`,
     })));
 
@@ -58,7 +68,7 @@ export default function createStore(): Store {
 
   store = createStoreWithMiddleware(
     rootReducer,
-    {}
+    initialState
   );
 
   return store;
