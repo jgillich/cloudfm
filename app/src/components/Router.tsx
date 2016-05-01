@@ -1,13 +1,14 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
-import {Route} from "react-router";
 import {
   AppContainer,
   LoginContainer, SignupContainer,
   CollectionContainer, AlbumListContainer, AlbumItemContainer,
   SettingsContainer, UserSettingsContainer, BackendSettingsContainer,
 } from "../components";
-import {Router as ReactRouter, IndexRoute} from "react-router";
+import {
+  Router as ReactRouter, IndexRoute, IndexRedirect, Route,
+} from "react-router";
 import {ReactRouterReduxHistory} from "react-router-redux";
 
 interface RouterProps {
@@ -17,6 +18,7 @@ interface RouterProps {
 export const Router: StatelessComponent<RouterProps> = ({history}) => (
   <ReactRouter history={history}>
     <Route path="/" component={AppContainer}>
+      <IndexRedirect to="/collection" />
       <Route path="/login" component={LoginContainer}/>
       <Route path="/signup" component={SignupContainer} />
       <Route path="/collection" component={CollectionContainer}>

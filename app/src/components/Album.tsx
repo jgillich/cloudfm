@@ -87,10 +87,7 @@ export const AlbumItemContainer = connect(
   (state, ownProps: RouterProps) => {
     let album = state.albums.find(a => a._id === ownProps.params.id);
     if(!album) {
-      // FIXME this happens all the time because components are loaded
-      // while pouch-redux-middleware is still inserting our data
-      window.location.pathname = "/collection";
-      // throw new Error("invalid album id");
+      throw new Error("invalid album id");
     };
 
     return {

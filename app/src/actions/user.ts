@@ -45,7 +45,6 @@ export function resumeSession(): (dispatch: Dispatch) => void {
           }
 
           dispatch({type: Action.LoginUser, user: response});
-          dispatch(push("/collection"));
         });
       } else {
         dispatch(push("/login"));
