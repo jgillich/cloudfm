@@ -34,3 +34,15 @@ declare var ReactHowler: ReactHowler;
 declare module "react-howler" {
   export = ReactHowler;
 }
+
+interface PouchDB {
+  plugin(plugin: any): void;
+  sync(pouch: PouchDB, opts: any): any;
+  getUser(name: string, opts?: any, callback?: (err: PouchError, res: any) => void): any;
+  putUser(name: string, opts?: any, callback?: (err: PouchError, res: any) => void): any;
+  login(name: string, password: string, opts?: any, callback?: (err: PouchError, res: any) => void): any;
+  signup(name: string, password: string, opts?: any, callback?: (err: PouchError, res: any) => void): any;
+  getSession(callback: (err: PouchError, res: any) => void): any;
+}
+
+declare var PouchDB: PouchDB;

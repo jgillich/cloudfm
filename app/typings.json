@@ -12,7 +12,7 @@
     "node-uuid/node-uuid-base": "registry:dt/node-uuid/node-uuid-base#0.0.0+20160316155526",
     "node-uuid/node-uuid-cjs": "registry:dt/node-uuid/node-uuid-cjs#0.0.0+20160316155526",
     "object-assign": "github:DefinitelyTyped/DefinitelyTyped/object-assign/object-assign.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
-    "pouchdb/pouch": "registry:dt/pouchdb/pouch#0.1.0+20160316155526",
+    "pouchdb/pouch": "registry:dt/pouchdb/pouch#0.1.0+20160425153630",
     "react": "registry:dt/react#0.14.0+20160423065914",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "react-redux": "registry:dt/react-redux#4.4.0+20160406115600",

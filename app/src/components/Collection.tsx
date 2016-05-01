@@ -26,9 +26,7 @@ export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
 interface CollectionProps {
   artists: Artist[];
   onTrackClick: () => void;
-  /* tslint:disable:no-any */
-  children: ReactElement<any>;
-  /* tslint:enable */
+  children: ReactElement<void>;
   active: string;
 };
 

@@ -28,9 +28,7 @@ export const SettingsSidebar: StatelessComponent<SettingsSidebarProps> =
 );
 
 interface SettingsProps {
-  /* tslint:disable:no-any */
-  children: Component<any, any>;
-  /* tslint:enable */
+  children: Component<void, void>;
   active: string;
 };
 

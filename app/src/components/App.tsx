@@ -7,9 +7,7 @@ import {User} from "../interfaces";
 require("../stylesheets/App.css");
 
 interface AppProps {
-  /* tslint:disable:no-any */
-  children: Component<any, any>;
-  /* tslint:enable */
+  children: Component<void, void>;
   user: User;
 };
 

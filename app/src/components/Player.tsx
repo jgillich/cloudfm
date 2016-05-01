@@ -23,10 +23,6 @@ export class Player extends Component<PlayerProps, PlayerState> {
 
   private howl: any; // FIXME Howl
 
-  public getInitialState(): PlayerState {
-    return {seekTime: 0};
-  }
-
   public initHowl({playing, track}: PlayerProps = this.props): void {
     if(this.howl) {
       this.howl.unload();
@@ -41,7 +37,6 @@ export class Player extends Component<PlayerProps, PlayerState> {
       onend: (): void => clearInterval(timerId),
       src: `${process.env.SERVER_URL}/tracks/${track.uris[0]}.mp3`,
     });
-
   }
 
   public componentWillUpdate(nextProps: PlayerProps, nextState: void): void {

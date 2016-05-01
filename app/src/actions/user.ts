@@ -19,7 +19,7 @@ export function updateUser(user: User): (dispatch: Dispatch) => void {
       (err, response) => {
       if (err) {
         console.error(err);
-        return dispatch({error: err.name, type: Action.AddError});
+        return dispatch({error: err.error, type: Action.AddError});
       }
 
       dispatch({type: Action.UpdateUser, user});
@@ -30,17 +30,15 @@ export function updateUser(user: User): (dispatch: Dispatch) => void {
 export function resumeSession(): (dispatch: Dispatch) => void {
   return function (dispatch: Dispatch): void {
     const remoteUrl = process.env.DATABASE_URL + "/_users";
-    /* tslint:disable:no-any */
-    const remoteDb = new (PouchDB as any)(remoteUrl, {skip_setup: true});
-    /* tslint:enable */
+    const allUsersDb = new PouchDB(remoteUrl, {skip_setup: true});
 
-    remoteDb.getSession((err, response) => {
+    allUsersDb.getSession((err, response) => {
       if (!err && response.userCtx.name) {
         const userDb = getUserDb(response.userCtx.name);
         db.sync(userDb, {live: true, retry: true})
           .on("error", console.error.bind(console));
 
-        remoteDb.getUser(response.userCtx.name, (err, response) => {
+        allUsersDb.getUser(response.userCtx.name, (err, response) => {
           if (err) {
             console.error(err);
             return dispatch({error: err.name, type: Action.AddError});
@@ -63,13 +61,13 @@ export function loginUser(user: User): (dispatch: Dispatch) => void {
     userDb.login(user.name, user.password, (err, response) => {
         if (err) {
           console.error(err);
-          return dispatch({error: err.name, type: Action.LoginUser});
+          return dispatch({error: err.error, type: Action.LoginUser});
         }
 
         userDb.getUser(user.name, (err, response) => {
           if (err) {
             console.error(err);
-            return dispatch({error: err.name, type: Action.AddError});
+            return dispatch({error: err.error, type: Action.AddError});
           }
 
           db.sync(userDb, {live: true, retry: true})
@@ -89,7 +87,7 @@ export function signupUser(user: User): (dispatch: Dispatch) => void {
       (err, response) => {
       if (err) {
         console.error(err);
-        return dispatch({error: err.name, type: Action.AddError});
+        return dispatch({error: err.error, type: Action.AddError});
       }
 
       dispatch({type: Action.SignupUser, user});
@@ -98,12 +96,12 @@ export function signupUser(user: User): (dispatch: Dispatch) => void {
   };
 }
 
-/* tslint:disable:no-any */
-function getUserDb(name: string): any {
-  let dbUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
-  return new (PouchDB as any)(dbUrl, {skip_setup: true});
+function getUserDb(name: string): PouchDB {
+  const dbUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
+  const pouch = new PouchDB(dbUrl, {skip_setup: true});
+    return pouch;
+
 }
-/* tslint:enable */
 
 function toHex(str: string): string {
   let result = "";
