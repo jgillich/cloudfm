@@ -3,24 +3,24 @@ import {StatelessComponent, ReactElement} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {playTrack} from "../actions";
-import {Artist, Album, RouterProps} from "../interfaces";
+import {Artist, Album} from "../interfaces";
 
 interface CollectionSidebarProps {
   artists: Artist[];
-  active: string;
 };
 
 export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
-({artists, active}) => (
-  <ul className="list-reset mb0 overflow-y-scroll">
+({artists}) => (
+  <div className="mb0 overflow-y-scroll">
     {artists.map(a => (
-      <Link key={a._id} to={`/collection/artist/${a._id}`}>
-        <li className={"px2 py1 black" + (active === a._id ? " bg-aqua" : "")}>
+      <div>
+        <Link className="btn" key={a._id} to={`/collection/artist/${a._id}`}
+          activeClassName="red">
           {a.name}
-        </li>
-      </Link>
+        </Link>
+      </div>
     ))}
-  </ul>
+  </div>
 );
 
 interface CollectionProps {
@@ -37,16 +37,17 @@ function artistsWithAlbums(artists: Artist[], albums: Album[]): Artist[] {
 export const Collection: StatelessComponent<CollectionProps> =
   ({children, artists, active}) => (
     <div className="flex flex-auto">
-      <CollectionSidebar artists={artists} active={active}/>
+      <CollectionSidebar artists={artists}/>
       {children}
     </div>
   );
 
 export const CollectionContainer = connect(
-  (state, ownProps: RouterProps) => ({
-    active: ownProps.params.id,
+  (state) => ({
     artists: artistsWithAlbums(state.artists, state.albums),
   }),
-  dispatch => ({onTrackClick: (track): void => dispatch(playTrack(track))})
+  dispatch => ({
+    onTrackClick: (track): void => dispatch(playTrack(track)),
+  })
 )(Collection);
 

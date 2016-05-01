@@ -10,13 +10,13 @@ export const Header: StatelessComponent<{}> = () => (
           <img className="block mx-auto" height="32" src={logo}/>
         </li>
         <li key="collection" className="inline-block mr1">
-          <Link to="/collection" className="btn white">
+          <Link to="/collection" className="btn silver" activeClassName="white">
             <i className="fa fa-music mr1"></i>
             <span className="xs-hide">Collection</span>
           </Link>
         </li>
         <li key="settings" className="inline-block mr1">
-          <Link to="/settings" className="btn white">
+          <Link to="/settings" className="btn silver" activeClassName="white">
             <i className="fa fa-cog mr1"></i>
             <span className="xs-hide">Settings</span>
           </Link>
