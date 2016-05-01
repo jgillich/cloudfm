@@ -98,9 +98,7 @@ export function signupUser(user: User): (dispatch: Dispatch) => void {
 
 function getUserDb(name: string): PouchDB {
   const dbUrl = process.env.DATABASE_URL + "/userdb-" + toHex(name);
-  const pouch = new PouchDB(dbUrl, {skip_setup: true});
-    return pouch;
-
+  return new PouchDB(dbUrl, {skip_setup: true});
 }
 
 function toHex(str: string): string {

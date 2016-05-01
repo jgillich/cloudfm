@@ -12,6 +12,7 @@
 @import "basscss-background-colors";
 @import "basscss-forms";
 @import "basscss-progress";
+@import "basscss-input-range";
 @import "basscss-defaults";
 
 * {

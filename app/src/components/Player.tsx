@@ -4,6 +4,7 @@ import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {Howl} from "howler";
+import {debounce} from "lodash";
 import {Track, Artist} from "../interfaces";
 import {playTrack, pausePlayer, forwardPlayer, backwardPlayer,
 } from "../actions";
@@ -16,12 +17,25 @@ interface PlayerProps {
 }
 
 interface PlayerState {
-  seekTime: number;
+  // The actual progress of the played track
+  trackProgress?: number;
+  // The displayed progress of the played track. This might differ from
+  // trackProgress when the user manually moves the progress slider
+  displayProgress?: number;
 }
 
 export class Player extends Component<PlayerProps, PlayerState> {
 
+  // Is set to true when the user moves the progress slider
+  private disableProgressUpdate: boolean;
+
   private howl: any; // FIXME Howl
+
+  public constructor(props: PlayerProps) {
+    super();
+    this.state = {displayProgress: 0, trackProgress: 0};
+    this.seek = debounce(this.seek, 500);
+  }
 
   public initHowl({playing, track}: PlayerProps = this.props): void {
     if(this.howl) {
@@ -29,12 +43,19 @@ export class Player extends Component<PlayerProps, PlayerState> {
     }
 
     let timerId = setInterval(() => {
-      this.setState({seekTime: this.howl.seek()});
+      this.setState({
+        trackProgress: (this.howl.seek() / this.howl.duration()) * 100,
+      });
     }, 500);
 
     this.howl = new (Howl as any)({
       autoplay: playing,
-      onend: (): void => clearInterval(timerId),
+      onend: (): void => {
+        clearInterval(timerId);
+        if(this.props.track === track) {
+          this.props.dispatch(forwardPlayer());
+        }
+      },
       src: `${process.env.SERVER_URL}/tracks/${track.uris[0]}.mp3`,
     });
   }
@@ -42,7 +63,6 @@ export class Player extends Component<PlayerProps, PlayerState> {
   public componentWillUpdate(nextProps: PlayerProps, nextState: void): void {
     if(!this.props.track || nextProps.track._id !== this.props.track._id) {
       this.initHowl(nextProps);
-
     } else if(nextProps.playing && !this.props.playing) {
       this.howl.play();
     } else if(!nextProps.playing && this.props.playing) {
@@ -56,16 +76,22 @@ export class Player extends Component<PlayerProps, PlayerState> {
 
   public render(): ReactElement<void> {
     let {track, artist, playing, dispatch} = this.props;
-    let progress = 0;
+    let {displayProgress, trackProgress} = this.state;
 
-    if(this.howl) {
-      progress = this.state.seekTime / this.howl.duration();
+    if(!this.disableProgressUpdate && displayProgress !== trackProgress) {
+      displayProgress = trackProgress;
     }
 
     return (
     <div className="flex justify-between items-center bg-blue white py1">
       <div>
-        <a className="btn " onClick={() => dispatch(backwardPlayer())}>
+        <a className="btn " onClick={() => {
+          if(this.state.trackProgress > 10) {
+            this.howl.seek(0);
+          } else {
+            dispatch(backwardPlayer());
+          }
+        }}>
           <i className="fa fa-fast-backward fa-lg px1"></i>
         </a>
         { playing ?
@@ -99,7 +125,12 @@ export class Player extends Component<PlayerProps, PlayerState> {
             </span>
             : null}
         </div>
-        <progress value={progress} className="progress"></progress>
+        <input value={displayProgress} type="range" onChange={(e) => {
+          this.disableProgressUpdate = true;
+          let value = parseInt((e.target as any).value, 10);
+          this.setState({displayProgress: value});
+          this.seek(value);
+        }}/>
       </div>
       </div>
       <div>
@@ -112,6 +143,11 @@ export class Player extends Component<PlayerProps, PlayerState> {
       </div>
     </div>
     );
+  }
+
+  private seek(percent: number): void {
+    this.howl.seek(this.howl.duration() * (percent / 100));
+    this.disableProgressUpdate = false;
   }
 }
 
