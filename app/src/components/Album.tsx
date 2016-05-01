@@ -1,9 +1,8 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
 import {connect} from "react-redux";
-import {Album, Track, RouterProps} from "../interfaces";
+import {Album, Artist, Track, RouterProps} from "../interfaces";
 import {Link} from "react-router";
-import {push} from "react-router-redux";
 import {playTrack} from "../actions";
 const logo = require("../assets/logo_white.svg");
 
@@ -61,20 +60,24 @@ export const AlbumListContainer = connect(
 interface AlbumItemProps {
   handleClick: (track: Track) => void;
   album: Album;
+  artist: Artist;
   tracks: Track[];
 }
 
 export const AlbumItem: StatelessComponent<AlbumItemProps> =
-({album, tracks, handleClick}) => {
+({album, artist, tracks, handleClick}) => {
   return (
-    <div className="flex flex-auto flex-column overflow-y-scroll px2 py2">
-      <div className="h3">{album.name}</div>
+    <div className="flex flex-auto overflow-y-scroll mx2 my2">
+      <div className="center mr4">
+        <img width="200" src={logo}/>
+        <div className="h3 bold">{album.name}</div>
+        <div className="h3">{artist.name}</div>
+      </div>
       <ul className="list-reset">
         {tracks.map(track =>
           <li key={track._id}>
-            <a className="btn" onClick={() => handleClick(track)}>
-              <i className="fa fa-play-circle pr1"/>
-              {track.name}
+            <a onClick={() => handleClick(track)} className="nowrap truncate">
+              <span className="mx1">{track.number}</span> {track.name}
             </a>
           </li>
         )}
@@ -90,9 +93,17 @@ export const AlbumItemContainer = connect(
       throw new Error("invalid album id");
     };
 
+    let artist = state.artists
+      .find(a => a._id === album.artist);
+
+    let tracks = state.tracks
+      .filter(t => t.album === album._id)
+      .sort((a, b) => a.number - b.number);
+
     return {
       album,
-      tracks: state.tracks.filter(t => t.album === album._id),
+      artist,
+      tracks,
     };
   },
   (dispatch) => ({

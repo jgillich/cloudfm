@@ -24,7 +24,8 @@
 }
 
 a {
-   outline: 0;
+  cursor: pointer;
+  outline: 0;
 }
 
 .btn:focus {
@@ -43,6 +44,9 @@ a {
   box-sizing: border-box;
 }
 
+.colum-count-2 {
+  column-count: 2;
+}
 
 :root {
 

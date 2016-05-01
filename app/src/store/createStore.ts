@@ -21,7 +21,6 @@ export default function createStore(initialState: InitialState): Store {
 
   const pouchMiddleware = PouchMiddleware(
     schema.map(type => ({
-
         actions: {
           insert: (doc): void => {
             if(doc.type === type.singular) {

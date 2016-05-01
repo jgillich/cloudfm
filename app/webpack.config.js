@@ -36,16 +36,16 @@ module.exports = {
   },
   plugins: [failPlugin, htmlPlugin, envPlugin],
   postcss: function () {
-      return [
-        "autoprefixer",
-        "postcss-import",
-        "postcss-custom-media",
-        "postcss-custom-properties",
-        "postcss-calc",
-        "postcss-discard-comments",
-        "postcss-remove-root",
-        "postcss-reporter",
-      ].map(require);
+    return [
+      "autoprefixer",
+      "postcss-import",
+      "postcss-custom-media",
+      "postcss-custom-properties",
+      "postcss-calc",
+      "postcss-discard-comments",
+      "postcss-remove-root",
+      "postcss-reporter",
+    ].map(require);
   },
   resolve: {
     extensions: ["", ".ts", ".tsx", ".js", ".css"],
