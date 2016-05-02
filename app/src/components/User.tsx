@@ -17,27 +17,27 @@ interface LoginProps {
 export class Login extends Component<LoginProps, {}> {
 
   public render(): ReactElement<void> {
-      let { dispatch, user, redirectTo } = this.props;
+    let {dispatch, user, redirectTo} = this.props;
 
-      return (
-        <div className="flex justify-center items-center flex-auto flex-column">
-          <div className="mb2"><img height="128" src={logo}/></div>
-          <Form model="user"
-            onSubmit={user => dispatch(loginUser(user, redirectTo))}>
-            <Field model="user.name">
-              <input className="inline-input" type="text"
-                placeholder="Username" value={user.name} />
-            </Field>
-            <Field model="user.password">
-              <input className="inline-input" type="password"
-                placeholder="Password" />
-            </Field>
-            <button className="btn btn-outline" type="submit">
-              Log in
-            </button>
-          </Form>
-          <div className="my2"><Link to="/signup">Sign up</Link></div>
-        </div>
+    return (
+      <div className="flex justify-center items-center flex-auto flex-column">
+        <div className="mb2"><img height="128" src={logo}/></div>
+        <Form model="user"
+          onSubmit={user => dispatch(loginUser(user, redirectTo))}>
+          <Field model="user.name">
+            <input className="inline-input" type="text"
+              placeholder="Username" value={user.name} />
+          </Field>
+          <Field model="user.password">
+            <input className="inline-input" type="password"
+              placeholder="Password" />
+          </Field>
+          <button className="btn btn-outline" type="submit">
+            Log in
+          </button>
+        </Form>
+        <div className="my2"><Link to="/signup">Sign up</Link></div>
+      </div>
     );
   }
 };
@@ -58,31 +58,31 @@ interface SignupProps {
 export class Signup extends Component<SignupProps, {}> {
 
   public render(): ReactElement<void> {
-      let { dispatch, redirectTo } = this.props;
+    let {dispatch, redirectTo} = this.props;
 
-      return (
-        <div className="flex justify-center items-center flex-auto flex-column">
-          <div className="mb2"><img height="128" src={logo}/></div>
-          <Form model="user" className="center"
-            onSubmit={user => dispatch(signupUser(user, redirectTo))}>
-            <Field model="user.name">
-              <input className="input" type="text"
-                placeholder="Username" />
-            </Field>
-            <Field model="user.password">
-              <input className="input" type="password"
-                placeholder="Password" />
-            </Field>
-            <Field model="user.email">
-              <input className="input" type="email"
-                placeholder="Email" />
-            </Field>
-            <button className="btn btn-outline" type="submit">
-              Sign up
-            </button>
-          </Form>
-          <div className="my2"><Link to="/login">Log in</Link></div>
-        </div>
+    return (
+      <div className="flex justify-center items-center flex-auto flex-column">
+        <div className="mb2"><img height="128" src={logo}/></div>
+        <Form model="user" className="center"
+          onSubmit={user => dispatch(signupUser(user, redirectTo))}>
+          <Field model="user.name">
+            <input className="input" type="text"
+              placeholder="Username" />
+          </Field>
+          <Field model="user.password">
+            <input className="input" type="password"
+              placeholder="Password" />
+          </Field>
+          <Field model="user.email">
+            <input className="input" type="email"
+              placeholder="Email" />
+          </Field>
+          <button className="btn btn-outline" type="submit">
+            Sign up
+          </button>
+        </Form>
+        <div className="my2"><Link to="/login">Log in</Link></div>
+      </div>
     );
   }
 };
@@ -112,9 +112,9 @@ export class UserSettings extends Component<UserSettingsProps, {}> {
   }
 
   public render(): ReactElement<string> {
-      let {user} = this.props;
+    let {user} = this.props;
 
-      return (
+    return (
       <div>
         Logged in as {user.name}
       </div>

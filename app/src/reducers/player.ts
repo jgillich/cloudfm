@@ -3,7 +3,7 @@ import {Action, PlayerAction} from "../actions";
 
 const playerReducer =
 (state: PlayerState = {playing: false, playlist: []}, action: PlayerAction) => {
-  switch (action.type) {
+  switch(action.type) {
     case Action.PlayTrack:
       return Object.assign({}, state, {
         playing: true,

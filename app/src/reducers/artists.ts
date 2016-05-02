@@ -2,9 +2,9 @@ import {Artist} from "../interfaces";
 import {Action, ArtistAction} from "../actions";
 
 function artistsReducer(state: Artist[] = [], action: ArtistAction): Artist[] {
-   switch (action.type) {
+  switch(action.type) {
     case Action.InsertArtist:
-      return [ ...state, action.artist ];
+      return [...state, action.artist];
     case Action.RemoveArtist:
       return state.filter(t => t._id !== action.artist._id);
     case Action.UpdateArtist:

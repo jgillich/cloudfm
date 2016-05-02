@@ -8,7 +8,7 @@ export interface FileBackend extends Doc {
 }
 
 export function isFileBackend(backend: Backend): backend is FileBackend {
-    return backend.type === "file";
+  return backend.type === "file";
 }
 
 export interface JamendoBackend extends Doc {
@@ -16,5 +16,5 @@ export interface JamendoBackend extends Doc {
 }
 
 export function isJamendoBackend(backend: Backend): backend is JamendoBackend {
-    return backend.type === "jamendo";
+  return backend.type === "jamendo";
 }

@@ -24,9 +24,9 @@ class BackendSettings extends Component<BackendSettingsProps, {}> {
   }
 
   public render(): ReactElement<string> {
-      let { user, addBackend } = this.props;
+    let { user, addBackend } = this.props;
 
-      return (
+    return (
       <div>
         <div className="h2">All Backends</div>
         <table className="table-light">
@@ -61,28 +61,28 @@ class BackendSettings extends Component<BackendSettingsProps, {}> {
           <div className="py1">
             <label className="pr1">
               <a className="btn btn-outline fit">
-                <input style={{display:"none"}}
+                <input style={{display: "none"}}
                   type="radio" name="type" value="jamendo" />
                 <img style={{width: "5em"}} src={jamendoIcon}/>
               </a>
             </label>
             <label className="pr1">
               <a className="btn btn-outline fit">
-                <input style={{display:"none"}}
+                <input style={{display: "none"}}
                   type="radio" name="type" value="file" />
                 <img style={{width: "5em"}} src={jamendoIcon}/>
               </a>
             </label>
             <label className="pr1">
               <a className="btn btn-outline fit">
-                <input style={{display:"none"}}
+                <input style={{display: "none"}}
                   type="radio" name="type" value="jamendo" />
                 <img style={{width: "5em"}} src={jamendoIcon}/>
               </a>
             </label>
             <label className="pr1">
               <a className="btn btn-outline fit">
-                <input style={{display:"none"}}
+                <input style={{display: "none"}}
                   type="radio" name="type" value="jamendo" />
                 <img style={{width: "5em"}} src={jamendoIcon}/>
               </a>
@@ -93,28 +93,28 @@ class BackendSettings extends Component<BackendSettingsProps, {}> {
           onSubmit={backend => this.handleSubmit(backend) }>
           <div>
             {(() => {
-            switch (addBackend.type) {
+              switch(addBackend.type) {
                 case "jamendo":
                   return (
-                  <div>
-                    <Field  model="addBackend.user_name">
-                      <input className="input" type="text"
-                        placeholder="Jamendo Username" />
-                    </Field>
-                  </div>
+                    <div>
+                      <Field  model="addBackend.user_name">
+                        <input className="input" type="text"
+                          placeholder="Jamendo Username" />
+                      </Field>
+                    </div>
                   );
                 case "file":
                   return (
-                  <div>
-                    <Field  model="addBackend.machine_id">
-                      <input className="input" type="text"
-                        placeholder="Machine ID" />
-                    </Field>
-                    <Field  model="addBackend.paths">
-                      <input className="input" type="text"
-                        placeholder="Path" />
-                    </Field>
-                  </div>
+                    <div>
+                      <Field  model="addBackend.machine_id">
+                        <input className="input" type="text"
+                          placeholder="Machine ID" />
+                      </Field>
+                      <Field  model="addBackend.paths">
+                        <input className="input" type="text"
+                          placeholder="Path" />
+                      </Field>
+                    </div>
                   );
                 default:
                   throw new Error("unknown backend type: " + addBackend.type);

@@ -5,7 +5,7 @@ const errorsReducer = (state = [], action: ErrorAction) => {
 
   if(type === Action.ResetError) {
     return [];
-  } else if (error) {
+  } else if(error) {
     state.push(action.error);
   }
 

@@ -15,11 +15,11 @@ import {ReactRouterReduxHistory} from "react-router-redux";
 import {resumeSession} from "../actions";
 
 function requireAuth(store: Store):
-(nextState: RouterState, replace: RedirectFunction, cb: Function) => void {
+  (nextState: RouterState, replace: RedirectFunction, cb: Function) => void {
   return (nextState, replace, cb) => {
     let { user } = store.getState();
 
-    if (!user.loggedIn) {
+    if(!user.loggedIn) {
       store.dispatch(resumeSession((loggedIn) => {
         if(loggedIn) {
           cb();
@@ -32,7 +32,7 @@ function requireAuth(store: Store):
         }
       }));
     } else {
-     cb();
+      cb();
     }
   };
 }
@@ -45,7 +45,7 @@ interface RouterProps {
 export const Router: StatelessComponent<RouterProps> = ({history, store}) => (
   <ReactRouter history={history}>
     <Route path="/" component={AppContainer}>
-      <IndexRedirect to="/collection"  />
+      <IndexRedirect to="/collection"/>
       <Route path="/login" component={LoginContainer}/>
       <Route path="/signup" component={SignupContainer} />
       <Route path="/collection" component={CollectionContainer}

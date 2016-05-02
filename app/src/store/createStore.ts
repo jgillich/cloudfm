@@ -21,37 +21,37 @@ export default function createStore(initialState: InitialState): Store {
 
   const pouchMiddleware = PouchMiddleware(
     schema.map(type => ({
-        actions: {
-          insert: (doc): void => {
-            if(doc.type === type.singular) {
-              store.dispatch({
-                [type.singular]: doc,
-                type: "INSERT_" + type.singular.toUpperCase(),
-              });
-            }
-          },
-          remove: (doc): void => {
-            if(doc.type === type.singular) {
-              store.dispatch({
-                [type.singular]: doc,
-                type: "REMOVE_" + type.singular.toUpperCase(),
-              });
-            }
-          },
-          update: (doc): void => {
-            if(doc.type === type.singular) {
-              store.dispatch({
-                [type.singular]: doc,
-                type: "UPDATE_" + type.singular.toUpperCase(),
-              });
-            }
-          },
+      actions: {
+        insert: (doc): void => {
+          if(doc.type === type.singular) {
+            store.dispatch({
+              [type.singular]: doc,
+              type: "INSERT_" + type.singular.toUpperCase(),
+            });
+          }
         },
-        changeFilter: (doc): boolean => doc.type === type.singular,
-        changesSince: "now",
-        db: db,
-        docs: initialState[type.plural],
-        path: `/${type.plural}`,
+        remove: (doc): void => {
+          if(doc.type === type.singular) {
+            store.dispatch({
+              [type.singular]: doc,
+              type: "REMOVE_" + type.singular.toUpperCase(),
+            });
+          }
+        },
+        update: (doc): void => {
+          if(doc.type === type.singular) {
+            store.dispatch({
+              [type.singular]: doc,
+              type: "UPDATE_" + type.singular.toUpperCase(),
+            });
+          }
+        },
+      },
+      changeFilter: (doc): boolean => doc.type === type.singular,
+      changesSince: "now",
+      db: db,
+      docs: initialState[type.plural],
+      path: `/${type.plural}`,
     })));
 
   const applyMiddlewares = applyMiddleware(

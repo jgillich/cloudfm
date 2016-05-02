@@ -70,7 +70,7 @@ export class Player extends Component<PlayerProps, PlayerState> {
     }
   }
 
-  public componentWillUnmount (): void {
+  public componentWillUnmount(): void {
     this.howl.unload();
   }
 
@@ -83,65 +83,65 @@ export class Player extends Component<PlayerProps, PlayerState> {
     }
 
     return (
-    <div className="flex justify-between items-center bg-blue white py1">
-      <div>
-        <a className="btn " onClick={() => {
-          if(this.state.trackProgress > 10) {
-            this.howl.seek(0);
-          } else {
-            dispatch(backwardPlayer());
-          }
-        }}>
-          <i className="fa fa-fast-backward fa-lg px1"></i>
-        </a>
-        { playing ?
-          <a className="btn"
-            onClick={() => dispatch(pausePlayer())}>
-            <i className="fa fa-pause fa-2x px1"></i>
-          </a>
-          :
-          <a className="btn"
-            onClick={() => dispatch(playTrack(track))}>
-            <i className="fa fa-play fa-2x px1"></i>
-          </a>
-        }
-        <a className="btn" onClick={() => dispatch(forwardPlayer())}>
-          <i className="fa fa-fast-forward fa-lg px1"></i>
-        </a>
-      </div>
-      <div className="col-5 center">
-        {track ?
+      <div className="flex justify-between items-center bg-blue white py1">
         <div>
-          <div className="h3 nowrap truncate"
-            title={`${track.name} - ${artist.name}`}>
-            <span>
-              <Link className="white" to={`/collection/album/${track.album}`}>
-                {track.name}
-              </Link>
-              <span className="px1">-</span>
-              <Link className="white" to={`/collection/artist/${track.artist}`}>
-                {artist.name}
-              </Link>
-            </span>
-          </div>
-          <input value={displayProgress} type="range" onChange={(e) => {
-            this.disableProgressUpdate = true;
-            let value = parseInt((e.target as any).value, 10);
-            this.setState({displayProgress: value});
-            this.seek(value);
-          }}/>
+          <a className="btn " onClick={() => {
+            if(this.state.trackProgress > 10) {
+              this.howl.seek(0);
+            } else {
+              dispatch(backwardPlayer());
+            }
+          }}>
+            <i className="fa fa-fast-backward fa-lg px1"></i>
+          </a>
+          { playing ?
+            <a className="btn"
+              onClick={() => dispatch(pausePlayer())}>
+              <i className="fa fa-pause fa-2x px1"></i>
+            </a>
+            :
+            <a className="btn"
+              onClick={() => dispatch(playTrack(track))}>
+              <i className="fa fa-play fa-2x px1"></i>
+            </a>
+          }
+          <a className="btn" onClick={() => dispatch(forwardPlayer())}>
+            <i className="fa fa-fast-forward fa-lg px1"></i>
+          </a>
         </div>
-        : null}
+        <div className="col-5 center">
+          {track ?
+            <div>
+              <div className="h3 nowrap truncate"
+                title={`${track.name} - ${artist.name}`}>
+                <span>
+                  <Link className="white" to={`/collection/album/${track.album}`}>
+                    {track.name}
+                  </Link>
+                  <span className="px1">-</span>
+                  <Link className="white" to={`/collection/artist/${track.artist}`}>
+                    {artist.name}
+                  </Link>
+                </span>
+              </div>
+              <input value={displayProgress} type="range" onChange={(e) => {
+                this.disableProgressUpdate = true;
+                let value = parseInt((e.target as any).value, 10);
+                this.setState({displayProgress: value});
+                this.seek(value);
+              }}/>
+            </div>
+            : null}
+        </div>
+        <div>
+          <a className="btn px1" onClick={() => dispatch(pausePlayer())}>
+            <i className="fa fa-repeat fa-lg"></i>
+          </a>
+          <a className="btn px1" onClick={() => dispatch(pausePlayer())}>
+            <i className="fa fa-random fa-lg"></i>
+          </a>
+        </div>
       </div>
-      <div>
-        <a className="btn px1" onClick={() => dispatch(pausePlayer())}>
-          <i className="fa fa-repeat fa-lg"></i>
-        </a>
-        <a className="btn px1" onClick={() => dispatch(pausePlayer())}>
-          <i className="fa fa-random fa-lg"></i>
-        </a>
-      </div>
-    </div>
     );
   }
 

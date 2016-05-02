@@ -2,7 +2,7 @@ import {User} from "../interfaces";
 import {Action, UserAction} from "../actions";
 
 const userReducer = (state: User = {loggedIn: false}, action: UserAction) => {
-  switch (action.type) {
+  switch(action.type) {
     case Action.LoginUser:
       return Object.assign({}, state, action.user, {loggedIn: true});
     case Action.SignupUser:

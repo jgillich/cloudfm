@@ -10,18 +10,18 @@ interface CollectionSidebarProps {
 };
 
 export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
-({artists}) => (
-  <div className="mb0 overflow-y-scroll">
-    {artists.map(a => (
-      <div>
-        <Link className="btn" key={a._id} to={`/collection/artist/${a._id}`}
-          activeClassName="red">
-          {a.name}
-        </Link>
-      </div>
-    ))}
-  </div>
-);
+  ({artists}) => (
+    <div className="mb0 overflow-y-scroll">
+      {artists.map(a => (
+        <div>
+          <Link className="btn" key={a._id} to={`/collection/artist/${a._id}`}
+            activeClassName="red">
+            {a.name}
+          </Link>
+        </div>
+      ))}
+    </div>
+  );
 
 interface CollectionProps {
   artists: Artist[];
@@ -50,4 +50,3 @@ export const CollectionContainer = connect(
     onTrackClick: (track): void => dispatch(playTrack(track)),
   })
 )(Collection);
-

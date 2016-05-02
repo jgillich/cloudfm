@@ -14,14 +14,14 @@ export const AlbumList: StatelessComponent<AlbumListProps> = ({albums}) => {
   return (
     <div className="flex flex-auto overflow-y-scroll">
       <div>
-      {albums.map(a => (
-        <Link key={a._id} to={`/collection/album/${a._id}`}
-          className="btn center">
-          <img width="200" src={logo}/>
-          <div>{a.name}</div>
-          <div className="gray">{a.artist}</div>
-        </Link>
-      ))}
+        {albums.map(a => (
+          <Link key={a._id} to={`/collection/album/${a._id}`}
+            className="btn center">
+            <img width="200" src={logo}/>
+            <div>{a.name}</div>
+            <div className="gray">{a.artist}</div>
+          </Link>
+        ))}
       </div>
     </div>
   );
@@ -82,7 +82,7 @@ export const AlbumItem: StatelessComponent<AlbumItemProps> =
           </li>
         )}
       </ul>
-  </div>
+    </div>
   );
 };
 
