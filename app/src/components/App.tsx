@@ -14,9 +14,9 @@ interface AppProps {
 export const App: StatelessComponent<AppProps> = ({children, user}) => (
   <div className="flex flex-column absolute"
     style={{height: "100%", width: "100%"}}>
-    {user.logged_in ? <Header/> : null}
+    {user.loggedIn ? <Header/> : null}
     {children}
-    {user.logged_in ? <PlayerContainer/> : null}
+    {user.loggedIn ? <PlayerContainer/> : null}
   </div>
 );
 

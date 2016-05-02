@@ -2,13 +2,28 @@ import {Action} from "./";
 import {Dispatch} from "redux";
 import * as PouchDB from "pouchdb";
 import db from "../store/db";
-import {push} from "react-router-redux";
 import {User} from "../interfaces";
+import {push} from "react-router-redux";
 
 export interface UserAction {
   type: Action;
   user: User;
 };
+
+export function getUser(user: User): (dispatch: Dispatch) => void {
+  return function (dispatch: Dispatch): void {
+    const userDb = getUserDb(user.name);
+
+    userDb.getUser(user.name, (err, user) => {
+      if (err) {
+        console.error(err);
+        return dispatch({error: err.error, type: Action.AddError});
+      }
+
+      dispatch({type: Action.UpdateUser, user});
+    });
+  };
+}
 
 export function updateUser(user: User): (dispatch: Dispatch) => void {
   return function (dispatch: Dispatch): void {
@@ -27,7 +42,8 @@ export function updateUser(user: User): (dispatch: Dispatch) => void {
   };
 }
 
-export function resumeSession(): (dispatch: Dispatch) => void {
+export function resumeSession(callback: (loggedIn: boolean) => void):
+(dispatch: Dispatch) => void {
   return function (dispatch: Dispatch): void {
     const remoteUrl = process.env.DATABASE_URL + "/_users";
     const allUsersDb = new PouchDB(remoteUrl, {skip_setup: true});
@@ -41,19 +57,21 @@ export function resumeSession(): (dispatch: Dispatch) => void {
         allUsersDb.getUser(response.userCtx.name, (err, response) => {
           if (err) {
             console.error(err);
+            callback(false);
             return dispatch({error: err.name, type: Action.AddError});
           }
 
           dispatch({type: Action.LoginUser, user: response});
+          callback(true);
         });
       } else {
-        dispatch(push("/login"));
+        callback(false);
       }
     });
   };
 }
 
-export function loginUser(user: User): (dispatch: Dispatch) => void {
+export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch) => void {
   return function (dispatch: Dispatch): void {
     const userDb = getUserDb(user.name);
 
@@ -73,13 +91,13 @@ export function loginUser(user: User): (dispatch: Dispatch) => void {
             .on("error", console.error.bind(console));
 
           dispatch({type: Action.LoginUser, user: response});
-          dispatch(push("/collection"));
+          dispatch(push(redirectTo));
         });
       });
   };
 }
 
-export function signupUser(user: User): (dispatch: Dispatch) => void {
+export function signupUser(user: User, redirectTo: string): (dispatch: Dispatch) => void {
   return function (dispatch: Dispatch): void {
     const userDb = getUserDb(user.name);
     userDb.signup(user.name, user.password, {metadata: {email: user.email}},
@@ -90,7 +108,7 @@ export function signupUser(user: User): (dispatch: Dispatch) => void {
       }
 
       dispatch({type: Action.SignupUser, user});
-      dispatch(loginUser(user));
+      dispatch(loginUser(user, redirectTo));
     });
   };
 }

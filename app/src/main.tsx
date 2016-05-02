@@ -11,7 +11,6 @@ import {Provider} from "react-redux";
 import {Router} from "./components";
 import createStore from "./store/createStore";
 import db from "./store/db";
-import {resumeSession} from "./actions";
 
 let initialState = {
   albums: [],
@@ -51,14 +50,12 @@ db.allDocs({
 
   render(
     <Provider store={store}>
-      <Router history={history}/>
+      <Router history={history} store={store}/>
     </Provider>,
     container
   );
 
   document.body.appendChild(container);
-
-  store.dispatch(resumeSession());
 
 });
 

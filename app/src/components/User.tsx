@@ -2,26 +2,28 @@ import * as React from "react";
 import {Component, ReactElement} from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {User} from "../interfaces";
-import {loginUser, signupUser} from "../actions";
+import {Dispatch} from "redux";
+import {User, RouterProps} from "../interfaces";
+import {loginUser, signupUser, getUser} from "../actions";
 import {Field, Form} from "react-redux-form";
 const logo = require("../assets/logo_white.svg");
 
 interface LoginProps {
   user: User;
-  handleSubmit: (user: User) => void;
+  dispatch: Dispatch;
+  redirectTo: string;
 }
 
 export class Login extends Component<LoginProps, {}> {
 
-  public render(): ReactElement<string> {
-      let { user, handleSubmit } = this.props;
+  public render(): ReactElement<void> {
+      let { dispatch, user, redirectTo } = this.props;
 
       return (
         <div className="flex justify-center items-center flex-auto flex-column">
           <div className="mb2"><img height="128" src={logo}/></div>
           <Form model="user"
-            onSubmit={user => handleSubmit(user) }>
+            onSubmit={user => dispatch(loginUser(user, redirectTo))}>
             <Field model="user.name">
               <input className="inline-input" type="text"
                 placeholder="Username" value={user.name} />
@@ -41,26 +43,28 @@ export class Login extends Component<LoginProps, {}> {
 };
 
 export const LoginContainer = connect(
-  ({user}) => ({user}),
-  (dispatch) => ({
-    handleSubmit: (user: User): void => dispatch(loginUser(user)),
-  })
+  (state, ownProps: RouterProps) => ({
+    redirectTo: (ownProps.location as any).query.redirectTo || "/",
+    user: state.user,
+  }),
+  (dispatch) => ({dispatch})
 )(Login);
 
 interface SignupProps {
-  handleSubmit: (user: User) => void;
+  dispatch: Dispatch;
+  redirectTo: string;
 }
 
 export class Signup extends Component<SignupProps, {}> {
 
-  public render(): ReactElement<string> {
-      let { handleSubmit } = this.props;
+  public render(): ReactElement<void> {
+      let { dispatch, redirectTo } = this.props;
 
       return (
         <div className="flex justify-center items-center flex-auto flex-column">
           <div className="mb2"><img height="128" src={logo}/></div>
           <Form model="user" className="center"
-            onSubmit={user => handleSubmit(user) }>
+            onSubmit={user => dispatch(signupUser(user, redirectTo))}>
             <Field model="user.name">
               <input className="input" type="text"
                 placeholder="Username" />
@@ -84,19 +88,28 @@ export class Signup extends Component<SignupProps, {}> {
 };
 
 export const SignupContainer = connect(
-  () => ({}),
-  (dispatch) => ({
-    handleSubmit: (user: User): void => dispatch(signupUser(user)),
-  })
+  (state, ownProps: RouterProps) => ({
+    redirectTo: (ownProps.location as any).query.redirectTo || "/",
+  }),
+  (dispatch) => ({dispatch})
 )(Signup);
 
 interface UserSettingsProps {
   user: User;
+  getUser: (user: User) => void;
 }
 
 export class UserSettings extends Component<UserSettingsProps, {}> {
 
   public props: UserSettingsProps;
+
+  public constructor(props: UserSettingsProps) {
+    super(props);
+
+    // When the user settings are loaded, we fetch the user once to make sure
+    // our local data is up to date.
+    this.props.getUser(this.props.user);
+  }
 
   public render(): ReactElement<string> {
       let {user} = this.props;
@@ -110,5 +123,6 @@ export class UserSettings extends Component<UserSettingsProps, {}> {
 };
 
 export const UserSettingsContainer = connect(
-  (state) => ({user: state.user})
+  (state) => ({user: state.user}),
+  (dispatch) => ({getUser: (user: User): void => dispatch(getUser(user))})
 )(UserSettings);
