@@ -110,10 +110,10 @@ export class Player extends Component<PlayerProps, PlayerState> {
         </a>
       </div>
       <div className="col-5 center">
+        {track ?
         <div>
-        <div className="h3 nowrap truncate"
-          title={track ? `${track.name} - ${artist.name}` : null}>
-          {track ?
+          <div className="h3 nowrap truncate"
+            title={`${track.name} - ${artist.name}`}>
             <span>
               <Link className="white" to={`/collection/album/${track.album}`}>
                 {track.name}
@@ -123,15 +123,15 @@ export class Player extends Component<PlayerProps, PlayerState> {
                 {artist.name}
               </Link>
             </span>
-            : null}
+          </div>
+          <input value={displayProgress} type="range" onChange={(e) => {
+            this.disableProgressUpdate = true;
+            let value = parseInt((e.target as any).value, 10);
+            this.setState({displayProgress: value});
+            this.seek(value);
+          }}/>
         </div>
-        <input value={displayProgress} type="range" onChange={(e) => {
-          this.disableProgressUpdate = true;
-          let value = parseInt((e.target as any).value, 10);
-          this.setState({displayProgress: value});
-          this.seek(value);
-        }}/>
-      </div>
+        : null}
       </div>
       <div>
         <a className="btn px1" onClick={() => dispatch(pausePlayer())}>
