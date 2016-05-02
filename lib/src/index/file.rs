@@ -15,11 +15,31 @@ impl Indexer<FileBackend> for Index {
                     if let Some(file_path) = entry.path().to_str() {
                         let uri = FileUri::new(&MACHINE_ID.to_string(), file_path);
 
+                        let artist = match tag.artist() {
+                            Some(artist) => artist,
+                            None => break
+                        };
+
+                        let album = match tag.album() {
+                            Some(album) => album,
+                            None => break
+                        };
+
+                        let name = match tag.title() {
+                            Some(name) => name,
+                            None => break
+                        };
+
+                        let number = match tag.track() {
+                            Some(number) => number,
+                            None => break
+                        };
+
                         tracks.push(DecodedTrack {
-                            artist: tag.artist().unwrap_or("").into(),
-                            album: tag.album().unwrap_or("").into(),
-                            name: tag.title().unwrap_or("").into(),
-                            number: tag.track().unwrap_or(0),
+                            artist: artist.into(),
+                            album: album.into(),
+                            name: name.into(),
+                            number: number,
                             uri: Uri::File(uri),
                         });
                     }
