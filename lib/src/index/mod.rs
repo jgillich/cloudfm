@@ -18,42 +18,67 @@ impl Index {
 
         for track in result {
 
-            // is_new works around https://github.com/rust-lang/rfcs/issues/811
-            // vec can't be mutated inside match block
-            let (artist_id, is_new) = match artists.iter().find(|&&(_, ref a)| a == &track.artist) {
-                Some(&(ref i, _)) => (i.clone(), false),
+            // Find or create artists
+            let artist_id = match artists.iter().find(|&&(_, ref a)| a == &track.artist) {
+                Some(&(ref id, _)) => Some(id.clone()),
+                None => None
+            };
+            let artist_id = match artist_id {
+                Some(id) => id,
                 None => {
-                    let (id, _) = db.create_document(db_path, &Artist::new(&track.artist))?.run()?;
-                    (id, true)
+                    let artist = Artist::new(&track.artist);
+                    let (id, _) = db.create_document(db_path, &artist)?.run()?;
+                    artists.push((id.clone(), track.artist.clone()));
+                    id
                 }
             };
-            if is_new {
-                artists.push((artist_id.clone(), track.artist.clone()));
-            };
 
-            let (album_id, is_new) = match albums.iter().find(|&&(_, ref a)| a == &track.album) { // TODO compare artist
-                Some(&(ref i, _)) => (i.clone(), false),
+            // Find or create album
+            let album_id = {
+                let mut id = None;
+                let matches = albums.iter().filter(|&&(_, ref a)| a == &track.album);
+                for &(ref doc_id, _) in matches {
+                    let doc = db.read_document((db_path, doc_id))?.run()?;
+                    let album: Album = doc.get_content()?;
+                    if album.artist == artist_id {
+                        id = Some(doc_id.clone());
+                        break; // this should never be needed, maybe add a panic?
+                    };
+                };
+                id
+            };
+            let album_id = match album_id {
+                Some(id) => id.clone(),
                 None => {
-                    let (id, _) = db.create_document(db_path, &Album::new(&track.album, artist_id.clone()))?.run()?;
-                    (id, true)
+                    let album = Album::new(&track.album, artist_id.clone());
+                    let (id, _) = db.create_document(db_path, &album)?.run()?;
+                    albums.push((id.clone(), track.album.clone()));
+                    id
                 }
             };
-            if is_new {
-                albums.push((album_id.clone(), track.album.clone()));
-            };
 
-            let new_track = match tracks.iter().find(|&&(_, ref t)| t == &track.name) { // TODO compare album, artist
-                Some(&(_, _)) => None, // TODO read track, compare uris
+            // Find or create track
+            let track_id = {
+                let mut id = None;
+                let matches = tracks.iter().filter(|&&(_, ref a)| a == &track.name);
+                for &(ref doc_id, _) in matches {
+                    let doc = db.read_document((db_path, doc_id))?.run()?;
+                    let track: Track = doc.get_content()?;
+                    if track.artist == artist_id && track.album == album_id {
+                        id = Some(doc_id.clone());
+                        break; // this should never be needed, maybe add a panic?
+                    };
+                };
+                id
+            };
+            match track_id {
+                Some(_) => (),
                 None => {
                     let track = Track::new(&track.name, track.number, artist_id, album_id, vec![track.uri]);
                     let (id, _) = db.create_document(db_path, &track)?.run()?;
-                    Some((id, track.name))
+                    tracks.push((id, track.name));
                 }
             };
-            if let Some(t) = new_track {
-                tracks.push(t);
-            }
-
         }
 
         Ok(())
