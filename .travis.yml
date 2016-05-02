@@ -12,7 +12,7 @@ env:
 install:
   - npm install -g webpack typings n
   - N_PREFIX=$HOME n stable
-  - cargo install mdbook
+  - cargo install mdbook || true
 script:
   - pushd lib && cargo build && cargo test && popd
   - pushd app && npm i && typings i && webpack && popd
