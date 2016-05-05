@@ -129,7 +129,7 @@ mod test {
 
     #[test]
     fn jamendo_backend() {
-        let uri = Backend::Jamendo(JamendoBackend { user_name: "foo", _type: "jamendo".into() });
+        let uri = Backend::Jamendo(JamendoBackend { user_name: "foo".into(), _type: "jamendo".into() });
         let uri_str = serde_json::to_string(&uri).unwrap();
         assert_eq!(uri_str, "{\"type\":\"jamendo\",\"user_name\":\"foo\"}");
         assert_eq!(serde_json::from_str::<Backend>(&uri_str).unwrap(), uri);
