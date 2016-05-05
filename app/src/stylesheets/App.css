@@ -6,13 +6,14 @@
 @import "basscss-btn-outline";
 @import "basscss-btn-primary";
 @import "basscss-color-base";
-@import "basscss-borders";
+@import "basscss-color-borders";
 @import "basscss-color-tables";
 @import "basscss-colors";
 @import "basscss-background-colors";
 @import "basscss-forms";
 @import "basscss-progress";
 @import "basscss-input-range";
+@import "basscss-defaults";
 
 * {
   box-sizing: border-box;
