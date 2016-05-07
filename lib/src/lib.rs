@@ -1,5 +1,5 @@
 #![feature(custom_derive, plugin, question_mark, slice_patterns)]
-#![plugin(serde_macros, clippy)]
+#![plugin(serde_macros)]
 
 // https://github.com/Manishearth/rust-clippy/issues/852
 #![allow(used_underscore_binding)]

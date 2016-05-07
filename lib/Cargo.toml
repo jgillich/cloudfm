@@ -21,4 +21,3 @@ uuid = "0.2"
 jamendo = { version = "*", git = "https://github.com/jgillich/jamendo-rs" }
 hex = "0.2"
 lazy_static = "0.2"
-clippy = "*"
