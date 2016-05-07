@@ -21,6 +21,7 @@ after_success: |
   export PATH=$HOME/.local/bin:$PATH &&
   [ $TRAVIS_BRANCH = master ] &&
   [ $TRAVIS_PULL_REQUEST = false ] &&
+  git push https://${TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git staging &&
   pip install ghp-import --user `whoami` &&
   ghp-import -n doc/book &&
   git push -fq https://${TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
