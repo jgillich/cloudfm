@@ -25,6 +25,11 @@ after_success: |
   pip install ghp-import --user `whoami` &&
   ghp-import -n doc/book &&
   git push -fq https://${TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
+
+branches:
+  except:
+    - staging 
+
 env:
   global:
     - secure: "d7GxSf5dTPnt2VGHEm2Y/AGfg20qmh/AF7tI3tG/i+QnhZxgO5llNM6woZwyrKsJx4KNTRvC4fwZWQiG2WjhFCEexJ3ckP+L11bmz/0kVstiD3mzQGKb3xszbkSQGFRKRXlY9+vV/Ef1ApoiuDmVAE3LvUTi/+dxI6QOQ1eABrXM4VLaNy8INh2QNBNth/kqc+1sS2i7BuzfJB3LMF+iPO+YhCGgW3TpgJOlVlq+pw9hNV2yeBtwFsHFm6ZsuaBl6tkH8QPSnTM+cKEBHzaKtJNzoKuOFO3C5zyrUXzeg+wzu23XqMwuVrCgEa2zjxmw5vVyqr3+5nlcdv8eMddeqniSZ8bLUQUgF0nxMGulKhaIA/83XDDu5Ql/pAoZX7kMEUjcYRlo9hQJ0sxwcb7YawNZlgp9Cgze6SlAu22JvNtjiIl0jH4RaJBmxJzB0XVK7IeUhdwk+Y20TSQ7ZXh4T2nWWEtp8p5MhrujExWZuyPrk5Mbt5JRrH8u3lsSlX6hQQTbIhLWggYVYuMxIOCvzoB//nZedJIQB/96B+vPkJMk51x0E7BXR3CaeJgu1b4F4qzMs9ChVcAlgRrSQeJKV97u2DoNcQiADHIiWYwqwEmx7R7VPx4Q3T27kDNOBZ2qTc+6d7N7Zi4aLnf7SEDISb7+R+2oe/Lp4ZLQDicMBaM="
