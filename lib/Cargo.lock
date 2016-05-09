@@ -6,9 +6,10 @@ dependencies = [
  "dotenv 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "hex 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hyperdav 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "id3 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "iron 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "jamendo 0.1.0 (git+https://github.com/jgillich/jamendo-rs)",
+ "jamendo 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "logger 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "router 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -241,6 +242,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "hyperdav"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "hyper 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "url 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "xml-rs 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "id3"
 version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -284,7 +295,7 @@ dependencies = [
 [[package]]
 name = "jamendo"
 version = "0.1.0"
-source = "git+https://github.com/jgillich/jamendo-rs#c12aa3489cf28a220f0051ad6649030034fa056e"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "hyper 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -788,4 +799,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "winapi-build"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "xml-rs"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "bitflags 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 

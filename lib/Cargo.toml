@@ -18,6 +18,7 @@ dotenv = "0.8"
 chill = { version = "*", git = "https://github.com/jgillich/chill.git" }
 uuid = "0.2"
 #google-youtube3 = "0.1"
-jamendo = { version = "*", git = "https://github.com/jgillich/jamendo-rs" }
+jamendo = "0.1.0" 
 hex = "0.2"
 lazy_static = "0.2"
+hyperdav = "0.1.1" 
