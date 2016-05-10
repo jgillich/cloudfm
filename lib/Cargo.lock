@@ -6,8 +6,8 @@ dependencies = [
  "clippy 0.0.65 (registry+https://github.com/rust-lang/crates.io-index)",
  "dotenv 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "hex 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "hyper 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "hyperdav 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hyper 0.9.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hyperdav 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "id3 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "iron 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "jamendo 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -235,7 +235,7 @@ dependencies = [
 
 [[package]]
 name = "hyper"
-version = "0.9.3"
+version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "cookie 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -245,6 +245,7 @@ dependencies = [
  "mime 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "num_cpus 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
  "openssl 0.7.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "openssl-verify 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "solicit 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -257,10 +258,10 @@ dependencies = [
 
 [[package]]
 name = "hyperdav"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "hyper 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hyper 0.9.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "url 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "xml-rs 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -311,7 +312,7 @@ name = "jamendo"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "hyper 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hyper 0.9.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_macros 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -518,6 +519,14 @@ dependencies = [
  "gcc 0.3.28 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
  "openssl-sys 0.7.11 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "openssl-verify"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "openssl 0.7.11 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

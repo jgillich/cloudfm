@@ -5,6 +5,7 @@ use jamendo;
 use uri;
 use views;
 use index;
+use hyperdav;
 
 trait_enum! {
     enum Error: StdError {
@@ -14,6 +15,7 @@ trait_enum! {
         View(views::ViewError),
         UriParse(uri::UriParseError),
         Index(index::IndexError),
+        Webdav(hyperdav::Error),
     }
 }
 
@@ -53,3 +55,8 @@ impl From<index::IndexError> for Error {
     }
 }
 
+impl From<hyperdav::Error> for Error {
+    fn from(err: hyperdav::Error) -> Error {
+        Error::Webdav(err)
+    }
+}

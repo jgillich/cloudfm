@@ -13,35 +13,11 @@ impl Indexer<FileBackend> for Index {
             for entry in walk_path(&path) {
                 if let Ok(tag) = Tag::read_from_path(entry.path()) {
                     if let Some(file_path) = entry.path().to_str() {
-                        let uri = FileUri::new(&MACHINE_ID.to_string(), file_path);
+                        let uri = Uri::File(FileUri::new(&MACHINE_ID.to_string(), file_path));
 
-                        let artist = match tag.artist() {
-                            Some(artist) => artist,
-                            None => break
-                        };
-
-                        let album = match tag.album() {
-                            Some(album) => album,
-                            None => break
-                        };
-
-                        let name = match tag.title() {
-                            Some(name) => name,
-                            None => break
-                        };
-
-                        let number = match tag.track() {
-                            Some(number) => number,
-                            None => break
-                        };
-
-                        tracks.push(DecodedTrack {
-                            artist: artist.into(),
-                            album: album.into(),
-                            name: name.into(),
-                            number: number,
-                            uri: Uri::File(uri),
-                        });
+                        if let Some(track) = DecodedTrack::from_tag(tag, uri) {
+                            tracks.push(track);
+                        }
                     }
                 }
             }
