@@ -5,6 +5,7 @@ use {views, DecodedTrack, User, Error, Artist, Album, Track};
 
 mod file;
 mod jamendo;
+mod webdav;
 
 pub struct Index;
 

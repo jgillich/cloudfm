@@ -22,7 +22,7 @@ impl Indexer<JamendoBackend> for Index {
                         album: track.album_name.clone(),
                         name: track.name.clone(),
                         number: track.position,
-                        uri: Uri::Jamendo(JamendoUri::new(track.id)),
+                        uri: Uri::Jamendo(JamendoUri::new(&backend.id, track.id)),
                     });
                 }
             }

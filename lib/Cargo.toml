@@ -6,6 +6,7 @@ license = "MIT"
 
 [dependencies]
 hyper = "0.9"
+url = { version = "1.1.0", features = [ "serde" ] }
 iron = "0.3"
 router = "0.1"
 logger = "0.0.3"

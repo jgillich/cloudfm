@@ -65,6 +65,7 @@ pub fn index_user(db: &chill::Client, row: &ViewRow<DocumentId, AllDocumentsView
             match backend {
                 &Backend::File(ref backend) => Index::index(db, &user, backend)?,
                 &Backend::Jamendo(ref backend) => Index::index(db, &user, backend)?,
+                &Backend::Webdav(ref backend) => Index::index(db, &user, backend)?,
             }
         }
     }

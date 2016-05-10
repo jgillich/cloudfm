@@ -43,5 +43,6 @@ fn handle(req: &mut Request) -> IronResult<Response> {
     match uri {
         Uri::File(u) => Proxy::handle(u),
         Uri::Jamendo(u) => Proxy::handle(u),
+        Uri::Webdav(u) => Proxy::handle(u),
     }
 }

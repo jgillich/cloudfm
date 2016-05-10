@@ -4,7 +4,10 @@
 // https://github.com/Manishearth/rust-clippy/issues/852
 #![allow(used_underscore_binding)]
 
+#![feature(type_ascription)]
+
 extern crate hyper;
+extern crate url;
 extern crate iron;
 extern crate logger;
 extern crate router;
@@ -16,6 +19,7 @@ extern crate uuid;
 extern crate serde;
 extern crate serde_json;
 extern crate jamendo;
+extern crate hyperdav;
 extern crate hex;
 #[macro_use]
 extern crate lazy_static;
@@ -69,5 +73,5 @@ pub use album::Album;
 pub use artist::Artist;
 pub use error::*;
 pub use track::{Track, DecodedTrack};
-pub use uri::{Uri, FileUri, JamendoUri};
-pub use user::{User, Backend, FileBackend, JamendoBackend};
+pub use uri::{Uri, FileUri, JamendoUri, WebdavUri};
+pub use user::{User, Backend, FileBackend, JamendoBackend, WebdavBackend};

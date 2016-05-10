@@ -8,13 +8,15 @@ use std::error::Error;
 pub enum Uri {
     File(FileUri),
     Jamendo(JamendoUri),
+    Webdav(WebdavUri),
 }
 
 impl fmt::Display for Uri {
     fn fmt(&self, formatter: &mut fmt::Formatter) -> Result<(), fmt::Error> {
          match *self {
-            Uri::File(ref uri) => write!(formatter, "file:{}:{}", uri.machine_id, uri.file_path.to_hex()),
-            Uri::Jamendo(ref uri) => write!(formatter, "jamendo:{}", uri.jamendo_id),
+            Uri::File(ref uri) => write!(formatter, "file:{}:{}", uri.backend_id, uri.file_path.to_hex()),
+            Uri::Jamendo(ref uri) => write!(formatter, "jamendo:{}:{}", uri.backend_id, uri.jamendo_id),
+            Uri::Webdav(ref uri) => write!(formatter, "webdav:{}:{}", uri.backend_id, uri.file_path.to_hex()),
         }
     }
 }
@@ -26,14 +28,21 @@ impl FromStr for Uri {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let parts: Vec<&str> = s.split(':').collect();
             match &parts[..] {
-                ["file", machine_id, file_path] => Ok(Uri::File(FileUri {
-                    machine_id: machine_id.into(),
+                ["file", backend_id, file_path] => Ok(Uri::File(FileUri {
+                    backend_id: backend_id.into(),
                     file_path: String::from_utf8(
                             Vec::from_hex(file_path).map_err(|_| UriParseError::UnknownFilePathEncoding)?
                         ).map_err(|_| UriParseError::UnknownFilePathEncoding)?,
                 })),
-                ["jamendo", jamendo_id] => Ok(Uri::Jamendo(JamendoUri {
+                ["jamendo", backend_id, jamendo_id] => Ok(Uri::Jamendo(JamendoUri {
+                    backend_id: backend_id.into(),
                     jamendo_id: jamendo_id.parse().map_err(|_| UriParseError::InvalidFormat)?,
+                })),
+                ["webdav", backend_id, file_path] => Ok(Uri::Webdav(WebdavUri {
+                    backend_id: backend_id.into(),
+                    file_path: String::from_utf8(
+                            Vec::from_hex(file_path).map_err(|_| UriParseError::UnknownFilePathEncoding)?
+                        ).map_err(|_| UriParseError::UnknownFilePathEncoding)?,
                 })),
                 _ => Err(UriParseError::InvalidFormat),
             }
@@ -95,14 +104,14 @@ impl serde::Deserialize for Uri {
 
 #[derive(Debug, PartialEq)]
 pub struct FileUri {
-    pub machine_id: String,
+    pub backend_id: String,
     pub file_path: String,
 }
 
 impl FileUri {
-    pub fn new(machine_id: &str, file_path: &str) -> Self {
+    pub fn new(backend_id: &str, file_path: &str) -> Self {
         FileUri {
-            machine_id: machine_id.into(),
+            backend_id: backend_id.into(),
             file_path: file_path.into(),
         }
     }
@@ -110,13 +119,30 @@ impl FileUri {
 
 #[derive(Debug, PartialEq)]
 pub struct JamendoUri {
+    pub backend_id: String,
     pub jamendo_id: u32,
 }
 
 impl JamendoUri {
-    pub fn new(jamendo_id: u32) -> Self {
+    pub fn new(backend_id: &str, jamendo_id: u32) -> Self {
         JamendoUri {
+            backend_id: backend_id.into(),
             jamendo_id: jamendo_id,
+        }
+    }
+}
+
+#[derive(Debug, PartialEq)]
+pub struct WebdavUri {
+    pub backend_id: String,
+    pub file_path: String,
+}
+
+impl WebdavUri {
+    pub fn new(backend_id: &str, file_path: &str) -> Self {
+        WebdavUri {
+            backend_id: backend_id.into(),
+            file_path: file_path.into(),
         }
     }
 }
@@ -127,7 +153,7 @@ mod test {
 
     #[test]
     fn file_uri() {
-        let uri = Uri::File(FileUri { machine_id: "foo-bar".into(), file_path: "/home/baz".into() });
+        let uri = Uri::File(FileUri { backend_id: "foo-bar".into(), file_path: "/home/baz".into() });
         let uri_str = uri.to_string();
         assert_eq!(uri_str, "file:foo-bar:2f686f6d652f62617a");
         assert_eq!(uri, uri_str.parse::<Uri>().unwrap());
@@ -135,9 +161,17 @@ mod test {
 
     #[test]
     fn jamendo_uri() {
-        let uri = Uri::Jamendo(JamendoUri { jamendo_id: 123 });
+        let uri = Uri::Jamendo(JamendoUri { backend_id: "foo-bar".into(), jamendo_id: 123 });
         let uri_str = uri.to_string();
-        assert_eq!(uri_str, "jamendo:123");
+        assert_eq!(uri_str, "jamendo:foo-bar:123");
+        assert_eq!(uri, uri_str.parse::<Uri>().unwrap());
+    }
+
+    #[test]
+    fn webdav_uri() {
+        let uri = Uri::Webdav(WebdavUri { backend_id: "foo-bar".into(), file_path: "/home/baz".into() });
+        let uri_str = uri.to_string();
+        assert_eq!(uri_str, "webdav:foo-bar:2f686f6d652f62617a");
         assert_eq!(uri, uri_str.parse::<Uri>().unwrap());
     }
 }
