@@ -10,7 +10,12 @@ mod webdav;
 pub struct Index;
 
 impl Index {
-    pub fn take_result<'a, P>(db: &'a chill::Client, db_path: P, result: Vec<DecodedTrack>) -> Result<(), Error> where P: IntoDatabasePath<'a> {
+    pub fn take_result<'a, P>(db: &'a chill::Client,
+                              db_path: P,
+                              result: Vec<DecodedTrack>)
+                              -> Result<(), Error>
+        where P: IntoDatabasePath<'a>
+    {
         let db_path = db_path.into_database_path()?;
 
         let mut tracks = views::all_tracks(db, db_path)?;
@@ -22,7 +27,7 @@ impl Index {
             // Find or create artists
             let artist_id = match artists.iter().find(|&&(_, ref a)| a == &track.artist) {
                 Some(&(ref id, _)) => Some(id.clone()),
-                None => None
+                None => None,
             };
             let artist_id = match artist_id {
                 Some(id) => id,
@@ -45,7 +50,7 @@ impl Index {
                         id = Some(doc_id.clone());
                         break; // this should never be needed, maybe add a panic?
                     };
-                };
+                }
                 id
             };
             let album_id = match album_id {
@@ -69,13 +74,17 @@ impl Index {
                         id = Some(doc_id.clone());
                         break; // this should never be needed, maybe add a panic?
                     };
-                };
+                }
                 id
             };
             match track_id {
                 Some(_) => (),
                 None => {
-                    let track = Track::new(&track.name, track.number, artist_id, album_id, vec![track.uri]);
+                    let track = Track::new(&track.name,
+                                           track.number,
+                                           artist_id,
+                                           album_id,
+                                           vec![track.uri]);
                     let (id, _) = db.create_document(db_path, &track)?.run()?;
                     tracks.push((id, track.name));
                 }
@@ -102,7 +111,9 @@ impl error::Error for IndexError {
         }
     }
 
-    fn cause(&self) -> Option<&error::Error> { None }
+    fn cause(&self) -> Option<&error::Error> {
+        None
+    }
 }
 
 impl fmt::Display for IndexError {

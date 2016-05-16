@@ -1,5 +1,5 @@
 use iron::{IronResult, Response, status};
-use {JamendoUri};
+use JamendoUri;
 use super::{ProxyHandler, Proxy};
 use hyper;
 use iron::headers::ContentType;

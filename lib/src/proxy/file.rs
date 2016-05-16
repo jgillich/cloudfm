@@ -1,6 +1,6 @@
 use iron::{IronResult, Response, status};
 use std::fs::File;
-use {FileUri};
+use FileUri;
 use super::{ProxyHandler, Proxy};
 
 impl ProxyHandler<FileUri> for Proxy {

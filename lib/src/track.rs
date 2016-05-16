@@ -1,6 +1,6 @@
 use chill::DocumentId;
 use id3::Tag;
-use {Uri};
+use Uri;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Track {
@@ -14,7 +14,12 @@ pub struct Track {
 }
 
 impl Track {
-    pub fn new(name: &str, number: u32, artist: DocumentId, album: DocumentId, uris: Vec<Uri>) -> Self {
+    pub fn new(name: &str,
+               number: u32,
+               artist: DocumentId,
+               album: DocumentId,
+               uris: Vec<Uri>)
+               -> Self {
         Track {
             _type: "track".into(),
             name: name.into(),

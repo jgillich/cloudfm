@@ -17,7 +17,9 @@ pub fn main() {
     let db = chill::Client::new(&db_url).expect("DATABASE_URL must be a valid URL");
 
     let (count, errors) = index_all(db);
-    println!("index_all done. success: {}, failed: {}", count - errors.len(), errors.len());
+    println!("index_all done. success: {}, failed: {}",
+             count - errors.len(),
+             errors.len());
     for error in errors {
         println!("error: {:#?}", error);
     }
@@ -31,17 +33,17 @@ pub fn index_all(db: chill::Client) -> (usize, Vec<Error>) {
 
     let action = match db.read_all_documents("/_users") {
         Ok(action) => action.with_start_key(start_key),
-        Err(error) => return (1, vec![Error::from(error)])
+        Err(error) => return (1, vec![Error::from(error)]),
     };
 
     let res = match action.run() {
         Ok(res) => res,
-        Err(error) => return (1, vec![Error::from(error)])
+        Err(error) => return (1, vec![Error::from(error)]),
     };
 
     let view = match res.as_unreduced() {
         Some(view) => view,
-        None => unimplemented!()
+        None => unimplemented!(),
     };
 
     for row in view.rows() {
@@ -54,7 +56,9 @@ pub fn index_all(db: chill::Client) -> (usize, Vec<Error>) {
 }
 
 
-pub fn index_user(db: &chill::Client, row: &ViewRow<DocumentId, AllDocumentsViewValue>) -> Result<(), Error> {
+pub fn index_user(db: &chill::Client,
+                  row: &ViewRow<DocumentId, AllDocumentsViewValue>)
+                  -> Result<(), Error> {
     let doc = db.read_document(("/_users", row.key()))?.run()?;
     let user: User = doc.get_content()?;
 

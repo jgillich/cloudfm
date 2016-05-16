@@ -2,14 +2,16 @@ use std::{error, fmt, default};
 use serde_json;
 use chill;
 use chill::{DocumentId, IntoDatabasePath};
-use {Error};
+use Error;
 
 // IMPORTANT!
 // if you touch any of the views, increase this by one
 // TODO replace with crate version, always update in debug mode
 const VIEW_REV: i32 = 6;
 
-pub fn apply<'a, P>(db: &'a chill::Client, db_path: P) -> Result<(), Error> where P: IntoDatabasePath<'a> {
+pub fn apply<'a, P>(db: &'a chill::Client, db_path: P) -> Result<(), Error>
+    where P: IntoDatabasePath<'a>
+{
     let db_path = db_path.into_database_path()?;
     let view_id = chill::DocumentIdRef::from("_design/cloudfm");
 
@@ -26,33 +28,53 @@ pub fn apply<'a, P>(db: &'a chill::Client, db_path: P) -> Result<(), Error> wher
             } else {
                 Ok(())
             }
-        },
+        }
         Err(chill::Error::NotFound(_)) => {
             db.create_document(db_path, &ViewDocument::new())?.with_document_id(view_id).run()?;
             Ok(())
-        },
-        Err(e) => {
-            Err(Error::from(e))
         }
+        Err(e) => Err(Error::from(e)),
     }
 }
 
-pub fn all_artists<'a, P>(db: &'a chill::Client, db_path: P) -> Result<Vec<(DocumentId, String)>, Error> where P: IntoDatabasePath<'a> {
-    let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_artists"))?.run()?;
+pub fn all_artists<'a, P>(db: &'a chill::Client,
+                          db_path: P)
+                          -> Result<Vec<(DocumentId, String)>, Error>
+    where P: IntoDatabasePath<'a>
+{
+    let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_artists"))?
+        .run()?;
     let res = res.as_unreduced().ok_or(ViewError::ViewReduced)?;
-    Ok(res.rows().iter().map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect())
+    Ok(res.rows()
+        .iter()
+        .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone()))
+        .collect())
 }
 
-pub fn all_albums<'a, P>(db: &'a chill::Client, db_path: P) -> Result<Vec<(DocumentId, String)>, Error> where P: IntoDatabasePath<'a> {
+pub fn all_albums<'a, P>(db: &'a chill::Client,
+                         db_path: P)
+                         -> Result<Vec<(DocumentId, String)>, Error>
+    where P: IntoDatabasePath<'a>
+{
     let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_albums"))?.run()?;
     let res = res.as_unreduced().ok_or(ViewError::ViewReduced)?;
-    Ok(res.rows().iter().map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect())
+    Ok(res.rows()
+        .iter()
+        .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone()))
+        .collect())
 }
 
-pub fn all_tracks<'a, P>(db: &'a chill::Client, db_path: P) -> Result<Vec<(DocumentId, String)>, Error> where P: IntoDatabasePath<'a> {
+pub fn all_tracks<'a, P>(db: &'a chill::Client,
+                         db_path: P)
+                         -> Result<Vec<(DocumentId, String)>, Error>
+    where P: IntoDatabasePath<'a>
+{
     let res = db.execute_view::<String, Option<i32>, _>((db_path, "cloudfm", "all_tracks"))?.run()?;
     let res = res.as_unreduced().ok_or(ViewError::ViewReduced)?;
-    Ok(res.rows().iter().map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone())).collect())
+    Ok(res.rows()
+        .iter()
+        .map(|a| (DocumentId::from(a.document_path().document_id()), a.key().clone()))
+        .collect())
 }
 
 // TODO make views static
@@ -94,9 +116,8 @@ fn views() -> serde_json::value::Value {
 
 
     for view in views {
-        builder = builder.insert_object(view.name.clone(), |builder| {
-            builder.insert("map", view.map.clone())
-        });
+        builder = builder.insert_object(view.name.clone(),
+                                        |builder| builder.insert("map", view.map.clone()));
     }
 
     builder.unwrap()
@@ -143,7 +164,9 @@ impl error::Error for ViewError {
         }
     }
 
-    fn cause(&self) -> Option<&error::Error> { None }
+    fn cause(&self) -> Option<&error::Error> {
+        None
+    }
 }
 
 impl fmt::Display for ViewError {

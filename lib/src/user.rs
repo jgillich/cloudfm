@@ -39,30 +39,32 @@ impl serde::Serialize for Backend {
 }
 
 impl serde::Deserialize for Backend {
-
     fn deserialize<D>(de: &mut D) -> Result<Self, D::Error>
-        where D: serde::de::Deserializer,
+        where D: serde::de::Deserializer
     {
-        let mut object: BTreeMap<String, serde_json::Value> = serde::de::Deserialize::deserialize(de)?;
+        let mut object: BTreeMap<String, serde_json::Value> =
+            serde::de::Deserialize::deserialize(de)?;
 
         let object_type = match object.remove("type") {
             Some(v) => {
                 match v.as_string() {
                     Some(object_type) => object_type.to_string(),
-                    None => return Err(serde::de::Error::invalid_value("type is not a string"))
+                    None => return Err(serde::de::Error::invalid_value("type is not a string")),
                 }
             }
-            None => return Err(serde::de::Error::missing_field("type"))
+            None => return Err(serde::de::Error::missing_field("type")),
         };
 
         let id = match object.remove("id") {
             Some(v) => {
                 match v.as_string() {
                     Some(id) => id.to_string(),
-                    None => return Err(serde::de::Error::invalid_value("id is not a string"))
+                    None => return Err(serde::de::Error::invalid_value("id is not a string")),
                 }
             }
-            None => { return Err(serde::de::Error::missing_field("id")); }
+            None => {
+                return Err(serde::de::Error::missing_field("id"));
+            }
         };
 
         match object_type.as_ref() {
@@ -71,15 +73,23 @@ impl serde::Deserialize for Backend {
                     Some(v) => {
                         match v.as_string() {
                             Some(machine_id) => machine_id.to_string(),
-                            None => return Err(serde::de::Error::invalid_value("machine_id is not a string"))
+                            None => {
+                                return Err(serde::de::Error::invalid_value("machine_id is not a \
+                                                                            string"))
+                            }
                         }
                     }
-                    None => return Err(serde::de::Error::missing_field("machine_id"))
+                    None => return Err(serde::de::Error::missing_field("machine_id")),
                 };
 
                 let paths = match object.remove("paths") {
-                    Some(paths) => serde_json::value::from_value(paths).map_err(|_| serde::de::Error::invalid_value("paths is not a string array"))?,
-                    None => return Err(serde::de::Error::missing_field("paths"))
+                    Some(paths) => {
+                        serde_json::value::from_value(paths)
+                            .map_err(|_| {
+                                serde::de::Error::invalid_value("paths is not a string array")
+                            })?
+                    }
+                    None => return Err(serde::de::Error::missing_field("paths")),
                 };
 
                 Ok(Backend::File(FileBackend {
@@ -88,16 +98,19 @@ impl serde::Deserialize for Backend {
                     machine_id: machine_id.into(),
                     paths: paths,
                 }))
-            },
+            }
             "jamendo" => {
                 let user_name = match object.remove("user_name") {
                     Some(v) => {
                         match v.as_string() {
                             Some(user_name) => user_name.to_string(),
-                            None => return Err(serde::de::Error::invalid_value("user_name is not a string"))
+                            None => {
+                                return Err(serde::de::Error::invalid_value("user_name is not a \
+                                                                            string"))
+                            }
                         }
                     }
-                    None => return Err(serde::de::Error::missing_field("user_name"))
+                    None => return Err(serde::de::Error::missing_field("user_name")),
                 };
 
                 Ok(Backend::Jamendo(JamendoBackend {
@@ -105,16 +118,24 @@ impl serde::Deserialize for Backend {
                     id: id,
                     user_name: user_name,
                 }))
-            },
+            }
             "webdav" => {
                 let webdav_url = match object.remove("webdav_url") {
                     Some(v) => {
                         match v.as_string() {
-                            Some(webdav_url) => Url::parse(webdav_url).map_err(|_| serde::de::Error::invalid_value("webdav_url is not a url"))?,
-                            None => return Err(serde::de::Error::invalid_value("webdav_url is not a string")),
+                            Some(webdav_url) => {
+                                Url::parse(webdav_url)
+                                    .map_err(|_| {
+                                        serde::de::Error::invalid_value("webdav_url is not a url")
+                                    })?
+                            }
+                            None => {
+                                return Err(serde::de::Error::invalid_value("webdav_url is not a \
+                                                                            string"))
+                            }
                         }
                     }
-                    None => return Err(serde::de::Error::missing_field("webdav_url"))
+                    None => return Err(serde::de::Error::missing_field("webdav_url")),
                 };
 
                 Ok(Backend::Webdav(WebdavBackend {
@@ -122,8 +143,8 @@ impl serde::Deserialize for Backend {
                     id: id,
                     webdav_url: webdav_url,
                 }))
-            },
-            _ => Err(serde::de::Error::invalid_value("unkown type"))
+            }
+            _ => Err(serde::de::Error::invalid_value("unkown type")),
         }
     }
 }
@@ -165,25 +186,41 @@ mod test {
 
     #[test]
     fn file_backend() {
-        let uri = Backend::File(FileBackend { id: "123".into(), machine_id: "foo-bar".into(), paths: Vec::new(), _type: "file".into() });
+        let uri = Backend::File(FileBackend {
+            id: "123".into(),
+            machine_id: "foo-bar".into(),
+            paths: Vec::new(),
+            _type: "file".into(),
+        });
         let uri_str = serde_json::to_string(&uri).unwrap();
-        assert_eq!(uri_str, "{\"type\":\"file\",\"id\":\"123\",\"machine_id\":\"foo-bar\",\"paths\":[]}");
+        assert_eq!(uri_str,
+                   "{\"type\":\"file\",\"id\":\"123\",\"machine_id\":\"foo-bar\",\"paths\":[]}");
         assert_eq!(serde_json::from_str::<Backend>(&uri_str).unwrap(), uri);
     }
 
     #[test]
     fn jamendo_backend() {
-        let uri = Backend::Jamendo(JamendoBackend { id: "123".into(), user_name: "foo".into(), _type: "jamendo".into() });
+        let uri = Backend::Jamendo(JamendoBackend {
+            id: "123".into(),
+            user_name: "foo".into(),
+            _type: "jamendo".into(),
+        });
         let uri_str = serde_json::to_string(&uri).unwrap();
-        assert_eq!(uri_str, "{\"type\":\"jamendo\",\"id\":\"123\",\"user_name\":\"foo\"}");
+        assert_eq!(uri_str,
+                   "{\"type\":\"jamendo\",\"id\":\"123\",\"user_name\":\"foo\"}");
         assert_eq!(serde_json::from_str::<Backend>(&uri_str).unwrap(), uri);
     }
 
     #[test]
     fn webdav_backend() {
-        let uri = Backend::Webdav(WebdavBackend { id: "123".into(), webdav_url: Url::parse("http://example.com").unwrap(),  _type: "webdav".into() });
+        let uri = Backend::Webdav(WebdavBackend {
+            id: "123".into(),
+            webdav_url: Url::parse("http://example.com").unwrap(),
+            _type: "webdav".into(),
+        });
         let uri_str = serde_json::to_string(&uri).unwrap();
-        assert_eq!(uri_str, "{\"type\":\"webdav\",\"id\":\"123\",\"webdav_url\":\"http://example.com/\"}");
+        assert_eq!(uri_str,
+                   "{\"type\":\"webdav\",\"id\":\"123\",\"webdav_url\":\"http://example.com/\"}");
         assert_eq!(serde_json::from_str::<Backend>(&uri_str).unwrap(), uri);
     }
 }
