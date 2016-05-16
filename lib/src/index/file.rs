@@ -10,7 +10,7 @@ impl Indexer<FileBackend> for Index {
         let mut tracks: Vec<DecodedTrack> = Vec::new();
 
         for path in &backend.paths {
-            for entry in walk_path(&path) {
+            for entry in walk_path(path) {
                 if let Ok(tag) = Tag::read_from_path(entry.path()) {
                     if let Some(file_path) = entry.path().to_str() {
                         let uri = Uri::File(FileUri::new(&MACHINE_ID.to_string(), file_path));
