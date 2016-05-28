@@ -3,7 +3,8 @@ machine:
     - curl -sSf https://static.rust-lang.org/rustup.sh | sudo sh -s -- --spec=nightly-2016-05-25
 dependencies:
   override:
-    - npm install -g webpack typings n
+    - pip install ghp-import
+    - npm install -g webpack typings
     - pushd app && npm install && typings install && popd
     - cargo install mdbook || true
   cache_directories:
@@ -23,3 +24,8 @@ deployment:
     branch: master
     commands:
       - git push origin master:staging
+  docs:
+    branch: master
+    commands:
+      - ghp-import -n doc/book -m "[ci skip] build docs"
+      - git push -fq origin gh-pages
