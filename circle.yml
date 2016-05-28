@@ -5,7 +5,9 @@ dependencies:
   override:
     - npm install -g webpack typings n
     - pushd app && npm install && typings install && popd
-    - cargo install mdbook
+    - cargo install mdbook || true
+  cache_directories:
+    - "~/.cargo"
 test:
   override:
     - pushd lib && cargo build && cargo test && popd
