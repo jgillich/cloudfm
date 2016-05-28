@@ -10,21 +10,6 @@ export interface UserAction {
   user: User;
 };
 
-export function getUser(user: User): (dispatch: Dispatch) => void {
-  return function(dispatch: Dispatch): void {
-    const userDb = getUserDb(user.name);
-
-    userDb.getUser(user.name, (err, user) => {
-      if(err) {
-        console.error(err);
-        return dispatch({error: err.error, type: Action.AddError});
-      }
-
-      dispatch({type: Action.UpdateUser, user});
-    });
-  };
-}
-
 export function updateUser(user: User): (dispatch: Dispatch) => void {
   return function(dispatch: Dispatch): void {
     const userDb = getUserDb(user.name);
@@ -45,8 +30,7 @@ export function updateUser(user: User): (dispatch: Dispatch) => void {
 export function resumeSession(callback: (loggedIn: boolean) => void):
   (dispatch: Dispatch) => void {
   return function(dispatch: Dispatch): void {
-    const remoteUrl = process.env.DATABASE_URL + "/_users";
-    const allUsersDb = new PouchDB(remoteUrl, {skip_setup: true});
+    const allUsersDb = getAllUsersDb();
 
     allUsersDb.getSession((err, response) => {
       if(!err && response.userCtx.name) {
@@ -54,14 +38,15 @@ export function resumeSession(callback: (loggedIn: boolean) => void):
         db.sync(userDb, {live: true, retry: true})
           .on("error", console.error.bind(console));
 
-        allUsersDb.getUser(response.userCtx.name, (err, response) => {
+        allUsersDb.getUser(response.userCtx.name, (err, user) => {
           if(err) {
             console.error(err);
             callback(false);
             return dispatch({error: err.name, type: Action.AddError});
           }
 
-          dispatch({type: Action.LoginUser, user: response});
+          listenUser(user, dispatch);
+          dispatch({type: Action.LoginUser, user: user});
           callback(true);
         });
       } else {
@@ -81,7 +66,7 @@ export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch) 
         return dispatch({error: err.error, type: Action.LoginUser});
       }
 
-      userDb.getUser(user.name, (err, response) => {
+      userDb.getUser(user.name, (err, user) => {
         if(err) {
           console.error(err);
           return dispatch({error: err.error, type: Action.AddError});
@@ -90,7 +75,8 @@ export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch) 
         db.sync(userDb, {live: true, retry: true})
           .on("error", console.error.bind(console));
 
-        dispatch({type: Action.LoginUser, user: response});
+        listenUser(user, dispatch);
+        dispatch({type: Action.LoginUser, user: user});
         dispatch(push(redirectTo));
       });
     });
@@ -112,6 +98,23 @@ export function signupUser(user: User, redirectTo: string): (dispatch: Dispatch)
         dispatch(loginUser(user, redirectTo));
       });
   };
+}
+
+function listenUser(user: User, dispatch: Dispatch): void {
+  (getAllUsersDb() as any).changes({
+    live: true,
+    since: 'now',
+    include_docs: true,
+    doc_ids: [user._id],
+  }).on('change', function(change) {
+    dispatch({type: Action.UpdateUser, user: change.doc});
+  });
+}
+
+function getAllUsersDb(): PouchDB {
+  const remoteUrl = process.env.DATABASE_URL + "/_users";
+  return new PouchDB(remoteUrl, {skip_setup: true});
+
 }
 
 function getUserDb(name: string): PouchDB {

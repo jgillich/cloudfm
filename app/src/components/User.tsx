@@ -4,7 +4,7 @@ import {Link} from "react-router";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {User, RouterProps} from "../interfaces";
-import {loginUser, signupUser, getUser} from "../actions";
+import {loginUser, signupUser} from "../actions";
 import {Field, Form} from "react-redux-form";
 const logo = require("../assets/logo_white.svg");
 
@@ -96,20 +96,11 @@ export const SignupContainer = connect(
 
 interface UserSettingsProps {
   user: User;
-  getUser: (user: User) => void;
 }
 
 export class UserSettings extends Component<UserSettingsProps, {}> {
 
   public props: UserSettingsProps;
-
-  public constructor(props: UserSettingsProps) {
-    super(props);
-
-    // When the user settings are loaded, we fetch the user once to make sure
-    // our local data is up to date.
-    this.props.getUser(this.props.user);
-  }
 
   public render(): ReactElement<string> {
     let {user} = this.props;
@@ -117,12 +108,15 @@ export class UserSettings extends Component<UserSettingsProps, {}> {
     return (
       <div>
         Logged in as {user.name}
+
+        <p>
+          Email: {user.email}
+        </p>
       </div>
     );
   }
 };
 
 export const UserSettingsContainer = connect(
-  (state) => ({user: state.user}),
-  (dispatch) => ({getUser: (user: User): void => dispatch(getUser(user))})
+  (state) => ({user: state.user})
 )(UserSettings);
