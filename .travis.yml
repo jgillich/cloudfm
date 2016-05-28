@@ -14,6 +14,7 @@ env:
 install:
   - npm install -g webpack typings n
   - N_PREFIX=$HOME n stable
+  - mkdir -p $HOME/.local/bin
   - curl -L https://github.com/azerupi/mdBook/releases/download/v0.0.12/mdBook-v0.0.12-x86_64-unknown-linux-gnu.tar.gz | tar -xz -C ~/.local/bin/
 script:
   - pushd lib && cargo build && cargo test && popd
