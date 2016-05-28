@@ -8,8 +8,8 @@ const htmlPlugin = new (require("html-webpack-plugin"))({
 
 require("dotenv").config({path: "../.env", silent: true});
 const envPlugin = new webpack.DefinePlugin({
-    "process.env.DATABASE_URL": `"${process.env.DATABASE_URL}"`,
-    "process.env.SERVER_URL": `"${process.env.SERVER_URL}"`,
+    "process.env.DATABASE_URL": `"${process.env.DATABASE_URL || "http://localhost:5984"}"`,
+    "process.env.SERVER_URL": `"${process.env.SERVER_URL || "http://localhost:8423"}"`,
 });
 
 module.exports = {
