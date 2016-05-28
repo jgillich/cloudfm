@@ -5,6 +5,6 @@ YouTube and Spotify, in a single app that works on any web browser or mobile
 phone, even offline.
 
 
-[![Travis](https://circleci.com/gh/cloudfm/cloudfm.png)](https://circleci.com/gh/cloudfm/cloudfm)
+[![Build Status](https://circleci.com/gh/cloudfm/cloudfm.png)](https://circleci.com/gh/cloudfm/cloudfm)
 
 * [Developer documentation](http://cloudfm.github.io/cloudfm/developer/developer.html)
