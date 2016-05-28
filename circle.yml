@@ -1,0 +1,23 @@
+machine:
+  pre:
+    - curl -sSf https://static.rust-lang.org/rustup.sh | sudo sh -s -- --channel=nightly
+dependencies:
+  override:
+    - npm install -g webpack typings n
+    - pushd app && npm install && typings install && popd
+    - cargo install mdbook
+test:
+  override:
+    - pushd lib && cargo build && cargo test && popd
+    - pushd app && webpack && popd
+    - pushd doc && mdbook build && popd
+general:
+  branches:
+    ignore:
+      - gh-pages
+      - staging
+deployment:
+  staging:
+    branch: master
+    commands:
+      - git push origin master:staging
