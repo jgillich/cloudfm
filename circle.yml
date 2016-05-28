@@ -1,6 +1,6 @@
 machine:
   pre:
-    - curl -sSf https://static.rust-lang.org/rustup.sh | sudo sh -s -- --channel=nightly
+    - curl -sSf https://static.rust-lang.org/rustup.sh | sudo sh -s -- --spec=nightly-2016-05-25
 dependencies:
   override:
     - npm install -g webpack typings n
