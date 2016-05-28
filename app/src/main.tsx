@@ -1,4 +1,4 @@
-/// <reference path="../typings/browser.d.ts"/>
+/// <reference path="../typings/index.d.ts"/>
 /// <reference path="./main.d.ts"/>
 
 require("core-js/shim");

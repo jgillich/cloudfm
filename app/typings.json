@@ -1,5 +1,5 @@
 {
-  "ambientDependencies": {
+  "globalDependencies": {
     "assert": "github:DefinitelyTyped/DefinitelyTyped/assert/assert.d.ts#58697597421d259f656dad7a2a5f20140c8a8051",
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
     "core-js": "registry:dt/core-js#0.0.0+20160317120654",
