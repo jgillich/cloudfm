@@ -26,8 +26,7 @@ deployment:
     branch: master
     commands:
       - git push origin master:staging
-  docs:
-    branch: master
-    commands:
+      # would prefer to have this under "docs", but only one deployment is executed per build
+      # https://discuss.circleci.com/t/deploy-same-branch-to-multiple-apps/1886
       - ghp-import -n doc/book -m "[ci skip] build docs"
       - git push -fq origin gh-pages
