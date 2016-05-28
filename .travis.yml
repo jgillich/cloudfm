@@ -10,16 +10,16 @@ env:
     - DATABASE_URL=http://localhost:5984
     - SERVER_URL=http://localhost:8423
     - SERVER_ADDR=127.0.0.1:8423
+    - PATH=$HOME/.local/bin:$PATH
 install:
   - npm install -g webpack typings n
   - N_PREFIX=$HOME n stable
-  - cargo install mdbook || true
+  - curl -L https://github.com/azerupi/mdBook/releases/download/v0.0.12/mdBook-v0.0.12-x86_64-unknown-linux-gnu.tar.gz | tar -xz -C ~/.local/bin/
 script:
   - pushd lib && cargo build && cargo test && popd
   - pushd app && npm i && typings i && webpack && popd
-  - pushd doc && ~/.cargo/bin/mdbook build && popd
+  - pushd doc && mdbook build && popd
 after_success: |
-  export PATH=$HOME/.local/bin:$PATH &&
   [ $TRAVIS_BRANCH = master ] &&
   [ $TRAVIS_PULL_REQUEST = false ] &&
   git push https://${TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:staging &&
