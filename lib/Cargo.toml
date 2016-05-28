@@ -14,6 +14,7 @@ id3 = "0.1.10"
 walkdir = "0.1.5"
 serde = "0.7.5"
 serde_json = "0.7.1"
+serde_macros = "0.7.5"
 dotenv = "0.8.0"
 chill = { version = "*", git = "https://github.com/jgillich/chill.git" }
 uuid = "0.2.2"
