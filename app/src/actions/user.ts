@@ -100,7 +100,8 @@ export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch) 
 export function signupUser(user: User, redirectTo: string): (dispatch: Dispatch) => void {
   return function(dispatch: Dispatch): void {
     const userDb = getUserDb(user.name);
-    userDb.signup(user.name, user.password, {metadata: {email: user.email}},
+    userDb.signup(user.name, user.password,
+      {metadata: { email: user.email, backends: []}},
       (err, response) => {
         if(err) {
           console.error(err);
