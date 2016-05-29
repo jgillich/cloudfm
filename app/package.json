@@ -19,7 +19,7 @@
     "basscss-btn-outline": "~1.1.0",
     "basscss-btn-primary": "~1.1.0",
     "basscss-color-base": "~2.0.2",
-    "basscss-color-borders": "~1.0.0",
+    "basscss-borders": "~1.0.0",
     "basscss-color-tables": "~1.0.4",
     "basscss-colors": "~2.2.0",
     "basscss-defaults": "~2.1.3",
