@@ -5,9 +5,12 @@ machine:
     PATH: ~/.cargo/bin:$PATH
 dependencies:
   override:
-    - pip install ghp-import
-    - npm install -g webpack typings
-    - cargo install mdbook || true
+    - |
+        case $CIRCLE_NODE_INDEX in
+          0) true ;;
+          1) pushd app && npm run install && popd ;;
+          2) cargo install mdbook || true ;;
+        esac
   cache_directories:
     - "~/.cargo"
 test:
@@ -15,8 +18,8 @@ test:
     - ? |
         case $CIRCLE_NODE_INDEX in
           0) pushd lib && cargo build && cargo test && popd ;;
-          1) pushd app && npm i && typings i && webpack && popd ;;
-          2) pushd doc && mdbook build && popd ;;
+          1) pushd app && npm test && popd ;;
+          2) pushd doc && mdbook build && mv book $CIRCLE_ARTIFACTS && popd ;;
         esac
       :
         parallel: true
@@ -32,5 +35,6 @@ deployment:
       - git push origin master:staging
       # would prefer to have this under "docs", but only one deployment is executed per build
       # https://discuss.circleci.com/t/deploy-same-branch-to-multiple-apps/1886
-      - ghp-import -n doc/book -m "[ci skip] build docs"
+      - pip install ghp-import
+      - ghp-import -n $CIRCLE_ARTIFACTS/book -m "[ci skip] build docs"
       - git push -fq origin gh-pages
