@@ -13,9 +13,12 @@ dependencies:
     - "~/.cargo"
 test:
   override:
-    - pushd lib && cargo build && cargo test && popd
-    - pushd app && webpack && popd
-    - pushd doc && mdbook build && popd
+    - case $CIRCLE_NODE_INDEX in \
+        0) pushd lib && cargo build && cargo test && popd ;; \
+        1) pushd app && webpack && popd ;; \
+        2) pushd doc && mdbook build && popd ;; \
+      esac:
+        parallel: true
 general:
   branches:
     ignore:
