@@ -7,7 +7,6 @@ dependencies:
   override:
     - pip install ghp-import
     - npm install -g webpack typings
-    - pushd app && npm install && typings install && popd
     - cargo install mdbook || true
   cache_directories:
     - "~/.cargo"
@@ -16,7 +15,7 @@ test:
     - ? |
         case $CIRCLE_NODE_INDEX in
           0) pushd lib && cargo build && cargo test && popd ;;
-          1) pushd app && webpack && popd ;;
+          1) pushd app && npm i && typings i && webpack && popd ;;
           2) pushd doc && mdbook build && popd ;;
         esac
       :
