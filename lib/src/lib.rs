@@ -21,25 +21,6 @@ extern crate hex;
 #[macro_use]
 extern crate lazy_static;
 
-pub mod index;
-pub mod proxy;
-pub mod album;
-pub mod artist;
-pub mod error;
-pub mod track;
-pub mod uri;
-pub mod user;
-pub mod views;
-
-pub use index::{Index, Indexer};
-pub use proxy::{Proxy, ProxyHandler};
-pub use album::Album;
-pub use artist::Artist;
-pub use error::*;
-pub use track::{Track, DecodedTrack};
-pub use uri::{Uri, FileUri, JamendoUri, WebdavUri};
-pub use user::{User, Backend, FileBackend, JamendoBackend, WebdavBackend};
-
 // TODO support visibility modifier instead of using pub
 macro_rules! trait_enum {
 
@@ -72,3 +53,22 @@ lazy_static! {
         uuid::Uuid::parse_str(&line).unwrap()
     };
 }
+
+pub mod index;
+pub mod proxy;
+pub mod album;
+pub mod artist;
+pub mod error;
+pub mod track;
+pub mod uri;
+pub mod user;
+pub mod views;
+
+pub use index::{Index, Indexer};
+pub use proxy::{Proxy, ProxyHandler};
+pub use album::Album;
+pub use artist::Artist;
+pub use error::*;
+pub use track::{Track, DecodedTrack};
+pub use uri::{Uri, FileUri, JamendoUri, WebdavUri};
+pub use user::{User, Backend, FileBackend, JamendoBackend, WebdavBackend};
