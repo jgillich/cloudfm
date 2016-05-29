@@ -8,7 +8,7 @@ dependencies:
     - |
         case $CIRCLE_NODE_INDEX in
           0) true ;;
-          1) pushd app && npm run install && popd ;;
+          1) pushd app && npm run init && popd ;;
           2) cargo install mdbook || true ;;
         esac
   cache_directories:

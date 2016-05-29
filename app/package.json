@@ -6,7 +6,7 @@
   "repository": "https://github.com/cloudfm/cloudfm.git",
   "scripts": {
     "test": "webpack",
-    "install": "npm install && typings install"
+    "init": "npm install && typings install"
   },
   "author": "Jakob Gillich <jakob@gillich.me>",
   "license": "MIT",
