@@ -52,7 +52,7 @@
     "css-loader": "~0.23.1",
     "dotenv": "~2.0.0",
     "file-loader": "~0.8.5",
-    "html-webpack-plugin": "~2.18.0",
+    "html-webpack-plugin": "~2.19.0",
     "postcss-calc": "~5.2.1",
     "postcss-custom-media": "~5.0.1",
     "postcss-custom-properties": "~5.0.1",
