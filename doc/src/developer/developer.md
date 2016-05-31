@@ -20,8 +20,8 @@
 * Start the app
 
         cd app
-        npm i -g webpack webpack-dev-server typings
-        typings i
+        npm i -g webpack webpack-dev-server
+        npm run init
         webpack-dev-server
 
 * Start the indexing service
