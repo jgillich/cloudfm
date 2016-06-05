@@ -1,15 +1,5 @@
 // TODO write proper typings and contribute them to dt
 
-interface PouchMiddleware {
-  (a: any): any;
-}
-
-declare var PouchMiddleware: PouchMiddleware;
-
-declare module "pouch-redux-middleware" {
-  export = PouchMiddleware;
-}
-
 interface ReactReduxForm {
   modelReducer(a: any, b?: any): any;
   formReducer(a: any, b?: any): any;
@@ -46,3 +36,13 @@ interface PouchDB {
 }
 
 declare var PouchDB: PouchDB;
+
+interface ReduxResetOptions {
+  type?: string;
+  data?: string;
+}
+
+declare module "redux-reset" {
+  function reduxReset(options?: ReduxResetOptions): any;
+  export default reduxReset;
+}

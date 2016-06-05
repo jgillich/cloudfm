@@ -6,7 +6,7 @@
   "repository": "https://github.com/cloudfm/cloudfm.git",
   "scripts": {
     "test": "webpack",
-    "build": "webpack -p",
+    "build": "NODE_ENV=production webpack -p",
     "init": "npm install && typings install"
   },
   "author": "Jakob Gillich <jakob@gillich.me>",
@@ -34,7 +34,6 @@
     "howler": "goldfire/howler.js#2.0",
     "lodash": "~4.13.1",
     "node-uuid": "~1.4.7",
-    "pouch-redux-middleware": "~0.2.0",
     "pouchdb": "~5.3.2",
     "pouchdb-authentication": "~0.5.1",
     "react": "~15.1.0",
@@ -47,6 +46,7 @@
     "react-virtualized": "~7.3.2",
     "redux": "~3.5.2",
     "redux-logger": "~2.6.1",
+    "redux-reset": "^0.2.0",
     "redux-thunk": "~2.1.0"
   },
   "devDependencies": {

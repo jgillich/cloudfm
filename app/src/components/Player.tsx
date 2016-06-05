@@ -71,7 +71,9 @@ export class Player extends Component<PlayerProps, PlayerState> {
   }
 
   public componentWillUnmount(): void {
-    this.howl.unload();
+    if(this.howl) {
+      this.howl.unload();
+    }
   }
 
   public render(): ReactElement<void> {

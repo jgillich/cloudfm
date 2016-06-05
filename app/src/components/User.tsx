@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component, ReactElement} from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
+import {Dispatch, Store} from "redux";
 import {User, RouterProps} from "../interfaces";
 import {loginUser, signupUser, getUser} from "../actions";
 import {Field, Form} from "react-redux-form";
