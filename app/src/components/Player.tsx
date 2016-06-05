@@ -4,7 +4,7 @@ import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {Howl} from "howler";
-import {debounce} from "lodash";
+import {debounce} from "core-decorators";
 import {Track, Artist} from "../interfaces";
 import {playTrack, pausePlayer, forwardPlayer, backwardPlayer,
 } from "../actions";
@@ -34,7 +34,6 @@ export class Player extends Component<PlayerProps, PlayerState> {
   public constructor(props: PlayerProps) {
     super();
     this.state = {displayProgress: 0, trackProgress: 0};
-    this.seek = debounce(this.seek, 500);
   }
 
   public initHowl({playing, track}: PlayerProps = this.props): void {
@@ -147,6 +146,7 @@ export class Player extends Component<PlayerProps, PlayerState> {
     );
   }
 
+  @debounce(500)
   private seek(percent: number): void {
     this.howl.seek(this.howl.duration() * (percent / 100));
     this.disableProgressUpdate = false;
