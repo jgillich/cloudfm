@@ -105,7 +105,7 @@ export function signupUser(user: User, redirectTo: string): (dispatch: Dispatch)
       (err, response) => {
         if(err) {
           console.error(err);
-          return dispatch({error: err.error, type: Action.AddError});
+          return dispatch({error: err, type: Action.AddError});
         }
 
         dispatch({type: Action.SignupUser, user});
