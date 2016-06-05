@@ -1,6 +1,6 @@
 machine:
   pre:
-    - curl -sSf https://static.rust-lang.org/rustup.sh | sudo sh -s -- --spec=nightly-2016-05-25
+    - curl -sSf https://static.rust-lang.org/rustup.sh | sudo sh -s -- --spec=nightly-2016-06-05
   environment:
     PATH: ~/.cargo/bin:$PATH
 dependencies:
