@@ -7,7 +7,7 @@ dependencies:
   override:
     - |
         case $CIRCLE_NODE_INDEX in
-          0) true ;;
+          0) pushd lib && cargo fetch && popd ;;
           1) pushd app && npm run init && popd ;;
         esac
     - cargo install mdbook || true
