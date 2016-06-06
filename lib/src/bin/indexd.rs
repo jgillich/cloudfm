@@ -13,7 +13,7 @@ use dotenv::dotenv;
 pub fn main() {
     dotenv().ok();
 
-    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let db_url = env::var("DATABASE_URL").unwrap_or("http://localhost:5984".into());
     let db = chill::Client::new(&db_url).expect("DATABASE_URL must be a valid URL");
 
     let (count, errors) = index_all(db);
