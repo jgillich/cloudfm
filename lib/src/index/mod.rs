@@ -1,6 +1,6 @@
 use std::{error, fmt};
 use chill;
-use chill::{IntoDatabasePath};
+use chill::IntoDatabasePath;
 use {views, DecodedTrack, User, Error, Artist, Album, Track};
 
 mod file;
