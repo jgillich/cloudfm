@@ -11,7 +11,7 @@ interface CollectionSidebarProps {
 
 export const CollectionSidebar: StatelessComponent<CollectionSidebarProps> =
   ({artists}) => (
-    <div className="mb0 overflow-y-scroll">
+    <div className="mb0 flex-none overflow-y-scroll">
       {artists.map(a => (
         <div>
           <Link className="btn" key={a._id} to={`/collection/artist/${a._id}`}

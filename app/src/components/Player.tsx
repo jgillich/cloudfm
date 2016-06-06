@@ -84,7 +84,7 @@ export class Player extends Component<PlayerProps, PlayerState> {
     }
 
     return (
-      <div className="flex justify-between items-center bg-blue white py1">
+      <div className="flex justify-between flex-none items-center bg-blue white py1">
         <div>
           <a className="btn " onClick={() => {
             if(this.state.trackProgress > 10) {
