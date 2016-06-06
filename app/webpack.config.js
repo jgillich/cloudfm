@@ -27,6 +27,7 @@ module.exports = {
       {loader: "file", test: /\.(svg|woff2?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/i},
       {loader: "ts-loader", test: /\.tsx?$/},
       {loader: "style!css!postcss", test: /\.css$/},
+      {loader: 'json', test: /\.json$/ },
     ],
     preLoaders: [
       {loader: "tslint", test: /\.tsx?$/},
@@ -50,8 +51,12 @@ module.exports = {
       "postcss-reporter",
     ].map(require);
   },
+  alias: {
+    // FIXME doesn't work in TypeScript
+    "app": path.join(__dirname, "./src/"),
+  },
   resolve: {
-    extensions: ["", ".ts", ".tsx", ".js", ".css"],
+    extensions: ["", ".ts", ".tsx", ".js", ".css", ".json"],
     alias: {
       "basscss": "../node_modules/basscss/src/basscss.css",
     }
