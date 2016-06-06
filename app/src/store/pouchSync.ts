@@ -1,45 +1,45 @@
-import {Dispatch} from "redux";
+import {Store} from "redux";
 import {getLocalDb} from "../db";
 
 let listeners = [];
 
 // Types is a tuple with [singular, plural]
 export default function pouchSync(types: string[][]) {
-    return ({getState, dispatch}) => {
-        let {user} = getState();
+    return (store) => {
+        let {user} = store.getState();
 
         return next => action => {
           let result = next(action);
-          let state = getState();
+          let state = store.getState();
           if(state.user !== user) {
             user = state.user;
             if(listeners.length) {
               listeners.forEach(l => l.cancel());
             }
             let db = getLocalDb(user.name);
-            reinitializeStore(state, db, dispatch, types);
-            listeners = types.map(t => listen(db, t[0], dispatch));
+            reinitializeStore(store, db, types);
+            listeners = types.map(t => listen(store, db, t));
           }
           return result;
         };
     };
 };
 
-function listen(db: any, type: string, dispatch: Dispatch) {
+function listen(store: Store, db: any, type: string[]): void {
     return db.changes({
         include_docs: true,
         live: true,
         since: "now",
     }).on("change", change => {
-        if (change.doc.type !== type) {
+        if (change.doc.type !== type[0]) {
             return;
         }
         let actionType = change.deleted ? "DELETE" :
-            db.allDocs().some(d => d._id === change.doc._id)
+            store.getState()[type[1]].some(d => d._id === change.doc._id)
             ? "UPDATE" : "INSERT";
-        dispatch({
-            type: `${actionType}_${type.toUpperCase()}`,
-            [type]: change.doc,
+        store.dispatch({
+            type: `${actionType}_${type[0].toUpperCase()}`,
+            [type[0]]: change.doc,
         });
     });
 }
@@ -47,11 +47,11 @@ function listen(db: any, type: string, dispatch: Dispatch) {
 // Replaces the current store with the new user data
 // When the store is initialized the first time, we don't know the username
 // because sign in has not happened yet.
-function reinitializeStore(state: any, db: PouchDB, dispatch: Dispatch, types: string[][]): void {
+function reinitializeStore(store: Store, db: PouchDB, types: string[][]): void {
   let emptyState = {};
   types.forEach(t => emptyState[t[1]] = []);
 
-  state = Object.assign(state, emptyState);
+  let state = Object.assign(store.getState(), emptyState);
 
   db.allDocs({
     include_docs: true,
@@ -61,13 +61,13 @@ function reinitializeStore(state: any, db: PouchDB, dispatch: Dispatch, types: s
     }
 
     res.rows.forEach(({doc}) => {
-      let foundType = types.find(t => t === doc.type);
+      let foundType = types.find(t => t[0] === doc.type);
       if(foundType) {
         state[foundType[1]].push(doc);
       }
     });
 
-    dispatch({
+    store.dispatch({
       state: state,
       type: "RESET",
     });
