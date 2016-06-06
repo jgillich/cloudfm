@@ -11,7 +11,7 @@ describe("Album", function() {
         {_id: "bar", name: "Bar", artist: "Bar Fighters"},
       ];
       const wrapper = render(<AlbumList albums={albums} />);
-      assert.equal(wrapper.find("a").length, 2);
+      assert.lengthOf(wrapper.find("a"), 2);
     });
   });
 });

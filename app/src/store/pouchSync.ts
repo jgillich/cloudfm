@@ -1,5 +1,4 @@
-import * as PouchDb from "pouchdb";
-import {Dispatch, Store} from "redux";
+import {Dispatch} from "redux";
 import {getLocalDb} from "../db";
 
 let listeners = [];
@@ -36,7 +35,8 @@ function listen(db: any, type: string, dispatch: Dispatch) {
             return;
         }
         let actionType = change.deleted ? "DELETE" :
-            db.allDocs().some(d => d._id == change.doc._id) ? "UPDATE" : "INSERT";
+            db.allDocs().some(d => d._id === change.doc._id)
+            ? "UPDATE" : "INSERT";
         dispatch({
             type: `${actionType}_${type.toUpperCase()}`,
             [type]: change.doc,

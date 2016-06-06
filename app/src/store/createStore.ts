@@ -13,7 +13,11 @@ export default function createStore(): Store {
   const applyMiddlewares = applyMiddleware(
     thunkMiddleware,
     routerMiddleware(browserHistory),
-    pouchSync([["track", "tracks"], ["artist", "artists"], ["album", "albums"]]),
+    pouchSync([
+      ["track", "tracks"],
+      ["artist", "artists"],
+      ["album", "albums"],
+    ]),
     (createLogger)()
   );
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/cloudfm/cloudfm.git",
   "scripts": {
-    "test": "webpack && karma start --single-run --browsers jsdom",
+    "test": "webpack && karma start --single-run",
     "build": "NODE_ENV=production webpack -p",
     "init": "npm install && typings install"
   },
