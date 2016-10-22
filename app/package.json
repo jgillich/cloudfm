@@ -43,7 +43,7 @@
     "basscss-input-range": "~3.0.0",
     "basscss-progress": "~3.0.0",
     "font-awesome": "~4.6.3",
-    "howler": "howler",
+    "howler": "^2.0.1",
     "node-uuid": "~1.4.7",
     "pouchdb": "~6.0.7",
     "pouchdb-authentication": "~0.5.5",
