@@ -3,5 +3,5 @@ build:
   steps:
     - npm-install:
         cwd: app/
-    - npm-test
+    - npm-test:
         cwd: app/
