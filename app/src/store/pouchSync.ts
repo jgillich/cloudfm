@@ -25,7 +25,7 @@ export default function pouchSync(types: string[][]) {
     };
 };
 
-function listen(store: Store, db: any, type: string[]): void {
+function listen(store: Store<any>, db: any, type: string[]): void {
     return db.changes({
         include_docs: true,
         live: true,
@@ -47,13 +47,13 @@ function listen(store: Store, db: any, type: string[]): void {
 // Replaces the current store with the new user data
 // When the store is initialized the first time, we don't know the username
 // because sign in has not happened yet.
-function reinitializeStore(store: Store, db: PouchDB, types: string[][]): void {
+function reinitializeStore(store: Store<any>, db: PouchDB, types: string[][]): void {
   let emptyState = {};
   types.forEach(t => emptyState[t[1]] = []);
 
   let state = Object.assign(store.getState(), emptyState);
 
-  db.allDocs({
+  (db as any).allDocs({
     include_docs: true,
   }, (err, res) => {
     if(err) {

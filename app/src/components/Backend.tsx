@@ -9,7 +9,7 @@ const jamendoIcon = require("../assets/backends/jamendo.png");
 
 interface BackendSettingsProps {
   user: User;
-  dispatch: Dispatch;
+  dispatch: Dispatch<any>;
   addBackend: Backend;
 }
 

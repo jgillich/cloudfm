@@ -14,7 +14,7 @@ import {
 import {ReactRouterReduxHistory} from "react-router-redux";
 import {resumeSession} from "../actions";
 
-function requireAuth(store: Store):
+function requireAuth(store: Store<any>):
   (nextState: RouterState, replace: RedirectFunction, cb: Function) => void {
   return (nextState, replace, cb) => {
     let { user } = store.getState();
@@ -39,7 +39,7 @@ function requireAuth(store: Store):
 
 interface RouterProps {
   history: ReactRouterReduxHistory;
-  store: Store;
+  store: Store<any>;
 };
 
 export const Router: StatelessComponent<RouterProps> = ({history, store}) => (

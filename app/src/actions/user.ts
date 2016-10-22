@@ -9,8 +9,8 @@ export interface UserAction {
   user: User;
 };
 
-export function getUser(user: User): (dispatch: Dispatch) => void {
-  return function(dispatch: Dispatch): void {
+export function getUser(user: User): (dispatch: Dispatch<UserAction>) => void {
+  return function(dispatch: Dispatch<UserAction>): void {
     const remoteDb = getRemoteDb(user.name);
 
     remoteDb.getUser(user.name, (err, user) => {
@@ -24,8 +24,8 @@ export function getUser(user: User): (dispatch: Dispatch) => void {
   };
 }
 
-export function updateUser(user: User): (dispatch: Dispatch) => void {
-  return function(dispatch: Dispatch): void {
+export function updateUser(user: User): (dispatch: Dispatch<UserAction>) => void {
+  return function(dispatch: Dispatch<UserAction>): void {
     const remoteDb = getRemoteDb(user.name);
     const metadata = {backends: user.backends, email: user.email};
 
@@ -42,8 +42,8 @@ export function updateUser(user: User): (dispatch: Dispatch) => void {
 }
 
 export function resumeSession(callback: (loggedIn: boolean) => void):
-  (dispatch: Dispatch) => void {
-  return function(dispatch: Dispatch): void {
+  (dispatch: Dispatch<UserAction>) => void {
+  return function(dispatch: Dispatch<UserAction>): void {
     const usersDb = getUsersDb();
 
     usersDb.getSession((err, response) => {
@@ -70,8 +70,8 @@ export function resumeSession(callback: (loggedIn: boolean) => void):
   };
 }
 
-export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch) => void {
-  return function(dispatch: Dispatch): void {
+export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch<UserAction>) => void {
+  return function(dispatch: Dispatch<UserAction>): void {
     const remoteDb = getRemoteDb(user.name);
 
     remoteDb.login(user.name, user.password, (err, response) => {
@@ -97,8 +97,8 @@ export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch) 
   };
 }
 
-export function signupUser(user: User, redirectTo: string): (dispatch: Dispatch) => void {
-  return function(dispatch: Dispatch): void {
+export function signupUser(user: User, redirectTo: string): (dispatch: Dispatch<UserAction>) => void {
+  return function(dispatch: Dispatch<UserAction>): void {
     const usersDb = getUsersDb();
     usersDb.signup(user.name, user.password,
       {metadata: {backends: [], email: user.email}},

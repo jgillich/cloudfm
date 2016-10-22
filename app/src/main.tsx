@@ -1,7 +1,6 @@
-/// <reference path="../typings/index.d.ts"/>
 /// <reference path="./main.d.ts"/>
 
-require("core-js/shim");
+require("core-js");
 
 import * as React from "react";
 import {render} from "react-dom";

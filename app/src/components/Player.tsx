@@ -13,7 +13,7 @@ interface PlayerProps {
   track: Track;
   artist: Artist;
   playing: boolean;
-  dispatch: Dispatch;
+  dispatch: Dispatch<any>;
 }
 
 interface PlayerState {

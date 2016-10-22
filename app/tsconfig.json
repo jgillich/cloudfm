@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "sourceMap": true,
     "jsx": "react",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "types": [
+      "node", "mocha"
+    ]
   },
-  "exclude": [
-    "node_modules"
-  ],
+
   "compileOnSave": false
 }

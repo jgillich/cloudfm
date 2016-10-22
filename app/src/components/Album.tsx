@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {Album, Artist, Track, RouterProps} from "../interfaces";
 import {Link} from "react-router";
 import {playTrack} from "../actions";
-const logo = require("../assets/logo_white.svg");
 
 interface AlbumListProps {
   albums: Album[];
@@ -17,7 +16,7 @@ export const AlbumList: StatelessComponent<AlbumListProps> = ({albums}) => {
         {albums.map(a => (
           <Link key={a._id} to={`/collection/album/${a._id}`}
             className="btn center">
-            <img width="200" src={logo}/>
+            <img src="http://placehold.it/150x150"/>
             <div>{a.name}</div>
             <div className="gray">{a.artist}</div>
           </Link>
@@ -69,7 +68,7 @@ export const AlbumItem: StatelessComponent<AlbumItemProps> =
   return (
     <div className="flex flex-auto overflow-y-scroll mx2 my2">
       <div className="center mr4">
-        <img width="200" src={logo}/>
+        <img src="http://placehold.it/150x150"/>
         <div className="h3 bold">{album.name}</div>
         <div className="h3">{artist.name}</div>
       </div>

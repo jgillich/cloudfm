@@ -10,7 +10,7 @@ const logo = require("../assets/logo_white.svg");
 
 interface LoginProps {
   user: User;
-  dispatch: Dispatch;
+  dispatch: Dispatch<any>;
   redirectTo: string;
 }
 
@@ -51,7 +51,7 @@ export const LoginContainer = connect(
 )(Login);
 
 interface SignupProps {
-  dispatch: Dispatch;
+  dispatch: Dispatch<any>;
   redirectTo: string;
 }
 

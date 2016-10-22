@@ -8,7 +8,7 @@ import {browserHistory } from "react-router";
 import reduxReset from "redux-reset";
 import pouchSync from "./pouchSync";
 
-export default function (): Store {
+export default function (): Store<any> {
 
   const applyMiddlewares = applyMiddleware(
     thunkMiddleware,
@@ -21,7 +21,7 @@ export default function (): Store {
     (createLogger)()
   );
 
-  const createStoreWithMiddleware = compose(
+  const createStoreWithMiddleware = (compose as any)(
     applyMiddlewares,
     reduxReset({data: "state"})
   )(createStore);

@@ -25,17 +25,16 @@ declare module "react-howler" {
   export = ReactHowler;
 }
 
+// err should be PouchDB.Core.Error, but it's not properly defined yet
 interface PouchDB {
   plugin(plugin: any): void;
   sync(pouch: PouchDB, opts: any): any;
-  getUser(name: string, opts?: any, callback?: (err: PouchError, res: any) => void): any;
-  putUser(name: string, opts?: any, callback?: (err: PouchError, res: any) => void): any;
-  login(name: string, password: string, opts?: any, callback?: (err: PouchError, res: any) => void): any;
-  signup(name: string, password: string, opts?: any, callback?: (err: PouchError, res: any) => void): any;
-  getSession(callback: (err: PouchError, res: any) => void): any;
+  getUser(name: string, opts?: any, callback?: (err: any, res: any) => void): any;
+  putUser(name: string, opts?: any, callback?: (err: any, res: any) => void): any;
+  login(name: string, password: string, opts?: any, callback?: (err: any, res: any) => void): any;
+  signup(name: string, password: string, opts?: any, callback?: (err: any, res: any) => void): any;
+  getSession(callback: (err: any, res: any) => void): any;
 }
-
-declare var PouchDB: PouchDB;
 
 interface ReduxResetOptions {
   type?: string;
