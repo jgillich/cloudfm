@@ -28,7 +28,7 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'Firefox', 'jsdom'],
+    browsers: ['jsdom'],
     singleRun: false,
     concurrency: Infinity
   })
