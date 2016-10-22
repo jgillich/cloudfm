@@ -21,7 +21,7 @@ interface PlayerState {
   trackProgress?: number;
   // The displayed progress of the played track. This might differ from
   // trackProgress when the user manually moves the progress slider
-  displayProgress?: number;
+  displayProgress?: number | any; // FIXME
 }
 
 export class Player extends Component<PlayerProps, PlayerState> {
