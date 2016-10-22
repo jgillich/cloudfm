@@ -5,6 +5,6 @@ YouTube and Spotify, in a single app that works on any web browser or mobile
 phone, even offline.
 
 
-[![Wercker](https://img.shields.io/wercker/ci/cloudfm/cloudfm.svg?style=flat-square)](https://app.wercker.com/jgillich/cloudfm/)
+[![wercker status](https://app.wercker.com/status/a1c11952b1a5fc5d856e1ce7156d672e/s/master "wercker status")](https://app.wercker.com/project/byKey/a1c11952b1a5fc5d856e1ce7156d672e)
 
 * [Developer documentation](http://cloudfm.github.io/cloudfm/developer/developer.html)
