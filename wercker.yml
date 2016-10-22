@@ -1,0 +1,7 @@
+box: node
+build:
+  steps:
+    - npm-install:
+        cwd: app/
+    - npm-test
+        cwd: app/
