@@ -70,7 +70,8 @@ export function resumeSession(callback: (loggedIn: boolean) => void):
   };
 }
 
-export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch<UserAction>) => void {
+export function loginUser(user: User, redirectTo: string):
+  (dispatch: Dispatch<UserAction>) => void {
   return function(dispatch: Dispatch<UserAction>): void {
     const remoteDb = getRemoteDb(user.name);
 
@@ -97,7 +98,8 @@ export function loginUser(user: User, redirectTo: string): (dispatch: Dispatch<U
   };
 }
 
-export function signupUser(user: User, redirectTo: string): (dispatch: Dispatch<UserAction>) => void {
+export function signupUser(user: User, redirectTo: string):
+  (dispatch: Dispatch<UserAction>) => void {
   return function(dispatch: Dispatch<UserAction>): void {
     const usersDb = getUsersDb();
     usersDb.signup(user.name, user.password,
